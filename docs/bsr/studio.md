@@ -21,24 +21,23 @@ you can:
 - Configure headers to further customize outgoing requests.
 - Optionally include cookies in outgoing request to send authenticated requests
   to private APIs (or Buf Studio Agent instances).
-- Create sharable links for requests defined on Buf Studio to team members with
-  access.
+- Create shareable links for requests defined on Buf Studio to team members
+  with access.
 
 ## Composing Requests
 
-Start by selecting the Protobuf method you’re looking to make a request with.
-With the “Select Method” menu you can choose a BSR module and use Buf Studio's
+Start by selecting the Protobuf method you're looking to make a request with.
+With the "Select Method" menu you can choose a BSR module and use Buf Studio's
 fuzzy search to select the desired service and method for you request:
 
-<!-- TODO: make this into a gif -->
 <Image alt="Studio method select demo" src="/img/bsr/studio-method-select.gif" width={90} />
 
 Note that the streaming endpoints are currently greyed out as Buf Studio
 currently only supports unary RPC. We intend to support streaming RPC in the
 future.
 
-Once you’ve selected your RPC, declare the **target URL** of the Protobuf API
-that you’re looking to make a request to. This should not include the service or
+Once you've selected your RPC, declare the **target URL** of the Protobuf API
+that you're looking to make a request to. This should not include the service or
 RPC path, which Buf Studio will append based on your selected RPC definition.
 
 <Image alt="Studio target url input" src="/img/bsr/studio-target-url.png" />
@@ -126,7 +125,7 @@ When using Buf Studio Agent, studio can now also reach:
    in a with a protocol understandable by browsers, which Buf Studio Agent will
    dynamically reframe to communicate with the target server.
 
-2. Servers without the required CORS configuration: as CORS is abrowser specific
+2. Servers without the required CORS configuration: as CORS is a browser specific
    limitation, Buf Studio Agent can issue requests to any server. The required
    CORS config is built into Buf Studio Agent by default, so the browser will be
    able to reach Buf Studio Agent which will forward your request to the target
@@ -179,7 +178,7 @@ forwarding, this transforms Buf Studio into the practical UI for any proto
 service at the company.
 [Please reach out to learn more](https://buf.build/request-a-demo/).
 
-### Reference: Buf Studio Agent flags
+### Reference: Buf Studio Agent flags {#reference-studio-agent-flags}
 
 Buf Studio agent is included in the cli under `buf beta studio-agent`. This runs
 an HTTP(S) server that forwards requests from the Buf Studio to the target URL.
@@ -207,6 +206,6 @@ an HTTP(S) server that forwards requests from the Buf Studio to the target URL.
     specified multiple times.
 - Buf Studio Agent can be configured to set specific accepted origins for CORS
   policies
-  - `origin` - Allowed origin for CORS, defaults to “studio.buf.build”
+  - `origin` - Allowed origin for CORS, defaults to "studio.buf.build"
 - For a long-running instance of Buf Studio Agent, an indefinite timeout will
   need to be set with `--timeout=0s`.
