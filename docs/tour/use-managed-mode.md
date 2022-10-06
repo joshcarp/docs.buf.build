@@ -56,7 +56,7 @@ these two diffs:
 ```
 
 If you regenerate Go code stubs for the API changes you made in your local
-[workspace](/reference/workspaces.md), you'll notice this:
+[workspace](/reference/workspaces.mdx), you'll notice this:
 
 ```terminal
 $ rm -rf gen
