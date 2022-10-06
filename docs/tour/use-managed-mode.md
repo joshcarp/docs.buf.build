@@ -3,21 +3,24 @@ id: use-managed-mode
 title: 13 Use managed mode
 ---
 
-In this section, you'll learn how to use [**managed mode**](../generate/managed-mode.md) when
-[generating code](generate-code.md) using Protobuf. Managed mode is a configuration option in your
-[`buf.gen.yaml`](../configuration/v1/buf-gen-yaml.md) that tells `buf` to set all of the [file
-options] in your module according to an opinionated set of values suitable for each of the
-supported Protobuf languages, such as Go, Java, and C#. Those file options are written *on the fly*
-so that you can remove them from your `.proto` source files.
+In this section, you'll learn how to use
+[**managed mode**](../generate/managed-mode.md) when
+[generating code](generate-code.md) using Protobuf. Managed mode is a
+configuration option in your
+[`buf.gen.yaml`](../configuration/v1/buf-gen-yaml.md) that tells `buf` to set
+all of the [file options] in your module according to an opinionated set of
+values suitable for each of the supported Protobuf languages, such as Go, Java,
+and C#. Those file options are written _on the fly_ so that you can remove them
+from your `.proto` source files.
 
-> We created managed mode because those file options have long been a source of confusion and
-> frustration for Protobuf users.
+> We created managed mode because those file options have long been a source of
+> confusion and frustration for Protobuf users.
 
 ## 13.1 Remove `go_package` {#remove-go_package}
 
-One of the drawbacks of using Protobuf in the past has been the need to hard-code language-specific
-options within Protobuf definitions themselves. Consider the `go_package` option we've been using
-throughout the tour:
+One of the drawbacks of using Protobuf in the past has been the need to
+hard-code language-specific options within Protobuf definitions themselves.
+Consider the `go_package` option we've been using throughout the tour:
 
 ```protobuf title="petapis/pet/v1/pet.proto" {5}
 syntax = "proto3";
@@ -27,12 +30,14 @@ package pet.v1;
 option go_package = "github.com/bufbuild/buf-tour/petstore/gen/proto/go/pet/v1;petv1";
 ```
 
-This option is required by `proto` and `protoc-gen-go` but it has nothing to do with the actual
-API definition in Protobuf. It's an API *consumer* concern, not an API *producer* concern.
-Different consumers may&mdash;and usually do&mdash;want to provide custom values for this option, especially
-when a set of Protobuf definitions has many different consumers.
+This option is required by `proto` and `protoc-gen-go` but it has nothing to do
+with the actual API definition in Protobuf. It's an API _consumer_ concern, not
+an API _producer_ concern. Different consumers may&mdash;and usually
+do&mdash;want to provide custom values for this option, especially when a set of
+Protobuf definitions has many different consumers.
 
-With managed mode, you can remove the `go_package` option altogether, as in these two diffs:
+With managed mode, you can remove the `go_package` option altogether, as in
+these two diffs:
 
 ```protobuf title="petapis/pet/v1/pet.proto" {5}
  syntax = "proto3";
@@ -67,25 +72,26 @@ See https://developers.google.com/protocol-buffers/docs/reference/go-generated#p
 ...
 ```
 
-This error comes up because you haven't yet enabled managed mode, but you'll see how to do that in
-the next section.
+This error comes up because you haven't yet enabled managed mode, but you'll see
+how to do that in the next section.
 
 ## 13.2 Configure managed mode {#configure-managed-mode}
 
-To configure managed mode, add the [`managed.enabled`](/configuration/v1/buf-gen-yaml#enabled)
-option to your `buf.gen.yaml` template and set a package prefix with the
+To configure managed mode, add the
+[`managed.enabled`](/configuration/v1/buf-gen-yaml#enabled) option to your
+`buf.gen.yaml` template and set a package prefix with the
 [`managed`](/configuration/v1/buf-gen-yaml#go_package_prefix) parameter.
 
-> The `go_package` option is [notoriously complicated][go_prefix]. To generate code using plugins
-> like `protoc-gen-go` and `protoc-gen-grpc`, Go repositories **must** contain a [go.mod][go.mod]
-> file that declares a Go [module path][path] that acts as a prefix for package import paths within
-> the module.
+> The `go_package` option is [notoriously complicated][go_prefix]. To generate
+> code using plugins like `protoc-gen-go` and `protoc-gen-grpc`, Go repositories
+> **must** contain a [go.mod][go.mod] file that declares a Go [module
+> path][path] that acts as a prefix for package import paths within the module.
 
-
-With managed mode you don't have to worry about this nuanced behavior. You can set the 
-`go_package_prefix.default` value to the `name` in your `go.mod` joined with the `out` path
-configured for the `protoc-gen-go` plugin. In the example below, the module path
-(`github.com/bufbuild/buf-tour/petstore`) and the plugin output path (`gen/proto/go`) result in a
+With managed mode you don't have to worry about this nuanced behavior. You can
+set the `go_package_prefix.default` value to the `name` in your `go.mod` joined
+with the `out` path configured for the `protoc-gen-go` plugin. In the example
+below, the module path (`github.com/bufbuild/buf-tour/petstore`) and the plugin
+output path (`gen/proto/go`) result in a
 [`go_package_prefix.default`](/configuration/v1/buf-gen-yaml#default) setting of
 `github.com/bufbuild/buf-tour/petstore/gen/proto/go`.
 
@@ -140,10 +146,10 @@ gen/proto/go/pet/v1/pet.pb.go:10:2: no required module provides package github.c
 	go get github.com/bufbuild/buf-tour/petstore/gen/proto/go/google/type
 ```
 
-In this case, `buf` overrides the `go_package` value for the `buf.build/googleapis/googleapis`
-module, but Google publishes their Go Protobuf stubs to a separate
-[`go-genproto`][go-genproto]
-repository, which is controlled by a `go_package` setting like this:
+In this case, `buf` overrides the `go_package` value for the
+`buf.build/googleapis/googleapis` module, but Google publishes their Go Protobuf
+stubs to a separate [`go-genproto`][go-genproto] repository, which is controlled
+by a `go_package` setting like this:
 
 ```protobuf title="google/rpc/status.proto" {8}
 syntax = "proto3";
@@ -158,17 +164,18 @@ option go_package = "google.golang.org/genproto/googleapis/rpc/status;status";
 ...
 ```
 
-Unfortunately, the [`grpc-go`][grpc-go] library depends on [`go-genproto`][go-genproto],
-so the import paths must match for the Go stubs to interoperate and the `go_package` option
-**must** be preserved.
+Unfortunately, the [`grpc-go`][grpc-go] library depends on
+[`go-genproto`][go-genproto], so the import paths must match for the Go stubs to
+interoperate and the `go_package` option **must** be preserved.
 
 ## 13.4 Remove modules from managed mode {#remove-modules-from-managed-mode}
 
 > This is a particularly rare edge case, which primarily applies to
-> `buf.build/googleapis/googleapis`. You shouldn't need to use the `except` key in general.
+> `buf.build/googleapis/googleapis`. You shouldn't need to use the `except` key
+> in general.
 
-You can fix these errors by _excluding_ the `buf.build/googleapis/googleapis` module from
-managed mode:
+You can fix these errors by _excluding_ the `buf.build/googleapis/googleapis`
+module from managed mode:
 
 ```yaml title="buf.gen.yaml" {6-7}
  version: v1
@@ -191,9 +198,9 @@ managed mode:
        - require_unimplemented_servers=false
 ```
 
-With the `except` setting, the `go_package` option in all of the files provided by the
-`buf.build/googleapis/googleapis` module is no longer managed by `buf`. In other words, the
-`go_package` option remains untouched for this set of files.
+With the `except` setting, the `go_package` option in all of the files provided
+by the `buf.build/googleapis/googleapis` module is no longer managed by `buf`.
+In other words, the `go_package` option remains untouched for this set of files.
 
 If you regenerate the stubs, you'll notice that it's successful:
 
@@ -208,9 +215,11 @@ You can also verify that the generated code compiles with this command:
 $ go build ./...
 ```
 
-[file options]: https://developers.google.com/protocol-buffers/docs/proto3#options
+[file options]:
+  https://developers.google.com/protocol-buffers/docs/proto3#options
 [go.mod]: https://golang.org/ref/mod#go-mod-file
-[go_prefix]: https://developers.google.com/protocol-buffers/docs/reference/go-generated#package
+[go_prefix]:
+  https://developers.google.com/protocol-buffers/docs/reference/go-generated#package
 [go-genproto]: https://github.com/googleapis/go-genproto
 [grpc-go]: https://github.com/grpc/grpc-go
 [path]: https://golang.org/ref/mod#glos-module-path

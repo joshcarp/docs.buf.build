@@ -5,20 +5,20 @@ title: protoc plugins
 
 Buf ships with two binaries that you can use as [protoc] plugins:
 
-* [`protoc-gen-buf-breaking`](#breaking)
-* [`protoc-gen-buf-lint`](#lint)
+- [`protoc-gen-buf-breaking`](#breaking)
+- [`protoc-gen-buf-lint`](#lint)
 
-Buf doesn't use these binaries but they can be useful in situations where you have a protoc setup
-in place, for example when using [Bazel].
+Buf doesn't use these binaries but they can be useful in situations where you
+have a protoc setup in place, for example when using [Bazel].
 
 ## `protoc-gen-buf-breaking` {#breaking}
 
-The `protoc-gen-buf-breaking` binary performs [breaking change detection][breaking] as a `protoc`
-plugin.
+The `protoc-gen-buf-breaking` binary performs [breaking change
+detection][breaking] as a `protoc` plugin.
 
-All flags and config are passed to the plugin as an option in JSON format. You need to pass these
-options using `--buf-breaking_opt` as opposed to `--buf-breaking_out`, as the option includes the
-`:` character as part of JSON.
+All flags and config are passed to the plugin as an option in JSON format. You
+need to pass these options using `--buf-breaking_opt` as opposed to
+`--buf-breaking_out`, as the option includes the `:` character as part of JSON.
 
 The option for `protoc-gen-buf-breaking` has this structure:
 
@@ -45,12 +45,14 @@ An example option:
 }
 ```
 
-- `against_input` is required and limited to [Buf image formats](../reference/images.md). The
-  format must be `bin` or `json` and can't be `dir`, `git`, `tar`, `zip`, etc.
-- `limit_to_input_files` limits checks to those files under build by `protoc` in the
-  current invocation, in this case the `file_to_generate` in the [`CodeGeneratorRequest`][req].
-  We generally recommend setting this option when using this plugin. We don't make this
-  the default in order to maintain symmetry with [`buf breaking`][breaking].
+- `against_input` is required and limited to
+  [Buf image formats](../reference/images.md). The format must be `bin` or
+  `json` and can't be `dir`, `git`, `tar`, `zip`, etc.
+- `limit_to_input_files` limits checks to those files under build by `protoc` in
+  the current invocation, in this case the `file_to_generate` in the
+  [`CodeGeneratorRequest`][req]. We generally recommend setting this option when
+  using this plugin. We don't make this the default in order to maintain
+  symmetry with [`buf breaking`][breaking].
 
 Here's an example usage of the binary in conjunction with protoc:
 
@@ -68,9 +70,9 @@ pet/v1/pet.proto:18:3:Field "1" on message "Pet" changed type from "enum" to "st
 
 The `protoc-gen-buf-lint` binary performs [linting][lint] as a `protoc` plugin.
 
-All flags and config are passed to the plugin as an option in JSON format. You need to pass these
-options using `--buf-lint_opt` as opposed to `--buf-lint_out`, as the option includes the
-`:` character as part of JSON.
+All flags and config are passed to the plugin as an option in JSON format. You
+need to pass these options using `--buf-lint_opt` as opposed to
+`--buf-lint_out`, as the option includes the `:` character as part of JSON.
 
 The option for `protoc-gen-buf-lint` has this structure:
 
@@ -91,9 +93,7 @@ An example option:
   "input_config": {
     "version": "v1",
     "lint": {
-      "use": [
-        "ENUM_NO_ALLOW_ALIAS"
-      ]
+      "use": ["ENUM_NO_ALLOW_ALIAS"]
     }
   },
   "error_format": "json"
@@ -128,4 +128,5 @@ pet/v1/pet.proto:47:9:Service name "PetStore" should be suffixed with "Service".
 [breaking]: ../breaking/overview.md
 [lint]: ../lint/overview.md
 [protoc]: https://developers.google.com/protocol-buffers
-[req]: https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/compiler/plugin.proto
+[req]:
+  https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/compiler/plugin.proto

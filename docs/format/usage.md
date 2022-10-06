@@ -3,20 +3,20 @@ id: usage
 title: Usage
 ---
 
-The `buf format` command rewrites `.proto` files in-place according to an opinionated
-[style](style.md).
+The `buf format` command rewrites `.proto` files in-place according to an
+opinionated [style](style.md).
 
 ## Configuration
 
 The `buf format` command has no configuration options. There's only one way to
-format `.proto` files, so that every `.proto` file looks and feels the same way. Stop
-wasting time and energy on deciding how `.proto` files ought to be formatted - `buf`
-decides for you so you don't have to.
+format `.proto` files, so that every `.proto` file looks and feels the same way.
+Stop wasting time and energy on deciding how `.proto` files ought to be
+formatted - `buf` decides for you so you don't have to.
 
 ## Examples
 
-By default, the [input](../reference/inputs.md) is the current directory and the formatted
-content is written to stdout. For example, given the following `tree`:
+By default, the [input](../reference/inputs.md) is the current directory and the
+formatted content is written to stdout. For example, given the following `tree`:
 
 ```sh
 .
@@ -70,7 +70,8 @@ message Object {
 
 > Most people will want to use 'buf format -w'.
 
-Display a diff between the original and formatted content with `-d`. For example,
+Display a diff between the original and formatted content with `-d`. For
+example,
 
 ```terminal
 # Write a diff instead of the formatted file
@@ -91,7 +92,8 @@ diff -u proto/simple/v1/simple.proto.orig proto/simple/v1/simple.proto
  }
 ```
 
-You can also use the `--exit-code` flag to exit with a non-zero exit code if there is a diff:
+You can also use the `--exit-code` flag to exit with a non-zero exit code if
+there is a diff:
 
 ```terminal
 $ buf format --exit-code
@@ -99,7 +101,8 @@ $ buf format -w --exit-code
 $ buf format -d --exit-code
 ```
 
-Format a file, directory, or module reference by specifying an input. For example,
+Format a file, directory, or module reference by specifying an input. For
+example,
 
 ```terminal
 # Write the formatted file to stdout

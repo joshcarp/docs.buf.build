@@ -3,85 +3,149 @@ id: introduction
 title: Introduction
 ---
 
-Welcome to the **Buf Schema Registry (BSR)**! This overview covers what the BSR is and the challenges it aims to solve within the Protobuf ecosystem. If you just want to see the BSR in action with code examples, check out [The tour](../tour/introduction.md).
+Welcome to the **Buf Schema Registry (BSR)**! This overview covers what the BSR
+is and the challenges it aims to solve within the Protobuf ecosystem. If you
+just want to see the BSR in action with code examples, check out
+[The tour](../tour/introduction.md).
 
 ## What is the BSR?
 
-The BSR stores and manages Protobuf files as versioned [modules](overview.md#modules) so that individuals and organizations can consume and publish their APIs without friction.
+The BSR stores and manages Protobuf files as versioned
+[modules](overview.mdx#modules) so that individuals and organizations can
+consume and publish their APIs without friction.
 
-The BSR comes with a browsable UI, dependency management, API validation and versioning, generated documentation, and an extensible plugin system which enables remote code generation.
+The BSR comes with a browsable UI, dependency management, API validation and
+versioning, generated documentation, and an extensible plugin system which
+enables remote code generation.
 
 ### BSR goals
 
-1. **Centralized registry** - The BSR is the source of truth for tracking and evolving your Protobuf APIs. A centralized registry enables you to maintain compatibility and manage dependencies, while enabling your clients to consume APIs reliably and efficiently. Having a centralized, Protobuf-aware, registry has the added benefit of protecting against broken builds.
+1. **Centralized registry** - The BSR is the source of truth for tracking and
+   evolving your Protobuf APIs. A centralized registry enables you to maintain
+   compatibility and manage dependencies, while enabling your clients to consume
+   APIs reliably and efficiently. Having a centralized, Protobuf-aware, registry
+   has the added benefit of protecting against broken builds.
 
-2. **Dependency management** - The BSR _finally_ introduces dependency management to the Protobuf ecosystem. You can now declare, resolve and use hosted BSR modules as dependencies in your projects.
+2. **Dependency management** - The BSR _finally_ introduces dependency
+   management to the Protobuf ecosystem. You can now declare, resolve and use
+   hosted BSR modules as dependencies in your projects.
 
-  Put simply, **you don't need to copy your `.proto` file dependencies around anymore**. The `buf` CLI interacts directly with the BSR to fetch your dependencies, (analogous to `npm` for Node.js, `pip` for Python, `cargo` for Rust, and Go modules in Go).
+Put simply, **you don't need to copy your `.proto` file dependencies around
+anymore**. The `buf` CLI interacts directly with the BSR to fetch your
+dependencies, (analogous to `npm` for Node.js, `pip` for Python, `cargo` for
+Rust, and Go modules in Go).
 
-3. **UI and documentation** - The BSR offers complete documentation for your Protobuf files through a browsable UI with syntax highlighting, definitions, and references.
+3. **UI and documentation** - The BSR offers complete documentation for your
+   Protobuf files through a browsable UI with syntax highlighting, definitions,
+   and references.
 
-4. **Code generation** - The BSR makes possible two distinct forms of code generation:
+4. **Code generation** - The BSR makes possible two distinct forms of code
+   generation:
 
-    - *Local code generation*: The BSR contains remote references that allow you to immediately generate code for your language of choice. Use your existing `protoc` plugins,
-      run `buf generate`, and you're ready to go.
+   - _Local code generation_: The BSR contains remote references that allow you
+     to immediately generate code for your language of choice. Use your existing
+     `protoc` plugins, run `buf generate`, and you're ready to go.
 
-    - *Remote code generation (alpha)*: Don't want to manage plugins? No problem. The BSR offers remote code generation through hosted plugins and templates.
+   - _Remote code generation (alpha)_: Don't want to manage plugins? No problem.
+     The BSR offers remote code generation through hosted plugins and templates.
 
-      The remote-generated code is stored in a managed software repository that you fetch like any other library with tools you already know: `go get`, `mvn install`,
-      `pip install`, `npm install`, etc.
+     The remote-generated code is stored in a managed software repository that
+     you fetch like any other library with tools you already know: `go get`,
+     `mvn install`, `pip install`, `npm install`, etc.
 
 ### Why the BSR?
 
-You're probably wondering why adopting the Buf Schema Registry (BSR) is an improvement over your existing Protobuf workflows. Above we highlighted *what* features are available, but let's break down why the BSR aims to solve existing problems.
+You're probably wondering why adopting the Buf Schema Registry (BSR) is an
+improvement over your existing Protobuf workflows. Above we highlighted _what_
+features are available, but let's break down why the BSR aims to solve existing
+problems.
 
 **The Protobuf ecosystem deserves build guarantees**
 
-Traditional workflows push Protobuf files to version control systems, but these systems lack Protobuf-awareness and thus consumers often waste time working with Protobuf files that don't compile. Yes, some organizations add checks to catch broken Protobuf files, but these are error-prone and don't scale well because *each* repository needs to be configured, setup and maintained.
+Traditional workflows push Protobuf files to version control systems, but these
+systems lack Protobuf-awareness and thus consumers often waste time working with
+Protobuf files that don't compile. Yes, some organizations add checks to catch
+broken Protobuf files, but these are error-prone and don't scale well because
+_each_ repository needs to be configured, setup and maintained.
 
-Since the BSR is a Protobuf-aware registry, it prevents Protobuf files that don't compile from being pushed to the origin in the first place. Your consumers will have confidence that Protobuf files consumed from the BSR are not broken and can compile. Everyone in the ecosystem benefits because compilation guarantees are pushed from the individual to the BSR.
+Since the BSR is a Protobuf-aware registry, it prevents Protobuf files that
+don't compile from being pushed to the origin in the first place. Your consumers
+will have confidence that Protobuf files consumed from the BSR are not broken
+and can compile. Everyone in the ecosystem benefits because compilation
+guarantees are pushed from the individual to the BSR.
 
 **Generated documentation for all**
 
-Sadly, readily consumable *and* up-to-date documentation is rarely available for Protobuf files. Some organizations setup workflows to generate documentation, but this is yet another manual step that has to be configured, setup and maintained. Furthermore, much of the tooling and plugins are unsupported and generate incomplete documentation.
+Sadly, readily consumable _and_ up-to-date documentation is rarely available for
+Protobuf files. Some organizations setup workflows to generate documentation,
+but this is yet another manual step that has to be configured, setup and
+maintained. Furthermore, much of the tooling and plugins are unsupported and
+generate incomplete documentation.
 
-The BSR comes built-in with **generated documentation**. You get live documentation for every commit to the BSR. Which means live and up-to-date documentation for latest and historic commits. Even better, the documentation the BSR provides has syntax highlighting, definitions, and references.
+The BSR comes built-in with **generated documentation**. You get live
+documentation for every commit to the BSR. Which means live and up-to-date
+documentation for latest and historic commits. Even better, the documentation
+the BSR provides has syntax highlighting, definitions, and references.
 
 **Keeping Protobuf files synced**
 
-Every organization that adopts Protobufs needs to solve distribution, whether internally across teams or externally exposed to the public. Protobuf files are usually checked into repositories, often dispersed, and it becomes challenging to keep Protobufs synced across projects. API drift is a common issue and even worse, forked Protobuf repositories accidentally get consumed by downstream dependents (instead of the upstream). It's a mess.
+Every organization that adopts Protobufs needs to solve distribution, whether
+internally across teams or externally exposed to the public. Protobuf files are
+usually checked into repositories, often dispersed, and it becomes challenging
+to keep Protobufs synced across projects. API drift is a common issue and even
+worse, forked Protobuf repositories accidentally get consumed by downstream
+dependents (instead of the upstream). It's a mess.
 
-The BSR solves this by offering a centralized registry to store all your Protobuf files, simplifying the process of publishing and consuming. By making the BSR the single source of truth it is possible to power developer workflows and business processes around Protobuf without worrying *how* to keep everything in-sync.
+The BSR solves this by offering a centralized registry to store all your
+Protobuf files, simplifying the process of publishing and consuming. By making
+the BSR the single source of truth it is possible to power developer workflows
+and business processes around Protobuf without worrying _how_ to keep everything
+in-sync.
 
 **Client SDKs should not be an afterthought**
 
 Define. Generate. Consume.
 
-Defining a Protobuf-based API enforces a contract between producer and consumers. The issue is that consumers are typically an afterthought in the process.
+Defining a Protobuf-based API enforces a contract between producer and
+consumers. The issue is that consumers are typically an afterthought in the
+process.
 
-Before a client can consume a Protobuf-based API they need to generate an SDK for their language of choice. Traditionally consumers are left to figure out how to build and generate clients, but this is often cumbersome as little guidance is provided and furthermore not all Protobuf files correctly encode options for a given language.
+Before a client can consume a Protobuf-based API they need to generate an SDK
+for their language of choice. Traditionally consumers are left to figure out how
+to build and generate clients, but this is often cumbersome as little guidance
+is provided and furthermore not all Protobuf files correctly encode options for
+a given language.
 
-The Buf ecosystem solves this by decoupling consumer and producer concerns. The `buf` CLI can modify language-specific options on the fly, and the BSR facilitates generating client SDKs by offering local and remote code generation.
+The Buf ecosystem solves this by decoupling consumer and producer concerns. The
+`buf` CLI can modify language-specific options on the fly, and the BSR
+facilitates generating client SDKs by offering local and remote code generation.
 
-Generating an SDK client should only require you to keep code up to date like any other library in your language of choice. It shouldn't require you to generate anything manually.
+Generating an SDK client should only require you to keep code up to date like
+any other library in your language of choice. It shouldn't require you to
+generate anything manually.
 
 ## Let's get started
 
-Once you've [installed](../installation.md) the latest version `buf`, you're ready to use the BSR!
+Once you've [installed](../installation.md) the latest version `buf`, you're
+ready to use the BSR!
 
 Here are a few ways to get moving:
 
-  - **[Overview](overview.md)** <br/>
-    Dive directly into the docs to get familiar with the BSR and the various components.
+- **[Overview](overview.mdx)** <br/> Dive directly into the docs to get familiar
+  with the BSR and the various components.
 
-  - **[Usage](usage.md)** <br/>
-    Learn how to run `buf` commands that use the BSR.
+- **[Usage](usage.mdx)** <br/> Learn how to run `buf` commands that use the BSR.
 
-  - **[The Tour](../tour/introduction.md)** <br/>
-    The tour provides an overview of the BSR and takes approximately 20 minutes to complete.
+- **[The Tour](../tour/introduction.md)** <br/> The tour provides an overview of
+  the BSR and takes approximately 20 minutes to complete.
 
 ## Experimental features
 
-[Remote generation](remote-generation/overview.md) is currently an *alpha feature*. This feature lets the BSR generate data types and service stubs for your modules and store the generated code in a **hosted registry**. With this, you can consume the generated code like any other library in your language of choice.
+[Remote generation](remote-generation/overview.mdx) is currently an _alpha
+feature_. This feature lets the BSR generate data types and service stubs for
+your modules and store the generated code in a **hosted registry**. With this,
+you can consume the generated code like any other library in your language of
+choice.
 
-> Note, this feature is currently available for Go. But we have plans to add additional support for other languages.
+> Note, this feature is currently available for Go. But we have plans to add
+> additional support for other languages.

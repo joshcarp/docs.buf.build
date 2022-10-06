@@ -6,8 +6,8 @@ title: Usage
 > We highly recommend completing [the tour](../tour/configure-and-build.md) to get an overview of `buf build`.
 
 All `buf` operations rely on building, or compiling, Protobuf files. The [linter](../lint/overview.md),
-[breaking change detector](../breaking/overview.md), [generator](../generate/usage.md),
-and the [BSR](../bsr/overview.md) are features that rely on compilation results. In its simplest form,
+[breaking change detector](../breaking/overview.md), [generator](../generate/usage.mdx),
+and the [BSR](../bsr/overview.mdx) are features that rely on compilation results. In its simplest form,
 the `buf build` command is used to verify that an [input](../reference/inputs.md) compiles.
 
 ## Configuration
@@ -45,7 +45,7 @@ root of your `.proto` files hierarchy, as this is how `.proto` import paths are 
 
 ## Define a Module
 
-To get started, create a [module](../bsr/overview.md#modules) by adding a `buf.yaml` file to the root of the directory
+To get started, create a [module](../bsr/overview.mdx#modules) by adding a `buf.yaml` file to the root of the directory
 that contains your Protobuf definitions. You can create the default `buf.yaml` file with this command:
 
 ```terminal
@@ -67,7 +67,7 @@ lint:
 For those of you that have used `protoc`, the placement of the `buf.yaml` is analogous to a `protoc`
 include (`-I`) path. **With `buf`, there is no `-I` flag** - each `protoc` `-I` path maps to a directory
 that contains a `buf.yaml` (called a module in Buf parlance), and multiple modules are stitched
-together with a [`buf.work.yaml`](../configuration/v1/buf-work-yaml.md), which defines a [workspace](../reference/workspaces.md).
+together with a [`buf.work.yaml`](../configuration/v1/buf-work-yaml.md), which defines a [workspace](../reference/workspaces.mdx).
 
 To illustrate how all these pieces fit together here's a quick example using `protoc` and its equivalent
 in `buf`:
@@ -221,7 +221,7 @@ $ buf build --error-format=json
 By default, `buf build` outputs its result to `/dev/null`. In this case, it's common to use
 `buf build` as a validation step, analogous to checking if the input compiles.
 
-`buf build` also supports outputting [`FileDescriptorSet`s](https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto)
+`buf build` also supports outputting [`FileDescriptorSet`](https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto)s
 and [Images](../reference/images.md), which is Buf's custom extension of the `FileDescriptorSet`. Better yet, these outputs
 can be formatted in a variety of ways.
 
@@ -318,6 +318,7 @@ dependent descriptors are included in the build:
   - Any custom options for the services, its methods, and the file in which the service is defined
 
 :::success Supplying multiple types
+
 You can specify multiple types by applying the `--type` option multiple times, as in this example:
 
 ```terminal
@@ -328,6 +329,7 @@ $ buf build \
 
 In this case, dependent descriptors for both `acme.weather.v1.Units` and
 `acme.weather.v1.CurrentWeather.Temperature` are included in the output.
+
 :::
 
 ### Type restriction example
@@ -383,6 +385,6 @@ $ docker run \
 [filedescriptorset]: https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto
 [image]: ../reference/images.md
 [messages]: https://developers.google.com/protocol-buffers/docs/proto3#simple
-[module]: ../bsr/overview.md#modules
+[module]: ../bsr/overview.mdx#modules
 [proto2]: https://developers.google.com/protocol-buffers/docs/proto
 [services]: https://developers.google.com/protocol-buffers/docs/proto3#services

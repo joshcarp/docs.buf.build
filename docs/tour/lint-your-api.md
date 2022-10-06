@@ -13,9 +13,9 @@ pet/v1/pet.proto:44:10:Field name "petID" should be lower_snake_case, such as "p
 pet/v1/pet.proto:49:9:Service name "PetStore" should be suffixed with "Service".
 ```
 
-As you can see, the current pet store API has a few lint failures across both of its
-files. These failures belong to the [`DEFAULT`](../lint/rules.md#default) lint category
-configured in the [`buf.yaml`](../configuration/v1/buf-yaml.md):
+As you can see, the current pet store API has a few lint failures across both of
+its files. These failures belong to the [`DEFAULT`](../lint/rules.md#default)
+lint category configured in the [`buf.yaml`](../configuration/v1/buf-yaml.md):
 
 ```yaml title="buf.yaml"
 version: v1
@@ -39,14 +39,16 @@ $ buf lint --error-format=json
 
 ## 3.1 Lint exceptions {#lint-exceptions}
 
-The [`DEFAULT`](/lint/rules#default) lint category failures come from these rules:
+The [`DEFAULT`](/lint/rules#default) lint category failures come from these
+rules:
 
-* [`PACKAGE_VERSION_SUFFIX`](../lint/rules.md#package_version_suffix)
-* [`FIELD_LOWER_SNAKE_CASE`](../lint/rules.md#field_lower_snake_case)
-* [`SERVICE_SUFFIX`](../lint/rules.md#service_suffix)
+- [`PACKAGE_VERSION_SUFFIX`](../lint/rules.md#package_version_suffix)
+- [`FIELD_LOWER_SNAKE_CASE`](../lint/rules.md#field_lower_snake_case)
+- [`SERVICE_SUFFIX`](../lint/rules.md#service_suffix)
 
-To make `buf` happy, you can exclude these rules from the `DEFAULT` category by adding them to the
-[`except`](/lint/configuration#except) list in your lint configuration:
+To make `buf` happy, you can exclude these rules from the `DEFAULT` category by
+adding them to the [`except`](/lint/configuration#except) list in your lint
+configuration:
 
 ```yaml title="buf.yaml" {8-11}
  version: v1
@@ -62,15 +64,17 @@ To make `buf` happy, you can exclude these rules from the `DEFAULT` category by 
 +    - SERVICE_SUFFIX
 ```
 
-Now if you run `buf lint` again, you'll notice that it's successful (exit code 0 and no output):
+Now if you run `buf lint` again, you'll notice that it's successful (exit code 0
+and no output):
 
 ```terminal
 $ buf lint
 ```
 
-Silencing failures by eliminating lint rules using `except` is usually **not** recommended,
-although it may be unavoidable in some situations; it's almost always better to actually _fix_
-the lint failures. You can restore the `buf.yaml` to its previous state with these config changes:
+Silencing failures by eliminating lint rules using `except` is usually **not**
+recommended, although it may be unavoidable in some situations; it's almost
+always better to actually _fix_ the lint failures. You can restore the
+`buf.yaml` to its previous state with these config changes:
 
 ```yaml title="buf.yaml" {8-11}
  version: v1
@@ -88,9 +92,10 @@ the lint failures. You can restore the `buf.yaml` to its previous state with the
 
 ## 3.2 Fix lint failures {#fix-lint-failures}
 
-Start by fixing the lint failures for the `pet/v1/pet.proto` file, which stem from the `FIELD_LOWER_SNAKE_CASE`
-and `SERVICE_SUFFIX` rules. `buf` indicates exactly what you need to change to fix the errors, so you can
-fix the failures with these updates:
+Start by fixing the lint failures for the `pet/v1/pet.proto` file, which stem
+from the `FIELD_LOWER_SNAKE_CASE` and `SERVICE_SUFFIX` rules. `buf` indicates
+exactly what you need to change to fix the errors, so you can fix the failures
+with these updates:
 
 ```protobuf title="pet/v1/pet.proto" {10-11,16-17}
  syntax = "proto3";
@@ -116,7 +121,8 @@ fix the failures with these updates:
  }
 ```
 
-You can verify that two of the failures are resolved by linting again and seeing only one remaining error:
+You can verify that two of the failures are resolved by linting again and seeing
+only one remaining error:
 
 ```terminal
 $ buf lint
@@ -126,10 +132,11 @@ google/type/datetime.proto:17:1:Package name "google.type" should be suffixed wi
 
 ## 3.3 Ignore lint failures {#ignore-lint-failures}
 
-The `google/type/datetime.proto` isn't actually a file in your local project. Instead, it's one of your
-dependencies, provided by [googleapis](https://buf.build/googleapis/googleapis), so you can't change its
-`package` declaration to satisfy `buf`'s lint requirements. You can `ignore` the `google/type/datetime.proto`
-file from `buf lint` like with this config update:
+The `google/type/datetime.proto` isn't actually a file in your local project.
+Instead, it's one of your dependencies, provided by
+[googleapis](https://buf.build/googleapis/googleapis), so you can't change its
+`package` declaration to satisfy `buf`'s lint requirements. You can `ignore` the
+`google/type/datetime.proto` file from `buf lint` like with this config update:
 
 ```yaml title="buf.yaml" {8-9}
  version: v1
@@ -143,9 +150,10 @@ file from `buf lint` like with this config update:
 +    - google/type/datetime.proto
 ```
 
-Alternatively, you can specify exactly which rules to ignore using the [`ignore_only`](/lint/configuration#ignore_only)
-parameter. You can output failures in a format that you can then copy into your `buf.yaml` file. This enables you to ignore
-all existing lint errors and correct them over time:
+Alternatively, you can specify exactly which rules to ignore using the
+[`ignore_only`](/lint/configuration#ignore_only) parameter. You can output
+failures in a format that you can then copy into your `buf.yaml` file. This
+enables you to ignore all existing lint errors and correct them over time:
 
 ```terminal
 $ buf lint --error-format=config-ignore-yaml
@@ -157,12 +165,14 @@ lint:
       - google/type/datetime.proto
 ```
 
-In this case, you don't own the `google/type/datetime.proto` file, so it's best to `ignore` it altogether.
+In this case, you don't own the `google/type/datetime.proto` file, so it's best
+to `ignore` it altogether.
 
 ## 3.4 Remote inputs {#remote-inputs}
 
-The `buf lint` command also works with remote inputs, using the local `buf.yaml` configuration. For example, you can see all
-the original lint failures if you reference a `tar.gz` archive from the `main` branch:
+The `buf lint` command also works with remote inputs, using the local `buf.yaml`
+configuration. For example, you can see all the original lint failures if you
+reference a `tar.gz` archive from the `main` branch:
 
 ```terminal
 $ buf lint "https://github.com/bufbuild/buf-tour/archive/main.tar.gz#strip_components=1,subdir=start/petapis" --config buf.yaml
@@ -171,7 +181,9 @@ start/petapis/pet/v1/pet.proto:44:10:Field name "petID" should be lower_snake_ca
 start/petapis/pet/v1/pet.proto:49:9:Service name "PetStore" should be suffixed with "Service".
 ```
 
-> The `strip_components` option specifies the number of directories to strip for `tar` or `zip` inputs.
+> The `strip_components` option specifies the number of directories to strip for
+> `tar` or `zip` inputs.
 
-> For remote locations that require authentication, see [HTTPS Authentication](../reference/inputs.md#https) and
+> For remote locations that require authentication, see
+> [HTTPS Authentication](../reference/inputs.md#https) and
 > [SSH Authentication](../reference/inputs.md#ssh) for more details.

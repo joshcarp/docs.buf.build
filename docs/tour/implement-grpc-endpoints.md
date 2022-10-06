@@ -3,19 +3,20 @@ id: implement-grpc-endpoints
 title: 11 Implement gRPC endpoints
 ---
 
-In this section, you'll implement a `PetStoreService` client and server, both of which you can run
-on the command line.
+In this section, you'll implement a `PetStoreService` client and server, both of
+which you can run on the command line.
 
 ## 11.1 Initialize a `go.mod` {#initialize-a-gomod}
 
-Before you write Go code, initialize a `go.mod` file with the `go mod init` command:
+Before you write Go code, initialize a `go.mod` file with the `go mod init`
+command:
 
 ```terminal
 $ go mod init github.com/bufbuild/buf-tour/petstore
 ```
 
-Similar to the [`buf.yaml`](/configuration/v1/buf-yaml) config file, the `go.mod` file tracks your
-code's Go dependencies.
+Similar to the [`buf.yaml`](/configuration/v1/buf-yaml) config file, the
+`go.mod` file tracks your code's Go dependencies.
 
 ## 11.2 Implement the server {#implement-the-server}
 
@@ -134,8 +135,8 @@ func run() error {
 
 ## 11.4 Resolve Go dependencies {#resolve-go-dependencies}
 
-Now that you have code for both a client and a server, run this command to resolve
-some of the dependencies you need for the generated code:
+Now that you have code for both a client and a server, run this command to
+resolve some of the dependencies you need for the generated code:
 
 ```terminal
 $ go mod tidy
@@ -157,8 +158,8 @@ You should notice these changes (the version pins may differ):
 
 ## 11.5 Call `PutPet` {#call-putpet}
 
-With the `server/main.go` and `client/main.go` implementations shown above, run the server and
-call the `PutPet` endpoint from the client.
+With the `server/main.go` and `client/main.go` implementations shown above, run
+the server and call the `PutPet` endpoint from the client.
 
 First, run the server:
 
@@ -177,7 +178,8 @@ $ go run client/main.go
 ... Successfully PutPet
 ```
 
-You'll also notice this in the server logs (in the other terminal running the server):
+You'll also notice this in the server logs (in the other terminal running the
+server):
 
 ```terminal
 $ go run server/main.go

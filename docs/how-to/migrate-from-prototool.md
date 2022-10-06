@@ -3,91 +3,106 @@ id: migrate-from-prototool
 title: Migrate From Prototool
 ---
 
-[Prototool](https://github.com/uber/prototool) is a widely used Protobuf tool that has a builder,
-linter, formatter, breaking change detector, gRPC CLI, and configurable plugin executor.
+[Prototool](https://github.com/uber/prototool) is a widely used Protobuf tool
+that has a builder, linter, formatter, breaking change detector, gRPC CLI, and
+configurable plugin executor.
 
-In this document, we'll discuss the pros and cons of Prototool vs `buf`'s build, lint
-and breaking change detection functionality, as well as `buf`-equivalent commands
-and migration.
+In this document, we'll discuss the pros and cons of Prototool vs `buf`'s build,
+lint and breaking change detection functionality, as well as `buf`-equivalent
+commands and migration.
 
 ## Prototool pros
 
 - Prototool has gRPC CLI functionality via `prototool grpc`. This functionality
-  roughly models parts of [grpcurl](https://github.com/fullstorydev/grpcurl) but with
-  fewer available features. We think gRPC CLI functionality is better left to gRPC-specific
-  tooling for now. See our [gRPC](grpc.md) documentation for how to use `buf` with `grpcurl`.
+  roughly models parts of [grpcurl](https://github.com/fullstorydev/grpcurl) but
+  with fewer available features. We think gRPC CLI functionality is better left
+  to gRPC-specific tooling for now. See our [gRPC](grpc.md) documentation for
+  how to use `buf` with `grpcurl`.
 - Prototool has a much more prescriptive set of lint rules via the `uber2` lint
-  group. This is a much more opinionated set of lint rules than `buf`'s `DEFAULT`
-  category. We feel that the `DEFAULT` category is a set of rules that universally applies to
-  many existing Protobuf schemas.
-- Prototool provides `.proto` template generation, specific to the `uber1` and `uber2`
-  lint groups, via `prototool create`. There is no equivalent functionality in `buf` and we
-  do not have plans to provide such functionality.
-
+  group. This is a much more opinionated set of lint rules than `buf`'s
+  `DEFAULT` category. We feel that the `DEFAULT` category is a set of rules that
+  universally applies to many existing Protobuf schemas.
+- Prototool provides `.proto` template generation, specific to the `uber1` and
+  `uber2` lint groups, via `prototool create`. There is no equivalent
+  functionality in `buf` and we do not have plans to provide such functionality.
 
 ## Prototool cons
 
-- By far the biggest con of Prototool is that it both uses a third-party Protobuf parser
-  that is not tested to cover every edge case of the Protobuf grammar, while additionally shelling
-  out to `protoc` to verify that files are valid. The third-party Protobuf parser Prototool uses has
-  had issues in the past with breakages, and as this parser does not verify that what it is parsing is
-  actually valid Protobuf, Prototool shells out to `protoc` to verify validity. This means that Prototool
-  is susceptible to both breakages for valid Protobuf files (if the parse fails), as well has having all
-  the drawbacks of shelling out to `protoc`, especially parsing of `protoc` output. Prototool attempts to
+- By far the biggest con of Prototool is that it both uses a third-party
+  Protobuf parser that is not tested to cover every edge case of the Protobuf
+  grammar, while additionally shelling out to `protoc` to verify that files are
+  valid. The third-party Protobuf parser Prototool uses has had issues in the
+  past with breakages, and as this parser does not verify that what it is
+  parsing is actually valid Protobuf, Prototool shells out to `protoc` to verify
+  validity. This means that Prototool is susceptible to both breakages for valid
+  Protobuf files (if the parse fails), as well has having all the drawbacks of
+  shelling out to `protoc`, especially parsing of `protoc` output. Prototool
+  attempts to
   [parse stderr](https://github.com/uber/prototool/blob/0d05c76a4ff28512cc1c5d4b172ad55c26f141c6/internal/protoc/compiler.go#L48)
-  from `protoc` output, which has breaking changes across minor versions of `protoc`. By default, Prototool
-  downloads `protoc` for you, which is helpful for many cases, but can cause issues if the download [fails](https://github.com/uber/prototool/issues/512),
-  the cache is corrupted, or if the `protoc` version is not locked. We highly recommend reading [our
-  discussion](../reference/internal-compiler) on Protobuf compilation for more details.
+  from `protoc` output, which has breaking changes across minor versions of
+  `protoc`. By default, Prototool downloads `protoc` for you, which is helpful
+  for many cases, but can cause issues if the download
+  [fails](https://github.com/uber/prototool/issues/512), the cache is corrupted,
+  or if the `protoc` version is not locked. We highly recommend reading
+  [our discussion](../reference/internal-compiler) on Protobuf compilation for
+  more details.
 
-  Instead, `buf` lets you use either the [internal compiler](../reference/internal-compiler.md)
-  that is tested to cover every edge case and only parse valid files, or use `protoc` output as `buf` input.
-  `buf` can actually use [many types of input](../reference/inputs.md), including `protoc` output,
-  local or remote Git repositories, and local or remote archives. `buf` never shells out to external commands
-  to perform any of its functionality. `buf` also has no cache as it does not need to cache any external binaries
-  to perform its functionality.
+  Instead, `buf` lets you use either the
+  [internal compiler](../reference/internal-compiler.md) that is tested to cover
+  every edge case and only parse valid files, or use `protoc` output as `buf`
+  input. `buf` can actually use [many types of input](../reference/inputs.md),
+  including `protoc` output, local or remote Git repositories, and local or
+  remote archives. `buf` never shells out to external commands to perform any of
+  its functionality. `buf` also has no cache as it does not need to cache any
+  external binaries to perform its functionality.
+
 - Prototool runs file discovery for your Protobuf files, but provides no
-  mechanism to skip file discovery and specify your files manually, outside
-  of running commands for files one at a time, which breaks some lint and
-  breaking change detection functionality. `buf` enables you to skip file discovery
-  and specify your files [manually](../build/usage.md#limit-to-specific-files)
-  for use cases that require this, such as [Bazel](/build-systems/bazel.md).
+  mechanism to skip file discovery and specify your files manually, outside of
+  running commands for files one at a time, which breaks some lint and breaking
+  change detection functionality. `buf` enables you to skip file discovery and
+  specify your files [manually](../build/usage.md#limit-to-specific-files) for
+  use cases that require this, such as [Bazel](/build-systems/bazel.md).
 - Prototool's lint functionality lets you select a single group, currently
   `google`, `uber1`, or `uber2`, and then add and remove rules from that
   specific group. `buf` instead provides [lint categories](../lint/rules.md)
-  that you can mix and match, and lets you exclude entire categories
-  or rules if you want. `buf` also presents a clear path to add additional
-  rules to new categories in a backwards-compatible manner without
-  touching existing categories.
-- Prototool's breaking change detector cannot be configured as to what
-  rules it runs to verify breaking change detection. `buf`'s rules are
-  fully configurable, including ignores on a per-directory or per-file
-  basis for every breaking rule or category.
-- Breaking change rules are not a binary proposition - there are different kinds of
-  breaking changes that you may care about. `buf` provides [four categories](../breaking/rules.md)
-  of breaking change rules to select - per-file generated stub breaking changes,
-  per-package generated stub breaking changes, wire breaking changes, and wire + JSON
-  breaking changes. Within these categories, you can go further and enable or
-  disable individual rules through configuration. Prototool effectively only
-  checks per-package generated stub breaking changes.
-- Prototool does not cover all possible issues per the `FileDescriptorSet` definition
-  of what is a breaking change, even for per-package generated stub breaking changes.
-- `buf` provides `file:line:column:message` references for breaking change violations,
-  letting you know where a violation occurred, including potentially integrating this
-  into your editor in the future. These reference your current Protobuf schema, including
-  if types move across files between versions of your Protobuf schema. The error output
-  can be outputted as text or JSON, with other formats coming in the future.
-  Prototool prints out unreferenced messages.
-- Since `buf` can process `FileDescriptorSet`s as input, `buf` provides
-  `protoc` plugins [protoc-gen-buf-lint](../reference/protoc-plugins.md#lint) and
-  [protoc-gen-buf-breaking](../reference/protoc-plugins.md#breaking) to allow you to use `buf`'s
-  lint breaking change detection functionality with your current `protoc` setup.
+  that you can mix and match, and lets you exclude entire categories or rules if
+  you want. `buf` also presents a clear path to add additional rules to new
+  categories in a backwards-compatible manner without touching existing
+  categories.
+- Prototool's breaking change detector cannot be configured as to what rules it
+  runs to verify breaking change detection. `buf`'s rules are fully
+  configurable, including ignores on a per-directory or per-file basis for every
+  breaking rule or category.
+- Breaking change rules are not a binary proposition - there are different kinds
+  of breaking changes that you may care about. `buf` provides
+  [four categories](../breaking/rules.md) of breaking change rules to select -
+  per-file generated stub breaking changes, per-package generated stub breaking
+  changes, wire breaking changes, and wire + JSON breaking changes. Within these
+  categories, you can go further and enable or disable individual rules through
+  configuration. Prototool effectively only checks per-package generated stub
+  breaking changes.
+- Prototool does not cover all possible issues per the `FileDescriptorSet`
+  definition of what is a breaking change, even for per-package generated stub
+  breaking changes.
+- `buf` provides `file:line:column:message` references for breaking change
+  violations, letting you know where a violation occurred, including potentially
+  integrating this into your editor in the future. These reference your current
+  Protobuf schema, including if types move across files between versions of your
+  Protobuf schema. The error output can be outputted as text or JSON, with other
+  formats coming in the future. Prototool prints out unreferenced messages.
+- Since `buf` can process `FileDescriptorSet`s as input, `buf` provides `protoc`
+  plugins [protoc-gen-buf-lint](../reference/protoc-plugins.md#lint) and
+  [protoc-gen-buf-breaking](../reference/protoc-plugins.md#breaking) to allow
+  you to use `buf`'s lint breaking change detection functionality with your
+  current `protoc` setup.
 
 ## Prototool lint groups to `buf` lint categories
 
-`buf` has lint categories that are either roughly equivalent or a subset of Prototool lint groups.
-`buf` does not have linting functionality some elements such as file option naming. See the
-["what we left out"](../lint/rules.md#what-we-left-out) documentation for more details.
+`buf` has lint categories that are either roughly equivalent or a subset of
+Prototool lint groups. `buf` does not have linting functionality some elements
+such as file option naming. See the
+["what we left out"](../lint/rules.md#what-we-left-out) documentation for more
+details.
 
 ### `google`
 
@@ -116,10 +131,11 @@ details.
 
 ### `uber1`, `uber2`
 
-The `uber1` and `uber2` Prototool lint groups are supersets of the `DEFAULT` `buf` lint
-category, except you need to set overrides for enum value and service suffixes.
-That is, `buf lint` should pass for all Protobuf schemas (except as discussed
-below) that use `uber1` or `uber2` with Prototool, given this `buf` configuration:
+The `uber1` and `uber2` Prototool lint groups are supersets of the `DEFAULT`
+`buf` lint category, except you need to set overrides for enum value and service
+suffixes. That is, `buf lint` should pass for all Protobuf schemas (except as
+discussed below) that use `uber1` or `uber2` with Prototool, given this `buf`
+configuration:
 
 ```yaml title="buf.yaml"
 version: v1
@@ -130,9 +146,9 @@ lint:
   service_suffix: API
 ```
 
-The only exception to this is for nested enum values with the `uber1` lint group.
-The `uber1` lint group expects the enclosing message name for enums to be part
-of enum value names. For example, this is a valid nested enum for `uber1`:
+The only exception to this is for nested enum values with the `uber1` lint
+group. The `uber1` lint group expects the enclosing message name for enums to be
+part of enum value names. For example, this is a valid nested enum for `uber1`:
 
 ```protobuf
 // THIS IS FOR UBER1 IN PROTOTOOL
@@ -145,10 +161,10 @@ message Foo {
 }
 ```
 
-For the `uber2` lint group, and for `buf`, the enclosing message name should not be
-part of the enum value prefix. While Prototool's lint rule allows `uber1`-style
-prefixes for backwards compatibility, `buf` expects that the prefix only include
-the enum name. For example:
+For the `uber2` lint group, and for `buf`, the enclosing message name should not
+be part of the enum value prefix. While Prototool's lint rule allows
+`uber1`-style prefixes for backwards compatibility, `buf` expects that the
+prefix only include the enum name. For example:
 
 ```protobuf
 message Foo {
@@ -164,9 +180,10 @@ messages - this does not violate the scoping rules.
 
 ## Configuration
 
-`buf` primarily uses a [`buf.yaml`](../configuration/v1/buf-yaml.md) configuration file that
-should be at the root of the `.proto` files it defines, whereas Prototool uses the `prototool.yaml`
-configuration file. We'll discuss the Prototool configuration sections below.
+`buf` primarily uses a [`buf.yaml`](../configuration/v1/buf-yaml.md)
+configuration file that should be at the root of the `.proto` files it defines,
+whereas Prototool uses the `prototool.yaml` configuration file. We'll discuss
+the Prototool configuration sections below.
 
 ### `excludes`
 
@@ -188,20 +205,22 @@ There is no equivalent in `buf`.
 
 Corresponds to `lint.use` in `buf`.
 
-`buf` enables you to specify categories or ids in `lint.use`, while `lint.group` in Prototool
-only specifies the single group to use as a base set of rules.
+`buf` enables you to specify categories or ids in `lint.use`, while `lint.group`
+in Prototool only specifies the single group to use as a base set of rules.
 
 ### `lint.ignores`
 
 Corresponds `lint.ignore_only` in `buf`.
 
-`buf` also enables you to ignore all rules for specific directories through `lint.ignore`.
+`buf` also enables you to ignore all rules for specific directories through
+`lint.ignore`.
 
 ### `lint.rules`
 
 Corresponds to `lint.use` and `lint.except` in `buf`.
 
-See the [lint configuration](../lint/configuration.md) documentation for more details.
+See the [lint configuration](../lint/configuration.md) documentation for more
+details.
 
 ### `lint.file_header`
 
@@ -211,8 +230,8 @@ There is no equivalent in `buf`.
 
 There is no equivalent in `buf`.
 
-`buf` does not check file options as of now, see [our discussion on this](../lint/rules.md#file-option-values)
-for more details.
+`buf` does not check file options as of now, see
+[our discussion on this](../lint/rules.md#file-option-values) for more details.
 
 ### `break.include_beta`
 
@@ -222,13 +241,15 @@ Corresponds to the inverse of `breaking.ignore_unstable_packages` in `buf`.
 
 There is no equivalent in `buf`.
 
-`buf` does not do package dependency enforcement, although we could add this feature in a
-more generic fashion through a new `buf` command in the future if there is a demand for it.
+`buf` does not do package dependency enforcement, although we could add this
+feature in a more generic fashion through a new `buf` command in the future if
+there is a demand for it.
 
 ### `generate`
 
-Use a plugin template as described in the [generation documentation](../generate/usage.md). The
-default location for a plugin template is [`buf.gen.yaml`](../configuration/v1/buf-gen-yaml.md).
+Use a plugin template as described in the
+[generation documentation](../generate/usage.mdx). The default location for a
+plugin template is [`buf.gen.yaml`](../configuration/v1/buf-gen-yaml.md).
 
 ## Equivalent commands
 
@@ -236,12 +257,13 @@ default location for a plugin template is [`buf.gen.yaml`](../configuration/v1/b
 
 There is no equivalent in `buf`.
 
-The command `prototool all` runs formatting and linting at once but it doesn't present
-a straightforward way to extend what the definition of "all" means, for example breaking
-change detection. Since `buf` is relatively fast in its various functionality (for example,
-compiling and linting all 2,311 files in [googleapis](https://github.com/googleapis/googleapis)
-takes about 0.8s with `buf`), we feel that it is better to run multiple commands for the
-functionality you want to perform.
+The command `prototool all` runs formatting and linting at once but it doesn't
+present a straightforward way to extend what the definition of "all" means, for
+example breaking change detection. Since `buf` is relatively fast in its various
+functionality (for example, compiling and linting all 2,311 files in
+[googleapis](https://github.com/googleapis/googleapis) takes about 0.8s with
+`buf`), we feel that it is better to run multiple commands for the functionality
+you want to perform.
 
 ### `prototool break check --git-branch main`
 
@@ -270,9 +292,9 @@ There is no equivalent in `buf`.
 $ buf build
 ```
 
-`buf` handles `/dev/null` on Mac and Linux, and `nul` in Windows as a special-case,
-and even though writing to `/dev/null` is fast, `buf` stops short on writing if this is
-specified.
+`buf` handles `/dev/null` on Mac and Linux, and `nul` in Windows as a
+special-case, and even though writing to `/dev/null` is fast, `buf` stops short
+on writing if this is specified.
 
 ### `prototool config init`
 
@@ -292,9 +314,10 @@ There is no equivalent in `buf`.
 $ buf build --exclude-imports --exclude-source-info -o -
 ```
 
-This writes a binary [Buf image](../reference/images.md) to stdout. While images are wire compatible with
-`FileDescriptorSet`s, you can strip the extra metadata with the `--as-file-descriptor-set` flag. If you want to write
-to a file, specify the file path for `-o` instead of `-`.
+This writes a binary [Buf image](../reference/images.md) to stdout. While images
+are wire compatible with `FileDescriptorSet`s, you can strip the extra metadata
+with the `--as-file-descriptor-set` flag. If you want to write to a file,
+specify the file path for `-o` instead of `-`.
 
 ### `prototool files`
 
@@ -314,16 +337,16 @@ buf format
 $ buf generate
 ```
 
-See the [generation documentation](../generate/usage.md) for more details.
+See the [generation documentation](../generate/usage.mdx) for more details.
 
 ### `prototool grpc`
 
 There is no equivalent in `buf`.
 
 `buf` does not have gRPC functionality, as discussed above. We recommend using
-[grpcurl](https://github.com/fullstorydev/grpcurl) instead. See the [gRPC](grpc.md)
-documentation for details on how to use `FileDescriptorSet`s produced by `buf` for
-`grpcurl` input.
+[grpcurl](https://github.com/fullstorydev/grpcurl) instead. See the
+[gRPC](grpc.md) documentation for details on how to use `FileDescriptorSet`s
+produced by `buf` for `grpcurl` input.
 
 ### `prototool lint`
 
@@ -355,18 +378,20 @@ $ buf --version
 
 There is no equivalent in `buf`.
 
-We recommend using `buf build -o -#format=json | jq` instead for Protobuf
-schema inspection. We plan on providing additional tooling for inspection in the future
+We recommend using `buf build -o -#format=json | jq` instead for Protobuf schema
+inspection. We plan on providing additional tooling for inspection in the future
 through a different mechanism.
 
 ## Docker
 
-Prototool provides a [Docker image](https://hub.docker.com/r/uber/prototool) with `prototool` installed.
-The equivalent Docker image for `buf` is [bufbuild/buf](https://hub.docker.com/r/bufbuild/buf). For example:
+Prototool provides a [Docker image](https://hub.docker.com/r/uber/prototool)
+with `prototool` installed. The equivalent Docker image for `buf` is
+[bufbuild/buf](https://hub.docker.com/r/bufbuild/buf). For example:
 
 ```sh
 $ docker pull bufbuild/buf
 $ docker run --volume "$(pwd):/workspace" --workdir "/workspace" bufbuild/buf lint
 ```
 
-Note that the `buf` command is the `ENTRYPOINT`, so you omit `buf` from the `docker run` invocation.
+Note that the `buf` command is the `ENTRYPOINT`, so you omit `buf` from the
+`docker run` invocation.

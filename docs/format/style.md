@@ -4,19 +4,20 @@ title: Style
 ---
 
 One of Buf's primary goals is to enforce consistency across all of Protobuf. The
-[linter](../lint/overview.md) ensures that the APIs themselves conform to a strong
-set of standards, but these standards have nothing to do with the structure of the
-`.proto` source file itself. That's where `buf format` comes in.
+[linter](../lint/overview.md) ensures that the APIs themselves conform to a
+strong set of standards, but these standards have nothing to do with the
+structure of the `.proto` source file itself. That's where `buf format` comes
+in.
 
 ## Structure
 
 Every `.proto` file is formatted in the following order:
 
-  * Syntax
-  * Package
-  * Imports (sorted)
-  * Options (sorted)
-  * Types
+- Syntax
+- Package
+- Imports (sorted)
+- Options (sorted)
+- Types
 
 Each of these categories are separated by a single newline like so:
 
@@ -56,9 +57,9 @@ message Pet {
 
 ## Indentation
 
-When necessary, lines are indented by 2 spaces. The level of indentation increases
-whenever the line moves from a type to its children (e.g. moving from a message
-declaration to its fields).
+When necessary, lines are indented by 2 spaces. The level of indentation
+increases whenever the line moves from a type to its children (e.g. moving from
+a message declaration to its fields).
 
 ```protobuf
 syntax = "proto3";
@@ -79,8 +80,8 @@ message Object {
 
 ## Comments & Newlines
 
-All comments are preserved, and multiple adjacent newlines are consolidated into a
-single line.
+All comments are preserved, and multiple adjacent newlines are consolidated into
+a single line.
 
 ```protobuf
 syntax = "proto3";
@@ -146,8 +147,8 @@ message List {
 ## Composite Types
 
 There are several elements that will always be written across multiple lines.
-Aside from the ones we see most frequently (messages, enums, etc), this
-includes arrays, message literals, and adjacent strings.
+Aside from the ones we see most frequently (messages, enums, etc), this includes
+arrays, message literals, and adjacent strings.
 
 ```protobuf
 syntax = "proto3";
@@ -175,8 +176,8 @@ option (custom.list) = {
 
 ## Empty Composite Types
 
-If a composite type (e.g. a `message`) is empty, it will be consolidated into
-a single line. However, if the message has comments within it, they will be
+If a composite type (e.g. a `message`) is empty, it will be consolidated into a
+single line. However, if the message has comments within it, they will be
 preserved.
 
 ```protobuf

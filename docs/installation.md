@@ -3,8 +3,8 @@ id: installation
 title: Installation
 ---
 
-
-import DownloadButton, {mac, linux, windows} from '@site/src/components/DownloadButton';
+import DownloadButton, {mac, linux, windows} from
+'@site/src/components/DownloadButton';
 
 <div>
   <DownloadButton os={mac}>
@@ -28,21 +28,25 @@ $ brew install bufbuild/buf/buf
 
 This installs:
 
-  - The binaries `buf`, `protoc-gen-buf-breaking`, `protoc-gen-buf-lint`.
-  - Bash completion for `buf`.
-  - Fish completion for `buf`.
-  - Zsh completion for `buf`.
+- The binaries `buf`, `protoc-gen-buf-breaking`, `protoc-gen-buf-lint`.
+- Bash completion for `buf`.
+- Fish completion for `buf`.
+- Zsh completion for `buf`.
 
 ## GitHub Releases
 
-`buf` is released via the [bufbuild/buf](https://github.com/bufbuild/buf) repository.
+`buf` is released via the [bufbuild/buf](https://github.com/bufbuild/buf)
+repository.
 
 Two types of assets are available:
 
-- The single `buf`, `protoc-gen-buf-breaking`, and `protoc-gen-buf-lint` binaries.
-- A tarball containing the binaries, bash completion, fish completion, and zsh completion.
+- The single `buf`, `protoc-gen-buf-breaking`, and `protoc-gen-buf-lint`
+  binaries.
+- A tarball containing the binaries, bash completion, fish completion, and zsh
+  completion.
 
-See [the Releases page](https://github.com/bufbuild/buf/releases) for the current release.
+See [the Releases page](https://github.com/bufbuild/buf/releases) for the
+current release.
 
 ### Binary
 
@@ -73,8 +77,9 @@ BIN="/usr/local/bin" && \
 
 ### Tarball
 
-To install the `buf`, `protoc-gen-buf-breaking`, and `protoc-gen-buf-lint` binaries,
-bash completion, fish completion, and zsh completion to `/usr/local` for version `1.8.0`:
+To install the `buf`, `protoc-gen-buf-breaking`, and `protoc-gen-buf-lint`
+binaries, bash completion, fish completion, and zsh completion to `/usr/local`
+for version `1.8.0`:
 
 ```sh
 # Substitute PREFIX for your install prefix.
@@ -104,13 +109,15 @@ rm -f \
 
 ### Verifying a release
 
-Releases are signed using our [minisign](https://github.com/jedisct1/minisign) public key:
+Releases are signed using our [minisign](https://github.com/jedisct1/minisign)
+public key:
 
 ```
 RWQ/i9xseZwBVE7pEniCNjlNOeeyp4BQgdZDLQcAohxEAH5Uj5DEKjv6
 ```
 
-The release assets can be verified using this command (assuming that `minisign` is installed):
+The release assets can be verified using this command (assuming that `minisign`
+is installed):
 
 ```sh
 # Substitute VERSION for the current released version.
@@ -122,8 +129,8 @@ VERSION="1.8.0" && \
 
 ## From source
 
-The binary can be installed from source if `go` is installed, however we recommend using one of
-the release assets instead.
+The binary can be installed from source if `go` is installed, however we
+recommend using one of the release assets instead.
 
 ```sh
 # Substitute GOBIN for your bin directory
@@ -134,8 +141,8 @@ GO111MODULE=on GOBIN=/usr/local/bin go install \
 
 ## Using the Docker image
 
-Buf ships a Docker image ([bufbuild/buf](https://hub.docker.com/r/bufbuild/buf)) that enables
-you to use `buf` as part of your Docker workflow.
+Buf ships a Docker image ([bufbuild/buf](https://hub.docker.com/r/bufbuild/buf))
+that enables you to use `buf` as part of your Docker workflow.
 
 For example, you can run `buf lint` with this command:
 
@@ -163,8 +170,8 @@ scoop update buf
 
 ### Binary
 
-Buf offers Windows binaries for both the `x86_64` and `arm64` architectures. You can download the
-latest binaries from [GitHub Releases][releases].
+Buf offers Windows binaries for both the `x86_64` and `arm64` architectures. You
+can download the latest binaries from [GitHub Releases][releases].
 
 [releases]: https://github.com/bufbuild/buf/releases/latest
 [scoop]: https://scoop.sh
