@@ -19,12 +19,12 @@ configured in the [`buf.yaml`](../configuration/v1/buf-yaml.md):
 
 ```yaml title="buf.yaml"
 version: v1
-lint:
-  use:
-    - DEFAULT
 breaking:
   use:
     - FILE
+lint:
+  use:
+    - DEFAULT
 ```
 
 You can also output lint failures as JSON:
