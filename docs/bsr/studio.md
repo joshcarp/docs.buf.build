@@ -6,8 +6,6 @@ title: Buf Studio
 import Image from '@site/src/components/Image'; import Mermaid from
 "@site/src/components/Mermaid";
 
-# Buf Studio: An interactive web UI for gRPC and Protobuf
-
 ## Overview
 
 [Buf Studio](https://studio.buf.build) is an interactive web UI for all your
