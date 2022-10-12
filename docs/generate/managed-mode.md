@@ -78,8 +78,8 @@ managed:
   java_string_check_utf8: false
   go_package_prefix:
     default: github.com/acme/weather/private/gen/proto/go
-      except:
-        - buf.build/googleapis/googleapis
+    except:
+      - buf.build/googleapis/googleapis
   override:
     JAVA_PACKAGE:
       acme/weather/v1/weather.proto: org
