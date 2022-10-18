@@ -17,6 +17,7 @@ import React from "react";
 import styles from "./DefaultNavbarItem.module.css";
 
 import type { Props } from "@theme/NavbarItem/DefaultNavbarItem";
+import { usePluginData } from "@docusaurus/useGlobalData";
 
 interface NavbarProps extends Props {
   stargazers?: number;
@@ -30,6 +31,8 @@ function DefaultNavbarItem(props: NavbarProps): JSX.Element {
   let bufAppearance: string;
   [bufAppearance, props] = extractBufAppearance(props);
   const classNames: string[] = [styles.hideExternalLinkIcon];
+  const { starGazers } = usePluginData('docusaurus-plugin-stars') as { starGazers: number };
+
   if (props.className) {
     classNames.push(props.className);
   }
@@ -56,7 +59,7 @@ function DefaultNavbarItem(props: NavbarProps): JSX.Element {
 
   if (bufAppearance === "github") {
     return (
-      <OriginalNavbarItem className={classNames.join(" ")} {...props} label={props.stargazers} />
+      <OriginalNavbarItem className={classNames.join(" ")} {...props} label={starGazers} />
     );
   }
 
@@ -64,7 +67,7 @@ function DefaultNavbarItem(props: NavbarProps): JSX.Element {
 }
 
 function extractBufAppearance(props: Props): [Appearance | undefined, Props] {
-  let { bufAppearance, ...rest } = props as any;
+  const { bufAppearance, ...rest } = props as any;
   switch (bufAppearance) {
     case "button":
     case "dark-button":

@@ -2,9 +2,6 @@ const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const path = require("path");
 
-const starGazers =
-    (process.env.STARGAZER_COUNT ?? "")?.length === 0 ? 4903 : process.env.STARGAZER_COUNT;
-
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   presets: [
@@ -17,7 +14,7 @@ module.exports = {
           sidebarPath: require.resolve("./sidebars.js"),
           admonitions: {
             icons: "none"
-          },
+          }
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css")
@@ -29,7 +26,10 @@ module.exports = {
       }
     ]
   ],
-  plugins: [path.resolve("src/plugins/fathom")],
+  plugins: [
+    path.resolve("src/plugins/fathom"),
+    path.resolve("src/plugins/stars")
+  ],
   title: "Buf®",
   tagline: "Building a better way to work with Protocol Buffers",
   url: "https://docs.buf.build",
@@ -50,6 +50,7 @@ module.exports = {
       siteId: process.env.FATHOM_ANALYTICS_SITE_ID || "none",
       customDomain: process.env.FATHOM_ANALYTICS_CUSTOM_DOMAIN || "none"
     },
+    githubRepo: "bufbuild/buf",
     navbar: {
       // We override the theme's navbar and support the additional option "bufAppearance"
       // on links. It can have one of these values:
@@ -107,8 +108,7 @@ module.exports = {
           href: "https://github.com/bufbuild/buf",
           label: "GitHub",
           position: "right",
-          bufAppearance: "github",
-          stargazers: starGazers
+          bufAppearance: "github"
         }
       ]
     },

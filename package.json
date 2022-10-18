@@ -6,7 +6,7 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
-    "build:ci": "STARGAZER_COUNT=$(curl -sSL https://api.github.com/repos/bufbuild/buf | jq .stargazers_count) docusaurus build",
+    "build:ci": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -58,6 +58,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
+    "node-fetch": "2.6.1",
     "prettier": "^2.5.1",
     "typescript": "^4.3.5"
   }
