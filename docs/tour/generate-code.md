@@ -32,7 +32,7 @@ configure where each `protoc` plugin writes its result and specify options for
 each plugin independently.
 
 You can create a `buf.gen.yaml` file that configures the `protoc-gen-cpp` and
-`protoc-gen-java` plugins:
+`protoc-gen-java` plugins. Create one in the `start` directory:
 
 ```yaml title="buf.gen.yaml"
 version: v1
