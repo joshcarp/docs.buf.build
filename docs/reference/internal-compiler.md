@@ -16,7 +16,7 @@ to properly parse Protobuf messages and produce
 [`FileDescriptorSet`][filedescriptorset]s suitable for stub generation.
 
 Additionally, there are many situations outside of stub generation that rely on
-a proper Protobuf parsing, such as [linting](../lint/overview.md) and
+proper Protobuf parsing, such as [linting](../lint/overview.md) and
 [breaking change detection](../breaking/overview.md). All existing Protobuf
 tooling has gone one of two routes:
 
@@ -48,7 +48,7 @@ that aims to manage your Protobuf schema. Therefore, we've taken a different
 route.
 
 The
-[internal compiler](https://godoc.org/github.com/jhump/protoreflect/desc/protoparse)
+[internal compiler](https://pkg.go.dev/github.com/bufbuild/protocompile)
 quite literally replaces `protoc` outside of the built-in plugins (`--java_out`,
 `--cpp_out`, etc.). The resulting `FileDescriptorSet`s are tested for
 equivalence to `protoc`, including both `proto2` and `proto3` definitions,
@@ -62,24 +62,27 @@ the byte representation of a serialized `FileDescriptorSet` produced by `buf`
 and by `protoc`, and they are equal. There are two known exceptions that make
 this not always the case:
 
-1. `buf` produces additional intermediate SourceCodeInfo, and retains more
-   detached comments, than `protoc`. This is strictly more information for
-   consumers of the resulting `FileDescriptorSet`s.
+1. `buf` produces slightly different SourceCodeInfo for the special `json_name`
+   and `default` field options, to be consistent with SourceCodeInfo of other
+   options. In `protoc`, the SourceCodeInfo for these special options is
+   [inconsistent](https://github.com/protocolbuffers/protobuf/issues/10478).
 
 2. `buf` represents custom/unknown options slightly differently on the wire,
    although when deserialized, the result is equivalent for consumers of
-   `FileDescriptorSet`s. There is an effort to work around this, so that
-   `FileDescriptorSet`s can be compared for testing, however it is not high
-   priority as it has zero effect on any actual usage.
+   `FileDescriptorSet`s. The underlying compiler provides a work-around (see
+   method `CanonicalProto` of [`linker.Result`](https://pkg.go.dev/github.com/bufbuild/protocompile@v0.1.0/linker#Result)),
+   but `buf` does not enable it because it has both a performance and usability
+   cost, and it has zero effect on any actual usage.
 
 Besides removing the need to manually manage `protoc` and the
 [Well-Known Types](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf)
-(which `buf` handles in all cases), `buf`'s compiler considerably _faster_ than
+(which `buf` handles in all cases), `buf`'s compiler is _faster_ than
 `protoc` in most scenarios. `buf` parses your `.proto` files across all
 available cores, and re-orders the result to match `protoc`'s ordering as a
-post-processing task. As an example, `buf` can compile all 2,311 `.proto` files
-in [googleapis](https://github.com/googleapis/googleapis) in about 0.8s, on a
-four-core machine, as opposed to about 4.3s for `protoc` on the same machine.
+post-processing task. As an example, `buf` can compile all 3,944 `.proto` files
+in [googleapis](https://github.com/googleapis/googleapis/tree/cb6fbe8784479b22af38c09a5039d8983e894566)
+in about 0.9s, on a 2022 Macbook Pro with an M1 Max chip, as opposed to about
+1.6s for `protoc` v21.7 on the same machine.
 
 **We know this is all a series of big claims**. There have been many claims in
 the Protobuf community about producing non-`protoc`-based parsing, so this is
