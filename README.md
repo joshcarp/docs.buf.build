@@ -180,8 +180,9 @@ Linting is currently performed on an ad hoc basis.
 
 ## Keeping the Browserslist up to date
 
-Periodically, mostly when prompted by log output from various systems, we should update the
-Browserslist "database" using this command:
+Periodically, mostly when prompted by log output from various systems, a 
+[Github Action](.github/workflows/update-browser-list.yaml) will do this weekly. If you 
+should need to update the Browserslist "database" manually, use this command:
 
 ```terminal
 npx browserslist@latest --update-db

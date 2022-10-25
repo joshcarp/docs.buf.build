@@ -1,0 +1,54 @@
+name: Fetch latest browserslist
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # Run once a week
+  workflow_dispatch:
+
+jobs:
+  fetch-versions:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c
+        with:
+          app_id: 252714
+          private_key: ${{ secrets.TOKEN_EXCHANGE_GH_APP_PRIVATE_KEY }}
+          repository: ${{ github.repository }}
+          permissions: >-
+            {"contents": "write", "pull_requests": "write"}
+      - name: Checkout repository code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+      - name: Fetch new browser list
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+        run: npx browserslist@latest --update-db
+      - name: Create PR
+        uses: peter-evans/create-pull-request@ad43dccb4d726ca8514126628bec209b8354b6dd
+        with:
+          add-paths: .
+          commit-message: "detected new browserslist update"
+          branch: browserslist-update
+          base: main
+          delete-branch: true
+          title: "Found new browserslist update"
+          body: |
+            `npx update-browserslist-db@latest` updates `caniuse-lite` version
+            in your npm, yarn or pnpm lock file.
+
+            This update will bring data about new browsers to polyfills tools
+            like Autoprefixer or Babel and reduce already unnecessary polyfills.
+
+            You need to do it regularly for three reasons:
+
+            1. To use the latest browser’s versions and statistics in queries like
+               `last 2 versions` or `>1%`. For example, if you created your project
+               2 years ago and did not update your dependencies, `last 1 version`
+               will return 2 year old browsers.
+            2. Actual browsers data will lead to using less polyfills. It will reduce
+               size of JS and CSS files and improve website performance.
+            3. `caniuse-lite` deduplication: to synchronize version in different tools.
+          token: ${{ steps.generate_token.outputs.token }}
