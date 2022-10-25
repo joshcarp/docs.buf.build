@@ -185,7 +185,7 @@ lint:
 We do recognize, however, that there are situations where comment-driven ignores
 are necessary, and we want users to be able to make informed decisions, so we
 added the `allow_comment_ignores` option. This also has the effect of making it
-possible to keep commen-driven ignores disabled. If you have commit checks for
+possible to keep comment-driven ignores disabled. If you have commit checks for
 files via an authors/owners file, for example, you can make sure that `buf.yaml`
 is owned by a top-level repository owner and prevent `allow_comment_ignores`
 from being set, so that `buf` ignores any `buf:lint:ignore` annotations.

@@ -91,7 +91,7 @@ two new code generation outputs:
   directory with the `paths=source_relative` option.
 - The `protoc-gen-go-grpc` plugin will generate Go code to the same
   `gen/proto/go` directory with two options: `paths=source_relative` and
-  `require_unimplemeneted_servers=false`.
+  `require_unimplemented_servers=false`.
 
 ## 10.4 Generate Go/gRPC client and server stubs {#generate-stubs}
 
