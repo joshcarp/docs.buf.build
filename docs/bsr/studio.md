@@ -74,9 +74,13 @@ Without Buf Studio Agent, requests are made directly from the browser using the
 standard `fetch()` API. This works great in combination with browser compatible
 Protobuf servers such as [Connect](https://connect.build/).
 
-<Mermaid
-chart={`sequenceDiagram participant St as Studio participant S as Server (Target URL) St->>S: fetch({request headers and body}) S->>St: {response headers and body}`}
-id={1} />
+<Mermaid chart={`
+sequenceDiagram
+	participant St as Studio
+	participant S as Server (Target URL)
+	St->>S: fetch({request headers and body})
+	S->>St: {response headers and body}
+`} id={1} />
 
 The server should be setup with a
 [CORS (Cross-Origin Resource Sharing)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
@@ -111,9 +115,16 @@ to unlock this extra functionality.
 
 With Buf Studio Agent, the request flow is as follows:
 
-<Mermaid
-chart={`sequenceDiagram participant St as Studio participant Sa as Studio Agent participant S as Service (Target URL) St->>Sa: fetch({request headers and body}) Sa->>S: {request headers and body} S->>Sa: {response headers and body} Sa->>St: {response headers and body}`}
-id={2} />
+<Mermaid chart={`
+sequenceDiagram
+	participant St as Studio
+	participant Sa as Studio Agent
+	participant S as Service (Target URL)
+	St->>Sa: fetch({request headers and body})
+	Sa->>S: {request headers and body}
+	S->>Sa: {response headers and body}
+	Sa->>St: {response headers and body}
+`} id={2} />
 
 When using Buf Studio Agent, studio can now also reach:
 
