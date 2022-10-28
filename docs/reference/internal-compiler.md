@@ -81,7 +81,7 @@ Besides removing the need to manually manage `protoc` and the
 available cores, and re-orders the result to match `protoc`'s ordering as a
 post-processing task. As an example, `buf` can compile all 3,944 `.proto` files
 in [googleapis](https://github.com/googleapis/googleapis/tree/cb6fbe8784479b22af38c09a5039d8983e894566)
-in about 0.9s, on a 2022 Macbook Pro with an M1 Max chip, as opposed to about
+in about 0.9s, on a 2022 MacBook Pro with an M1 Max chip, as opposed to about
 1.6s for `protoc` v21.7 on the same machine.
 
 **We know this is all a series of big claims**. There have been many claims in
