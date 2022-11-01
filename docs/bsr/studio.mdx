@@ -3,8 +3,8 @@ id: studio
 title: Buf Studio
 ---
 
-import Image from '@site/src/components/Image'; import Mermaid from
-"@site/src/components/Mermaid";
+import Image from "@site/src/components/Image";
+import Mermaid from "@site/src/components/Mermaid";
 
 ## Overview
 
@@ -19,8 +19,8 @@ you can:
 - Configure headers to further customize outgoing requests.
 - Optionally include cookies in outgoing request to send authenticated requests
   to private APIs (or Buf Studio Agent instances).
-- Create shareable links for requests defined on Buf Studio to team members
-  with access.
+- Create shareable links for requests defined on Buf Studio to team members with
+  access.
 
 ## Composing Requests
 
@@ -28,7 +28,11 @@ Start by selecting the Protobuf method you're looking to make a request with.
 With the "Select Method" menu you can choose a BSR module and use Buf Studio's
 fuzzy search to select the desired service and method for you request:
 
-<Image alt="Studio method select demo" src="/img/bsr/studio-method-select.gif" width={90} />
+<Image
+  alt="Studio method select demo"
+  src="/img/bsr/studio-method-select.gif"
+  width={90}
+/>
 
 Note that the streaming endpoints are currently greyed out as Buf Studio
 currently only supports unary RPC. We intend to support streaming RPC in the
@@ -50,7 +54,11 @@ RPC's request message, the editor will give you:
 - Documentation: hover over fields, or use the "Docs" tab above the editor to
   view documentation for the Protobuf definition.
 
-<Image alt="Studio request editor" src="/img/bsr/studio-request-editor.gif" width={60} />
+<Image
+  alt="Studio request editor"
+  src="/img/bsr/studio-request-editor.gif"
+  width={60}
+/>
 
 You can also set the headers for your request. This can be useful for any
 metadata you want to send through, authorization headers, etc.
@@ -74,13 +82,16 @@ Without Buf Studio Agent, requests are made directly from the browser using the
 standard `fetch()` API. This works great in combination with browser compatible
 Protobuf servers such as [Connect](https://connect.build/).
 
-<Mermaid chart={`
+<Mermaid
+  chart={`
 sequenceDiagram
 	participant St as Studio
 	participant S as Server (Target URL)
 	St->>S: fetch({request headers and body})
 	S->>St: {response headers and body}
-`} id={1} />
+`}
+  id={1}
+/>
 
 The server should be setup with a
 [CORS (Cross-Origin Resource Sharing)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
@@ -115,7 +126,8 @@ to unlock this extra functionality.
 
 With Buf Studio Agent, the request flow is as follows:
 
-<Mermaid chart={`
+<Mermaid
+  chart={`
 sequenceDiagram
 	participant St as Studio
 	participant Sa as Studio Agent
@@ -124,7 +136,9 @@ sequenceDiagram
 	Sa->>S: {request headers and body}
 	S->>Sa: {response headers and body}
 	Sa->>St: {response headers and body}
-`} id={2} />
+`}
+  id={2}
+/>
 
 When using Buf Studio Agent, studio can now also reach:
 
@@ -134,11 +148,11 @@ When using Buf Studio Agent, studio can now also reach:
    in a with a protocol understandable by browsers, which Buf Studio Agent will
    dynamically reframe to communicate with the target server.
 
-2. Servers without the required CORS configuration: as CORS is a browser specific
-   limitation, Buf Studio Agent can issue requests to any server. The required
-   CORS config is built into Buf Studio Agent by default, so the browser will be
-   able to reach Buf Studio Agent which will forward your request to the target
-   server.
+2. Servers without the required CORS configuration: as CORS is a browser
+   specific limitation, Buf Studio Agent can issue requests to any server. The
+   required CORS config is built into Buf Studio Agent by default, so the
+   browser will be able to reach Buf Studio Agent which will forward your
+   request to the target server.
 
 To use Buf Studio Agent, configure the Buf Studio Agent URL in the UI with a URL
 to a running instance of Buf Studio Agent:
@@ -155,7 +169,10 @@ For more information on running Buf Studio Agent, see the
 Some APIs use cookies to authenticate requests. You can configure Buf Studio to
 include cookies with your requests by checking the following option:
 
-<Image alt="Studio options tab with cookies option" src="/img/bsr/studio-cookies.png" />
+<Image
+  alt="Studio options tab with cookies option"
+  src="/img/bsr/studio-cookies.png"
+/>
 
 Cookies for the target URL need to contain `SameSite=None; Secure` to be
 included in requests from Buf Studio. Servers that accept cross-origin cookies
