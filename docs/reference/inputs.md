@@ -208,7 +208,11 @@ directory, or a remote `http://`, `https://`, `ssh://`, or `git://` location.
 - The `branch` option specifies the branch to clone.
 - The `tag` option specifies the tag to clone.
 - The `ref` option specifies an explicit Git reference. Any ref that is a valid
-  input to `git checkout` is accepted.
+  input to `git checkout` is accepted. Note that most git hosts (including GitHub) only 
+  allow fetching by reference and not commits by sha. Buf will clone the repo, 
+  then run `git checkout <ref>` to get to the specified commit for ref. 
+  To use refs for commits outside of the range of the default clone settings use `branch` and 
+  `depth` as needed.
 - The `depth` option specifies how deep of a clone to perform. It defaults to 50
   if `ref` is used and 1 otherwise.
 - The `recurse_submodules` option says to clone submodules recursively.
@@ -233,9 +237,10 @@ Examples:
   `proto` directory as the base directory.
 - `.git#branch=main,recurse_submodules=true` says to clone the `main` branch
   along with all recursive submodules.
-- `.git#ref=7c0dc2fee4d20dcee8a982268ce35e66fc19cac8` says to clone the repo and
-  checkout the specific ref. Any ref that is a valid input to `git checkout` can
-  be used.
+- `.git#ref=7c0dc2fee4d20dcee8a982268ce35e66fc19cac8` says to clone the default 
+  branch of the repo and checkout the specific ref.
+- `.git#branch=foo,ref=3ef31aff63c2d2911e0665b13906d0b2027575b7` says to clone 
+  the foo branch of repo and checkout the specific ref.
 - `.git#ref=refs/remotes/pull/3,branch=my_feature,depth=100` says to clone the
   specified branch to a depth of 100 and checkout `refs/remotes/pull/3`.
 - `https://github.com/googleapis/googleapis.git` says to clone the default
