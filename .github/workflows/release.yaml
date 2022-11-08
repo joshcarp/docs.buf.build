@@ -1,0 +1,45 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: The version you intend to release (eg x.y.z)
+        required: true
+
+env:
+  VERSION: ${{ github.event.inputs.version }}
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: 252714
+          private_key: ${{ secrets.TOKEN_EXCHANGE_GH_APP_PRIVATE_KEY }}
+          repository: ${{ github.repository }}
+          permissions: >-
+            {"contents": "write", "pull_requests": "write"}
+      - name: Checkout repository code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '^1.19.x'
+      - name: Update docs Version
+        run: make updateversion VERSION=v${{env.VERSION}}
+      - name: Create PR
+        id: cpr
+        uses: peter-evans/create-pull-request@ad43dccb4d726ca8514126628bec209b8354b6dd
+        with:
+          add-paths: .
+          commit-message: "Update version to v${{env.VERSION}}"
+          branch: release/v${{env.VERSION}}
+          delete-branch: true
+          title: "Release v${{env.VERSION}}"
+          body: Release prepared for ${{env.VERSION}}
+          token: ${{ steps.generate_token.outputs.token }}
