@@ -18,7 +18,7 @@ better organize your Protobuf definitions.
 The next feature you'll build will enable people to purchase pets by calling a
 `PurchasePet` endpoint. This endpoint requires some information about payment
 systems, so you'll create a separate module for it that can be shared by other
-APIs. This is the kind of logical separate you often find in larger
+APIs. This is the kind of logical separation you often find in larger
 organizations, where one team would own a `paymentapis` module while another
 would own `petapis`.
 
