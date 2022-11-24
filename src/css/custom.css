@@ -115,9 +115,10 @@ figure {
 }
 
 figcaption {
-  font-weight: 100;
-  font-size: 1.2rem;
-  text-align: right;
+  font-weight: 400;
+  font-size: 0.9rem;
+  text-align: center;
+  font-style: italic;
 }
 
 /* Admonition blocks */

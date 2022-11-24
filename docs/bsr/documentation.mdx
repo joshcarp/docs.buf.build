@@ -16,8 +16,8 @@ tab.
   caption="The documentation link in the BSR interface"
 />
 
-For an example see the `demolab/theweather` module by visiting
-[https://buf.build/demolab/theweather/docs](https://buf.build/demolab/theweather/docs).
+For an example see the `bufbuild/eliza` module by visiting
+[https://buf.build/bufbuild/eliza](https://buf.build/bufbuild/eliza).
 
 ## Module documentation
 
@@ -66,3 +66,49 @@ the generated documentation.
   src="/img/bsr/gen_docs-1_v2.png"
   caption="Generated package documentation"
 />
+
+### Annotated Protobuf options
+
+The generated documentation renders annotated Protobuf options. A list of options has been selected for rendering at this time. Not all options are included in the generated documentation.
+
+You can find the complete list of Protobuf's built-in options available in the [`descriptor.proto`](https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto#L312).
+
+#### List of options rendered in the generated documentation:
+
+**Message Options**
+ - `deprecated`
+
+**Field options**
+ - `deprecated`
+ - `packed`
+ - `ctype`
+ - `jstype`
+
+**Enum options**
+ - `allow_alias`
+ - `deprecated`
+
+**EnumValue options**
+ - `deprecated`
+
+**Service options**
+ - `deprecated`
+
+**Method options**
+ - `deprecated`
+ - `idempotency_level`
+
+**Note: custom options are not rendered in the generated documentation at this time.**
+
+<Image
+    alt="BSR module"
+    src="/img/bsr/gen_docs-4.png"
+    caption="Deprecated option rendered in the index"
+/>
+
+<Image
+    alt="BSR module"
+    src="/img/bsr/gen_docs-5.png"
+    caption="Options rendered in source code style"
+/>
+
