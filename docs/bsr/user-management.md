@@ -60,9 +60,11 @@ organization settings page.
 
 Resources such as repositories, templates and plugins are owned by either an
 individual user or an organization. In the case of user-owned resources, the
-user is granted the `Owner` role and for organization-owned resources members
-inherit the [base resource roles](#base-resource-roles) as defined by the
-organization.
+user is granted the `Owner` role, and for organization-owned resources, user
+with `Member` role in the organization will inherit the 
+[base resource roles](#base-resource-roles) as defined by the organization, 
+while user with `Owner` or `Admin` role in the organization will inherit the 
+respective resource roles.
 
 In some situations, however, you'll need to give additional permissions to
 individual users over a user- or organization-owned resource.
