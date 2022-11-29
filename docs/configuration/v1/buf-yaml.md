@@ -136,9 +136,10 @@ lint:
 #### `ignore`
 
 The `ignore` key is **optional**, and allows directories or files to be excluded
-from all lint rules when running `buf lint`. The specified directory or file
-paths **must** be relative to the `buf.yaml`. For example, the lint result in
-`foo/bar.proto` is ignored with this config:
+from all lint rules when running `buf lint`. If a directory is ignored, 
+then all files and subfolders of the directory will also be ignored. The specified 
+directory or file paths **must** be relative to the `buf.yaml`. For example, the 
+lint result in `foo/bar.proto` is ignored with this config:
 
 ```yaml title="buf.yaml"
 version: v1
@@ -298,9 +299,10 @@ breaking:
 #### `ignore`
 
 The `ignore` key is **optional**, and allows directories or files to be excluded
-from all breaking rules when running `buf breaking`. The specified directory or
-file paths **must** be relative to the `buf.yaml`. For example, the breaking
-result in `foo/bar.proto` is ignored with this config:
+from all breaking rules when running `buf breaking`. If a directory is ignored, 
+then all files and subfolders of the directory will also be ignored. The specified 
+directory or file paths **must** be relative to the `buf.yaml`. For example, the 
+breaking result in `foo/bar.proto` is ignored with this config:
 
 ```yaml title="buf.yaml"
 version: v1

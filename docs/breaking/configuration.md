@@ -85,7 +85,8 @@ breaking:
 ### `ignore`
 
 The `ignore` key is **optional**, and enables you to exclude directories or
-files from all breaking rules when running `buf breaking`. The specified
+files from all breaking rules when running `buf breaking`. If a directory is ignored, 
+then all files and subfolders of the directory will also be ignored. The specified
 directory or file paths **must** be relative to the `buf.yaml`. For example, the
 breaking result in `foo/bar.proto` is ignored if you apply this:
 

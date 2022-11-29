@@ -95,7 +95,8 @@ lint:
 ### `ignore`
 
 The `ignore` key is **optional** and enables you to exclude directories or files
-from all lint rules when running `buf lint`. The specified directory or file
+from all lint rules when running `buf lint`. If a directory is ignored, then all files 
+and subfolders of the directory will also be ignored. The specified directory or file
 paths **must** be relative to the `buf.yaml`. For example, the lint result in
 `foo/bar.proto` is ignored with this config:
 
