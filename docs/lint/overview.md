@@ -45,7 +45,7 @@ Some features of the `buf` CLI's linter:
   proportional to the input size, so linting a single file only takes a few
   milliseconds.
 
-[cli]: ../installation.md
+[cli]: ../installation.mdx
 [googleapis]: https://github.com/googleapis/googleapis
 [lint]: https://en.wikipedia.org/wiki/Lint_(software)
 [protoc]: https://github.com/protocolbuffers/protobuf

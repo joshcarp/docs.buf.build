@@ -81,17 +81,17 @@ $ cd ../petapis
 ```
 
 ```yaml title="petapis/buf.yaml" {5}
- version: v1
- name: buf.build/$BUF_USER/petapis
- deps:
-   - buf.build/googleapis/googleapis
-+  - buf.build/$BUF_USER/paymentapis
+version: v1
+name: buf.build/$BUF_USER/petapis
+deps:
+  - buf.build/googleapis/googleapis
++ - buf.build/$BUF_USER/paymentapis
 breaking:
-   use:
-     - FILE
- lint:
-   use:
-     - DEFAULT
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT
 ```
 
 Update your dependencies with this command:

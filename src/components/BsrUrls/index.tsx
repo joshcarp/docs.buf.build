@@ -1,7 +1,7 @@
-import Link from '@docusaurus/Link';
-import React from 'react';
+import Link from "@docusaurus/Link";
+import React from "react";
 
-import styles from './styles.module.css';
+import styles from "./styles.module.css";
 
 enum Kind {
   CONSTANT,
@@ -26,10 +26,10 @@ const links: Record<string, string> = {
   module: "/bsr/overview#modules",
   organization: "/bsr/user-management#organization-roles",
   owner: "/bsr/user-management#owner",
-  plugin: "/bsr/remote-generation/concepts#plugins",
+  plugin: "/bsr/remote-packages/concepts#plugins",
   reference: "/bsr/overview#referencing-a-module",
   repository: "/bsr/overview#modules",
-  template: "/bsr/remote-generation/concepts#templates",
+  template: "/bsr/remote-packages/concepts#templates",
   user: "/bsr/user-management"
 };
 
@@ -125,7 +125,13 @@ const urls: UrlProps[] = [
   {
     title: "Members of an organization",
     example: bsrEndpoint("acme/members"),
-    segments: [root, slash, variable("organization"), slash, constant("members")]
+    segments: [
+      root,
+      slash,
+      variable("organization"),
+      slash,
+      constant("members")
+    ]
   },
   {
     title: "Organizations a user belongs to",
@@ -208,12 +214,12 @@ const urls: UrlProps[] = [
     ]
   },
   {
-    title: "Hosted plugins associated with an owner",
+    title: "Remote plugins associated with an owner",
     example: bsrEndpoint("protocolbuffers/plugins"),
     segments: [root, slash, variable("owner"), slash, constant("plugins")]
   },
   {
-    title: "Hosted plugin",
+    title: "Remote plugin",
     example: bsrEndpoint("protocolbuffers/plugins/python"),
     segments: [
       root,
@@ -227,7 +233,9 @@ const urls: UrlProps[] = [
   },
   {
     title: "Generated documentation for a specific reference",
-    example: bsrEndpoint("acme/paymentapis/docs/9a877cf260e1488d869a31fce3bea26d"),
+    example: bsrEndpoint(
+      "acme/paymentapis/docs/9a877cf260e1488d869a31fce3bea26d"
+    ),
     segments: [
       root,
       slash,
@@ -242,7 +250,9 @@ const urls: UrlProps[] = [
   },
   {
     title: "Code for a specific reference",
-    example: bsrEndpoint("acme/paymentapis/tree/9a877cf260e1488d869a31fce3bea26d"),
+    example: bsrEndpoint(
+      "acme/paymentapis/tree/9a877cf260e1488d869a31fce3bea26d"
+    ),
     segments: [
       root,
       slash,
@@ -257,7 +267,9 @@ const urls: UrlProps[] = [
   },
   {
     title: "Generated assets for a specific reference",
-    example: bsrEndpoint("acme/paymentapis/assets/9a877cf260e1488d869a31fce3bea26d"),
+    example: bsrEndpoint(
+      "acme/paymentapis/assets/9a877cf260e1488d869a31fce3bea26d"
+    ),
     segments: [
       root,
       slash,

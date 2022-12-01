@@ -36,7 +36,7 @@ breaking change rules. Instead, it's best to choose one of the categories:
 
 Choose a category based on these criteria:
 
-- If you distribute your generated source code outside of a monorepo in any
+- If you distribute your generated source code outside a monorepo in any
   capacity, or want to make sure that consumers of the generated source code
   don't experience broken builds, use `FILE` or `PACKAGE`. Choose `FILE` if you
   use (or might use) any languages that generate header files (such as C++ or

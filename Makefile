@@ -46,6 +46,10 @@ clean:
 lint:
 	vale docs
 
+.PHONY: ci
+ci:
+	npm run build:ci
+
 .PHONY: updateversion
 updateversion:
 ifndef VERSION

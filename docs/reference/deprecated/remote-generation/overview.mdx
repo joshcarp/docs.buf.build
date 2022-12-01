@@ -6,9 +6,20 @@ description:
   source code like any other dependency.
 ---
 
-import Breaking from "@site/src/components/Breaking";
+:::warning Deprecated documentation
 
-<Breaking feature="Remote code generation" version="alpha" />
+The remote generation alpha has been superseded by
+[remote packages](../../../bsr/remote-packages/overview.mdx) and
+[remote plugins](../../../bsr/remote-plugins/overview.mdx).
+
+For existing users, please see the
+[remote packages migrating from alpha](../../../bsr/remote-packages/migrating-from-alpha.md)
+and
+[remote plugins migrating from alpha](../../../bsr/remote-plugins/migrating-from-alpha.md)
+guides, and if you run into issues, contact us on [Buf Public
+Slack][buf-slack-link].
+
+:::
 
 A common frustration when working with Protocol Buffers is that you need to
 generate code for each language that you're working with. Many teams implement
@@ -29,34 +40,23 @@ import Image from "@site/src/components/Image";
   alt="BSR module"
   src="/img/bsr/remote-code-gen.png"
   width={75}
-  caption="The Buf Schema Registry's remote generation process"
+  caption="The Buf Schema Registry's remote plugin process"
 />
 
 In essence, you can use generation [templates](#templates) to generate code
-stubs from [Buf modules](../overview.mdx#modules) that you've pushed to the BSR.
-All code generation happens _on the BSR itself_&mdash;not on your laptop, not in
-a CI/CD environment, only remotely on the BSR.
+stubs from [Buf modules](../../../bsr/overview.mdx#modules) that you've pushed
+to the BSR. All code generation happens _on the BSR itself_&mdash;not on your
+laptop, not in a CI/CD environment, only remotely on the BSR.
 
-## Supported languages {#languages}
+## Remote plugin concepts {#concepts}
 
-The BSR currently [supports](#registries) remote generation for these languages:
-
-import BsrLanguages from "@site/src/components/BsrLanguages";
-
-<BsrLanguages />
-
-We plan to support remote generation for additional languages in the near
-future.
-
-## Remote generation concepts {#concepts}
-
-Remote generation for the BSR revolves around a few core concepts:
+Remote plugins in the BSR revolve around a few core concepts:
 
 - Protobuf [plugins](#plugins) generate code from Protobuf definitions
 - Generation [templates](#templates) are named and versioned collections of
   [plugins](#plugins)
-- Remote generation [registries](#registries) provide interfaces for
-  language-specific tools to install generated assets
+- Remote plugin [registries](#registries) provide interfaces for
+  language-specific tools to install generated SDKs
 
 ### Plugins
 
@@ -71,10 +71,10 @@ can create and upload your own plugins to use as part of code generation.
 
 :::
 
-Plugins belong to an [owner](../user-management.md#owner) and may be public or
-private. Public plugins are available to anyone, while private plugins are only
-available to the owner or members of the owning organization. Plugins are often
-referenced together with their owner's name, for example,
+Plugins belong to an [owner](../../../bsr/user-management.md#owner) and may be
+public or private. Public plugins are available to anyone, while private plugins
+are only available to the owner or members of the owning organization. Plugins
+are often referenced together with their owner's name, for example,
 `library/plugins/protoc-gen-go` (or in some contexts just
 `library/protoc-gen-go`), is used to reference the `protoc-gen-go` plugin
 maintained by Buf.
@@ -92,7 +92,7 @@ in Protobuf binary format on standard in, and respond with a
 [CodeGeneratorResponse](https://github.com/protocolbuffers/protobuf/blob/bd42fcc7a3e04504df895ce2fd0782c0e84b68a5/src/google/protobuf/compiler/plugin.proto#L99)
 in Protobuf binary format on standard out when run. This matches exactly the
 contract used with existing Protobuf plugins in the ecosystem today, making
-migration of existing plugins to BSR hosted plugins straightforward.
+migration of existing plugins to BSR remote plugins straightforward.
 
 A plugin version is created by pushing a tagged Docker image to the plugins
 Docker registry repository. For example, assuming the relevant `Dockerfile` and
@@ -132,13 +132,14 @@ LABEL "build.buf.plugins.runtime_library_versions.0.version"="v1.27.1"
 
 You need to give plugins a valid [semantic version][semver].
 
-:::success Remote plugin execution
+:::success Remote plugins
 
 A feature that you may also find useful is
-[remote plugin execution](./hosted-plugins.mdx). While remote code generation is
-geared toward eliminating the need to generate code stubs _at all_, remote
-plugin execution enables you to generate code stubs locally without needing to
-install plugins locally.
+[remote plugins](../../../bsr/remote-plugins/usage.mdx).
+
+While remote code generation is geared toward eliminating the need to generate
+code stubs _at all_, remote plugins enable you to generate code stubs locally
+without needing to install plugins locally.
 
 :::
 
@@ -157,9 +158,10 @@ you can upload your own templates to use as part of code generation.
 
 :::
 
-Templates belong to an [owner](../user-management.md#owner) and can be public or
-private. Public templates are available to anyone, while private templates are
-available only to the owner or members of the owner's organization.
+Templates belong to an [owner](../../../bsr/user-management.md#owner) and can be
+public or private. Public templates are available to anyone, while private
+templates are available only to the owner or members of the owner's
+organization.
 
 Buf maintains several official templates:
 
@@ -194,7 +196,7 @@ The BSR currently offers two registries:
 ### Synthetic versions
 
 A **synthetic version** combines the [template](#templates) and
-[module](../overview.mdx#modules) versions into a
+[module](../../../bsr/overview.mdx#modules) versions into a
 [semantic version](https://semver.org/spec/v2.0.0.html) of this form:
 
 import Syntax from "@site/src/components/Syntax";
@@ -208,13 +210,13 @@ import Syntax from "@site/src/components/Syntax";
     {
       label: "templateVersion",
       kind: "variable",
-      href: "/bsr/remote-generation/overview#templates"
+      href: "/bsr/remote-packages/overview#templates"
     },
     { separator: "." },
     {
       label: "commitSequenceID",
       kind: "variable",
-      href: "/bsr/remote-generation/overview#commits"
+      href: "/bsr/remote-packages/overview#commits"
     }
   ]}
 />
@@ -238,7 +240,7 @@ the module.
 
 The BSR applies synthetic versions to all remote-generated code artifacts in the
 **remote generation registry**. That currently includes
-[Go packages](../../tour/use-remote-generation.mdx) but will be expanded to
+[Go packages](../../../tour/use-remote-packages.mdx) but will be expanded to
 other languages.
 
 #### Enforcing semantic versioning
@@ -250,9 +252,9 @@ that asset to the BSR, the patch version is incremented in spite of the breaking
 change, which violates semantic versioning.
 
 In order to preserve semver guarantees in your own generated assets, we
-recommend performing [breaking change detection](../../breaking/usage.md)
+recommend performing [breaking change detection](../../../breaking/usage.mdx)
 _before_ pushing a new version of a Buf module, potentially as part of your
-[CI/CD pipeline](../../ci-cd/setup.mdx#checks).
+[CI/CD pipeline](../../../ci-cd/setup.mdx#checks).
 
 #### Commits
 
@@ -281,6 +283,9 @@ _without_ [pre-release and build][scheme] labels. In other words, we found that
 versions like `v1.2.3` were common whereas `v1.2.3-alpha.1` were not, and we
 opted for the former.
 
+[bsr-remote-packages-overview]: /bsr/remote-packages/overview
+[bsr-remote-plugins-overview]: /bsr/remote-plugins/overview
+[buf-slack-link]: https://buf.build/links/slack
 [go-mod]: https://golang.org/ref/mod
 [grpc-go]: https://buf.build/grpc/templates/go
 [grpc-web]: https://buf.build/grpc/templates/web
@@ -292,6 +297,9 @@ opted for the former.
   https://pkg.go.dev/google.golang.org/protobuf@v1.27.1/cmd/protoc-gen-go
 [protoc-gen-python]:
   https://developers.google.com/protocol-buffers/docs/reference/python-generated
+[remote-packages-migrating-from-alpha]:
+  /bsr/remote-packages/migrating-from-alpha
+[remote-plugins-migrating-from-alpha]: /bsr/remote-plugins/migrating-from-alpha
 [scheme]:
   https://www.baeldung.com/cs/semantic-versioning#4-pre-release-and-build
 [semver]: https://semver.org/spec/v2.0.0.html

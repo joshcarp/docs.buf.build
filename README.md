@@ -64,7 +64,7 @@ To add a badge to a category, add the property `customProps` as follows:
 ```json
 {
   "type": "category",
-  "label": "Remote generation",
+  "label": "Remote plugins",
   "customProps": {
     "badge": {
       "label": "experimental",

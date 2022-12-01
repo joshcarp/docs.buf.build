@@ -30,7 +30,7 @@ For more on the `buf.lock` file, refer to the [`buf.lock`](v1/buf-lock.md) page!
 
 ## `buf.gen.yaml`
 
-The `buf.gen.yaml` file is used to define a **local generation template** that
+The `buf.gen.yaml` file is used to define a **local plugin template** that
 works directly with the `buf generate` command. In short, the `buf.gen.yaml`
 file is used to easily generate code with `protoc` plugins and simplifies the
 `protoc` experience significantly.

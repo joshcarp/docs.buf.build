@@ -1,0 +1,58 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+The `GOPRIVATE` environment variable controls which modules the `go` command
+considers to be private and thus shouldn't use the proxy or checksum
+database. This is important since you don't want to send private information
+to the default Go module proxy at https://proxy.golang.org.
+
+Modify the Go environment using the `export` command in your shell or with the
+`go env -w` command to persist the change.
+
+
+<Tabs
+groupId="var-selection"
+defaultValue="temporary"
+values={[
+    {label: 'Temporary', value: 'temporary'},
+    {label: 'Persist', value: 'persist'},
+]}>
+<TabItem value="temporary">
+
+        $ export GOPRIVATE=buf.build/gen/go
+
+  </TabItem>
+  <TabItem value="persist">
+
+        $ go env -w GOPRIVATE=buf.build/gen/go
+
+  </TabItem>
+</Tabs>
+
+If you already have `GONOSUMDB` configured, you also need to add
+`buf.build/gen/go` to it:
+
+<Tabs
+groupId="var-selection"
+defaultValue="temporary"
+values={[
+    {label: 'Temporary', value: 'temporary'},
+    {label: 'Persist', value: 'persist'},
+]}>
+<TabItem value="temporary">
+
+        $ export GONOSUMDB=$GONOSUMDB,buf.build/gen/go
+
+  </TabItem>
+  <TabItem value="persist">
+
+        $ go env -w GONOSUMDB=$GONOSUMDB,buf.build/gen/go
+
+  </TabItem>
+</Tabs>
+
+This isn't necessary if you do not already have `GONOSUMDB` configured, as
+`GOPRIVATE` automatically sets it in this case. For more information, see the
+official [private modules documentation][private].
+
+[private]: https://golang.org/ref/mod#private-modules

@@ -161,8 +161,8 @@
       "destination": "/bsr/introduction"
     },
     {
-      "source": "/bsr/remote-generation",
-      "destination": "/bsr/remote-generation/overview"
+      "source": "/bsr/managed-packages",
+      "destination": "/bsr/managed-packages/overview"
     },
     {
       "source": "/best-practices",
@@ -202,19 +202,19 @@
     },
     {
       "source": "/bsr-npm",
-      "destination": "/bsr/remote-generation/js"
+      "destination": "/bsr/managed-packages/js"
     },
     {
-      "source": "/bsr/remote-generation/npm",
-      "destination": "/bsr/remote-generation/js"
+      "source": "/bsr/managed-packages/npm",
+      "destination": "/bsr/managed-packages/js"
     },
     {
-      "source": "/bsr/remote-generation/consuming-generated-code",
-      "destination": "/bsr/remote-generation/go"
+      "source": "/bsr/managed-packages/consuming-generated-code",
+      "destination": "/bsr/managed-packages/go"
     },
     {
-      "source": "/bsr/remote-generation/concepts",
-      "destination": "/bsr/remote-generation/overview#concepts"
+      "source": "/bsr/managed-packages/concepts",
+      "destination": "/bsr/managed-packages/overview#concepts"
     }
   ]
 }

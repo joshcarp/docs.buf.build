@@ -21,7 +21,7 @@ currently don't have any module-level documentation.
 You can update the module-level documentation page by creating a `buf.md` in the
 same directory as your module's [`buf.yaml`](../configuration/v1/buf-yaml.md),
 and pushing it up to the BSR. In this way, the `buf.md` file is analogous to a
-GitHub repository's `README.md`. The `buf.md` file currently supports all of the
+GitHub repository's `README.md`. The `buf.md` file currently supports all the
 [CommonMark](https://commonmark.org) syntax.
 
 Let's start by adding a quick note:

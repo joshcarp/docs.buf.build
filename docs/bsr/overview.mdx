@@ -3,7 +3,9 @@ id: overview
 title: Overview
 ---
 
+
 import Image from "@site/src/components/Image";
+import Syntax from "@site/src/components/Syntax";
 
 ## Modules
 
@@ -13,9 +15,9 @@ versioned as a logical unit. By moving away from individual `.proto` files, the
 scripts to `-I` include, exclude, and configure your Protobuf sources.
 
 <Image
-  alt="BSR module"
-  src="/img/bsr/module_2_with_yaml.png"
-  caption="How modules map to Buf YAML configs"
+    alt="BSR module"
+    src="/img/bsr/module_2_with_yaml.png"
+    caption="How modules map to Buf YAML configs"
 />
 
 Storing modules in the BSR, a Protobuf-aware registry, protects you from
@@ -42,39 +44,39 @@ name: buf.build/acme/weather
 
 The module `name` is composed of three parts: the remote, owner, and repository:
 
-import Syntax from "@site/src/components/Syntax";
+
 
 <Syntax
-  title="Module name syntax"
-  examples={["buf.build/acme/weather"]}
-  segments={[
-    { label: "buf.build", kind: "default" },
-    { separator: "/" },
-    {
-      label: "owner",
-      kind: "variable",
-      href: "/bsr/user-management#resource-owner"
-    },
-    { separator: "/" },
-    { label: "repository", kind: "variable", href: "/bsr/overview#modules" }
-  ]}
+    title="Module name syntax"
+    examples={["buf.build/acme/weather"]}
+    segments={[
+        {label: "buf.build", kind: "default"},
+        {separator: "/"},
+        {
+            label: "owner",
+            kind: "variable",
+            href: "/bsr/user-management#resource-owner"
+        },
+        {separator: "/"},
+        {label: "repository", kind: "variable", href: "/bsr/overview#modules"}
+    ]}
 />
 
 - **Remote**: The DNS name for the server hosting the BSR. This is always
-  `buf.build`.
+`buf.build`.
 - **Owner**: An entity that is either a user or organization within the BSR
-  ecosystem.
+ecosystem.
 - **Repository**: Stores all versions of a single module
 
-  While roughly analogous to Git repositories, a Buf repository is only a remote
-  location&mdash;there is no concept of a repository "clone" or "fork".
-  Repositories do not exist in multiple locations.
+While roughly analogous to Git repositories, a Buf repository is only a remote
+location&mdash;there is no concept of a repository "clone" or "fork".
+Repositories do not exist in multiple locations.
 
-  Every repository is identified by its module name, allowing it to be imported
-  by other modules and uniquely identified within the BSR.
+Every repository is identified by its module name, allowing it to be imported
+by other modules and uniquely identified within the BSR.
 
 Many organizations with public Protobuf files are already using the BSR, and
-some of the bigger ones are officially maintained by Buf. These include
+some bigger ones are officially maintained by Buf. These include
 
 - [cncf/xds](https://buf.build/cncf/xds)
 - [envoyproxy/envoy](https://buf.build/envoyproxy/envoy)
@@ -106,9 +108,10 @@ deps:
 ```
 
 Although we **do not recommend** it, in some situations you may need to pin a
-module to a specific version. Ideally, authors keeps modules
-backwards-compatible and avoid breaking changes so you can _always_ rely on the
-latest version.
+module to a specific version. You can do this by specifying a tag, a commit name,
+or a draft name in your `deps` after the `:` delimiter. Ideally, authors keeps
+modules backwards-compatible and avoid breaking changes, so you can _always_ rely
+on the latest version.
 
 ```yaml
 deps:
@@ -146,17 +149,24 @@ The `buf` CLI automatically resolves the module(s) specified in the `deps` list.
 ## Referencing a module
 
 A module has different versions. Each version includes any number of changes,
-and each change is identifiable by a unique commit or tag. The collective set of
-module versions is housed within a repository.
+and each change is identifiable by a unique commit, tag, or draft. The
+collective set of module versions is housed within a repository.
 
 **Commit**: Every push of new content to a repository is associated with a
 commit that identifies that change in the schema. The commit is created after a
 successful push. This means that unlike Git, the commit only exists on the BSR
 repository and not locally.
 
-**Tag**: A reference to a single commit but with a human readable name, similar
+**Tag**: A reference to a single commit but with a human-readable name, similar
 to a Git tag. It is useful for identifying commonly referenced
 commits&mdash;like a release.
+
+**Draft**: A temporary commit in a development workflow with a human-readable
+name, similar to a Git feature branch but without history. It is useful for
+iterating on a module while keeping those changes outside the main branch. Can
+be overwritten and deleted. When it
+is used as a dependency in `buf.yaml` of a module, the module cannot be pushed
+until you update to a non-draft commit of the dependency.
 
 ## Local modules with workspaces
 
@@ -170,7 +180,7 @@ This makes workspaces a good way to iterate on multiple modules at the same time
 before pushing any changes to the BSR.
 
 > For an in-depth example check out the
-> [Tour - Use a Workspace](../tour/use-a-workspace.md)
+> [Tour - Use a Workspace](../tour/use-a-workspace.mdx)
 
 ## Module cache
 
@@ -180,17 +190,16 @@ To choose where to cache the files, it checks these, in order:
 
 - The value of `$BUF_CACHE_DIR`, if set.
 - The value of `$XDG_CACHE_HOME` falling back to `$HOME/.cache` on Linux and Mac
-  and `%LocalAppData%` for Windows.
+and `%LocalAppData%` for Windows.
 
 ## Code generation
 
-Hosting modules on the BSR means anyone with proper access can consume those
+Hosting modules on the BSR allows anyone with proper access to consume those
 modules. This solves the need to coordinate and sync Protobuf files manually
-amongst multiple consumers, which is error prone and quite often leads to drift.
+amongst multiple consumers, which is error-prone and leads to drift.
 
-Instead, users bring their own plugins and generate code from a single source of
-truth: a hosted module on the BSR. This is especially useful when consuming a
-Protobuf-based API that requires a client SDK for your language(s) of choice.
+Instead, users generate code from a single source of truth: a hosted module on
+the BSR.
 
 In your [`buf.gen.yaml`](../configuration/v1/buf-gen-yaml.md) define plugins and
 their respective options, and then generate your code with the `buf` CLI by
@@ -200,12 +209,46 @@ referencing a BSR module:
 $ buf generate buf.build/acme/weather
 ```
 
-> See the [Usage](../bsr/usage.mdx#code-generation) section for a detailed
-> example.
+## Remote Plugins
+
+The Buf team packages and distributes plugins to the BSR, browsable at:
+[buf.build/plugins][bsr-plugins]
+
+If you're interested in how these plugins are packaged see the
+[bufbuild/plugins][bufbuild-plugins] repository for more details.
+
+To learn more about how remote plugins can be used in code generation workflows,
+see the [remote plugins'](remote-plugins/usage.mdx) documentation.
+
+## Remote Packages
+
+By combining a BSR module and a plugin you can fetch generated SDKs with your
+language's package manager:
+
+**Go Module Proxy**
+
+```terminal
+$ go get buf.build/gen/go/bufbuild/eliza/bufbuild/connect-go
+```
+
+**NPM Registry**
+
+```terminal
+$ npm install @buf/bufbuild_eliza.bufbuild_connect-web@latest
+```
+
+For more information, see the [Remote Packages][remote-packages-overview] documentation.
+
+---
 
 Although beyond the scope of this overview, we suggest taking a look at
 [managed mode](../generate/managed-mode.md) as it relates to code generation.
 Historically, _consumer concerns_ are conflated with _producer concerns_ due to
-hardcoding of language-specific options in Protobuf files, which in turn
+hard-coding of language-specific options in Protobuf files, which in turn
 restricts their usefulness to consumers. Managed mode addresses existing
 limitations and offers a better separation of concerns.
+
+[bsr-plugins]:  https://buf.build/plugins
+[bufbuild-plugins]:  https://github.com/bufbuild/plugins
+[remote-plugins]:  remote-plugins/usage.mdx
+[remote-packages-overview]:  /bsr/remote-packages/overview

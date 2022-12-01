@@ -24,7 +24,7 @@ immensely.
 
 Start by removing the `google/type/datetime.proto` file from your module
 altogether. From within the `petapis` directory, run this command to remove
-_all_ of the local `google` dependencies:
+_all_ the local `google` dependencies:
 
 ```terminal
 $ rm -rf google
@@ -33,7 +33,7 @@ $ rm -rf google
 Now remove the `google/type/datetime.proto` reference from your
 [`buf.yaml`](../configuration/v1/buf-yaml.md):
 
-```yaml title="buf.yaml" {9-10}
+```yaml title="buf.yaml" {6-7}
  version: v1
  name: buf.build/$BUF_USER/petapis
  breaking:
@@ -66,12 +66,12 @@ configure it like this:
  name: buf.build/$BUF_USER/petapis
 +deps:
 +  - buf.build/googleapis/googleapis
-breaking:
+ breaking:
    use:
      - FILE
  lint:
    use:
-     - DEFAULT 
+     - DEFAULT
 ```
 
 Now, if you try to build the module again, you'll notice this:
@@ -132,10 +132,10 @@ In summary, `buf` can resolve the dependencies specified in your `buf.yaml`'s
 `deps` key and include the imports required to build your module. **You don't
 have to manually copy `.proto` files anymore!**
 
-## 9.3 Pin Your Dependencies {#pin-your-dependencies}
+## 9.3 Pin your dependencies {#pin-your-dependencies}
 
-You can pin to a specific tag or commit by specifying it in your `deps` after
-the `:` delimiter. For example, if you want to depend on the same commit you
+Pin a specific tag, commit, or draft by specifying it in your `deps` after the
+`:` delimiter. For example, if you want to depend on the same commit you
 resolved above and prevent `buf` from updating it in the future, you can specify
 it like this:
 
@@ -145,12 +145,12 @@ it like this:
  deps:
 -  - buf.build/googleapis/googleapis
 +  - buf.build/googleapis/googleapis:62f35d8aed1149c291d606d958a7ce32
-breaking:
+ breaking:
    use:
      - FILE
  lint:
    use:
-     - DEFAULT 
+     - DEFAULT
 ```
 
 This is **not recommended** in general since you should _always_ be able to
@@ -164,12 +164,12 @@ compatible. But in some situations it's unavoidable. With that said, restore the
  deps:
 -  - buf.build/googleapis/googleapis:62f35d8aed1149c291d606d958a7ce32
 +  - buf.build/googleapis/googleapis
-breaking:
+ breaking:
    use:
      - FILE
  lint:
    use:
-     - DEFAULT 
+     - DEFAULT
 ```
 
 ## 9.4 Push Your Changes {#push-your-changes}
@@ -183,3 +183,6 @@ $ buf push
 ---
 b2917eb692064beb92ad1e38dba6c25e
 ```
+
+> If one or more dependencies are pinned to a draft commit, pushing the module
+> will not be allowed.

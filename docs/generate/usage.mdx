@@ -13,15 +13,18 @@ all of its nuances, you must also learn the complexity of `protoc`. The
 can stop worrying about complex `protoc` invocations and instead focus on their
 schema definitions.
 
+
+
+
 import Examples from "@site/src/components/Examples";
 
 <Examples
-  subject="generating code stubs using Buf"
-  projects={[
-    "plugin-execution-local",
-    "plugin-execution-remote",
-    "managed-mode"
-  ]}
+    subject="generating code stubs using Buf"
+    projects={[
+        "plugin-execution-local",
+        "plugin-execution-remote",
+        "managed-mode"
+    ]}
 />
 
 ## Configuration
@@ -44,7 +47,7 @@ file with this command:
 $ buf mod init
 ```
 
-```yaml title="buf.yaml"
+```diff title="buf.yaml"
 version: v1
 breaking:
   use:
@@ -54,7 +57,14 @@ lint:
     - DEFAULT
 ```
 
-## Create a `buf.gen.yaml`
+## Use Local Plugins
+
+The `buf.gen.yaml` file is used to define a **local plugin template** that
+works directly with the `buf generate` command. In short, the `buf.gen.yaml`
+file is used to easily generate code with `protoc` plugins and simplifies the
+`protoc` experience significantly.
+
+### Create a `buf.gen.yaml`
 
 Now that you have an [input](../reference/inputs.md) to generate code for, we
 need to define a `buf.gen.yaml` and specify what `protoc` plugins you want to
@@ -63,17 +73,15 @@ use. For example, here's a typical `buf.gen.yaml` for
 [grpc](https://github.com/grpc/grpc-go/), assuming `protoc-gen-go` and
 `protoc-gen-go-grpc` are on your `$PATH`:
 
-```yaml title="buf.gen.yaml"
+```diff title="buf.gen.yaml"
 version: v1
 plugins:
-  - name: go
+  - plugin: go
     out: gen/go
     opt: paths=source_relative
-  - name: go-grpc
+  - plugin: go-grpc
     out: gen/go
-    opt:
-      - paths=source_relative
-      - require_unimplemented_servers=false
+    opt: paths=source_relative
 ```
 
 By default, `buf generate` looks for a file of this shape named `buf.gen.yaml`
@@ -85,7 +93,7 @@ plugin has a per-directory parallel invocation, with results from each
 invocation combined before writing the result. For more information, see the
 [`buf.gen.yaml` reference](../configuration/v1/buf-gen-yaml.md).
 
-## Run generate
+### Run generate
 
 Run this to generate from the [input](../reference/inputs.md) in your current
 directory:
@@ -125,6 +133,60 @@ $ buf generate --error-format=json
 ---
 {"path":"acme/pet/v1/pet.proto","start_line":5,"start_column":8,"end_line":5,"end_column":8,"type":"COMPILE","message":"acme/payment/v1alpha1/payment.proto: does not exist"}
 ```
+
+## Use Remote Plugins
+
+Stop worrying about how to install your plugins at specific versions and keep
+this consistent across your team, let us take care of that.
+[**Remote plugins**](../bsr/remote-plugins/usage.mdx) make it
+possible to generate source code using remote plugins in an isolated environment
+on the BSR. By isolating code generation from its environment, you eliminate an
+entire class of problems caused by subtle differences across specific compiler
+versions and custom Protobuf plugins.
+
+You won't need the locally generated code from before, so you can remove the `gen` directory:
+
+```sh
+rm -rf gen
+```
+
+### Modify your `buf.gen.yaml`
+
+Now that you have defined a `buf.gen.yaml` and specified what `protoc` plugins
+you want to use. We can now modify the `buf.gen.yaml` for
+[go](https://buf.build/protocolbuffers/go) and
+[grpc](https://buf.build/grpc/go), remote plugins so `protoc-gen-go` and
+`protoc-gen-go-grpc` do not need to be in your `$PATH`:
+
+```diff title="buf.gen.yaml" {3,4,6,7,8,10,11,12}
+version: v1
+plugins:
+-   - name: go
++   - plugin: buf.build/protocolbuffers/go:v1.28.1
+      out: gen/go
+-     opt: paths=source_relative
+-   - name: go-grpc
++   - plugin: buf.build/grpc/go:v1.2.0
+      out: gen/go
+-     opt:
+-     - paths=source_relative
+-     - require_unimplemented_servers=false
+```
+
+### Run generate
+
+Run this to generate from the [input](../reference/inputs.md) in your current
+directory:
+
+```terminal
+$ buf generate
+```
+
+The `buf generate` command will
+
+- Discover all Protobuf files per your `buf.yaml` configuration.
+- Send the Protobuf files to the Buf Schema Registry for remote plugins and
+respond with your desired source code.
 
 ## Common use cases
 
@@ -200,14 +262,15 @@ discover all files under management and handle this for you in general.
 If you only want to generate stubs for a subset of your input, you can do so via
 the `--path` flag:
 
-```terminal
-# Only generate for the files in the directories proto/foo and proto/bar
+```terminal title="Only generate for the files in the directories proto/foo and proto/bar"
 $ buf generate --path proto/foo --path proto/bar
+```
 
-# Only generate for the files proto/foo/foo.proto and proto/foo/bar.proto
+```terminal title="Only generate for the files proto/foo/foo.proto and proto/foo/bar.proto"
 $ buf generate --path proto/foo/foo.proto --path proto/foo/bar.proto
+```
 
-# Only generate for the files in the directory proto/foo on your GitHub repository
+```terminal title="Only generate for the files in the directory proto/foo on your GitHub repository"
 $ buf generate https://github.com/foo/bar.git --template data/generate.yaml --path proto/foo
 ```
 
@@ -226,17 +289,15 @@ $ docker run \
 
 :::info Docker image doesn't include protoc or plugins
 
-If you need to generate code stubs using [protoc] or
-[Protobuf plugins](../reference/images.md#plugins), be aware that the
-`bufbuild/buf` image ships with neither. We recommend one of these approaches:
-
-1. Use [remote plugin execution](../bsr/remote-generation/hosted-plugins.mdx) to
-   generate code stubs without needing to install any additional executables.
+1. Use [remote plugins](../bsr/remote-packages/overview.mdx#remote-plugins) to
+generate code without requiring local plugins.
+1. Use [generated assets](../bsr/remote-packages/overview.mdx) to fetch
+generated code stubs without needing to install any additional executables.
 1. Use the `bufbuild/buf` image as part of a [multi-stage build][multi-stage]
-   that includes any required executables as part of the final image.
+that includes any required executables as part of the final image.
 
 :::
 
-[image]: https://hub.docker.com/r/bufbuild/buf
-[multi-stage]: https://docs.docker.com/develop/develop-images/multistage-build/
-[protoc]: https://
+[image]  https://hub.docker.com/r/bufbuild/buf
+[multi-stage]  https://docs.docker.com/develop/develop-images/multistage-build/
+[protoc]  http://google.github.io/proto-lens/installing-protoc.html

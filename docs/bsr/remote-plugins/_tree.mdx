@@ -1,0 +1,86 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="language-selection"
+defaultValue="go"
+values={[
+{label: 'Go', value: 'go'},
+{label: 'JavaScript', value: 'javascript'},
+{label: 'Python', value: 'python'},
+{label: 'Ruby', value: 'ruby'},
+{label: 'Java', value: 'java'},
+]}>
+<TabItem value="go">
+
+```sh
+.
+├── buf.gen.yaml
+└── gen
+    └── go
+        └── pet
+            └── v1
+                ├── pet.pb.go
+                └── pet_grpc.pb.go
+```
+
+  </TabItem>
+  <TabItem value="javascript">
+
+```sh
+.
+├── buf.gen.yaml
+└── gen
+    └── js
+        └── pet
+            └── v1
+                ├── pet_connectweb.d.ts
+                ├── pet_connectweb.js
+                ├── pet_pb.d.ts
+                └── pet_pb.js
+```
+
+  </TabItem>
+  <TabItem value="python">
+
+```sh
+.
+├── buf.gen.yaml
+└── gen
+    └── python
+        └── pet
+            └── v1
+                ├── pet_pb2.py
+                └── pet_pb2_grpc.py
+```
+
+  </TabItem>
+  <TabItem value="ruby">
+
+```sh
+.
+├── buf.gen.yaml
+└── gen
+    └── ruby
+        └── pet
+            └── v1
+                ├── pet_pb.rb
+                └── pet_services_pb.rb
+```
+
+  </TabItem>
+  <TabItem value="java">
+
+```sh
+.
+├── buf.gen.yaml
+└── gen
+    └── java
+        └── pet
+            └── v1
+                ├── PetOuterClass.java
+                └── PetStoreServiceGrpc.java
+```
+
+  </TabItem>
+</Tabs>

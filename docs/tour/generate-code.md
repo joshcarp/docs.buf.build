@@ -37,9 +37,9 @@ You can create a `buf.gen.yaml` file that configures the `protoc-gen-cpp` and
 ```yaml title="buf.gen.yaml"
 version: v1
 plugins:
-  - name: cpp
+  - plugin: cpp
     out: gen/proto/cpp
-  - name: java
+  - plugin: java
     out: gen/proto/java
 ```
 
@@ -136,9 +136,9 @@ of the generated code for C++ and Java. You can disable
 +  cc_enable_arenas: false
 +  java_multiple_files: true
  plugins:
-   - name: cpp
+   - plugin: cpp
      out: gen/proto/cpp
-   - name: java
+   - plugin: java
      out: gen/proto/java
 ```
 
@@ -211,9 +211,9 @@ configuration before you continue:
 -  cc_enable_arenas: false
 -  java_multiple_files: true
  plugins:
-   - name: cpp
+   - plugin: cpp
      out: gen/proto/cpp
-   - name: java
+   - plugin: java
      out: gen/proto/java
 ```
 

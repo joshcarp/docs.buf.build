@@ -21,7 +21,7 @@ on-demand, for every version, for every possible Protobuf plugin, with
 consumption via language-native mechanisms.
 
 This feature is currently available for Buf's
-[Go Module Proxy](bsr/remote-generation/overview.mdx#go-module-proxy) which is
+[Go Module Proxy](bsr/remote-packages/overview.mdx#go-module-proxy) which is
 currently in **alpha**. Given a module, such as `buf.build/acme/weather`, you
 can consume generated code for:
 

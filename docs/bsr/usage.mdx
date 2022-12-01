@@ -15,9 +15,9 @@ entry into your `$HOME/.netrc` (Linux or macOS) or `%HOME%/_netrc` (Windows).
 
 ## Push a module
 
-The only requirement to push to the BSR is to have a module that
-[builds](../build/usage.md) successfully, meaning that you should be able to run
-`buf build` successfully on your module.
+To push to the BSR, your module must [build](../build/usage.md) successfully.
+This means that you are able to run `buf build` successfully on your module and
+your module has no dependencies pinned to a draft commit.
 
 Before you can push a module into the BSR, a repository must exist and you must
 own or have access to that repository. A repository can be created either
@@ -142,9 +142,7 @@ resolves hosted module dependencies by leveraging the BSR.
 ## Code generation
 
 The BSR facilitates both local and remote code generation, simplifying how
-module consumers get access to generated code. This is especially useful for
-**clients** that need to generate an SDK to consume a Protobuf-based API in
-their language of choice.
+module consumers get access to generated code.
 
 ### Local code generation
 
@@ -153,22 +151,22 @@ from remote modules hosted on the BSR. If you already have a workflow that
 invokes plugins with `protoc` then adopting `buf generate` should be
 straightforward.
 
-Add a `buf.gen.yaml` file and list all the plugins as well as their options.
+Add a [`buf.gen.yaml`](/configuration/v1/buf-gen-yaml) file and list all the plugins as well as their options.
 Here is a quick example that generates C++ and Java code.
 
 ```yaml title=buf.gen.yaml
 version: v1
 plugins:
-  - name: cpp
+  - plugin: cpp
     out: gen/proto/cpp
-  - name: java
+  - plugin: java
     out: gen/proto/java
 ```
 
 The `buf` CLI infers the `protoc-gen-{name}` prefix for each plugin specified by
 the `name` key, similar to `protoc` behaviour.
 
-Once you set up a `buf.gen.yaml` file, run this command and specify a module
+Once you set up a [`buf.gen.yaml`](/configuration/v1/buf-gen-yaml) file, run this command and specify a module
 hosted on the BSR. That's right, you can reference a hosted BSR module without
 having the Protobuf files locally!
 
@@ -184,10 +182,8 @@ directories.
 
 ### Remote code generation
 
-If you don't want to manage plugins and generate code manually and would prefer
-to simply consume generated code, check out the
-[remote code generation](remote-generation/overview.mdx) feature, which is
-currently in **alpha**.
+The BSR supports remote plugins and generated SDKs, check out the [remote plugins](remote-plugins/usage.mdx)
+and [remote packages](remote-packages/overview.mdx) feature for additional details.
 
 ## Manage a repository
 

@@ -1,0 +1,80 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs
+groupId="language-selection"
+defaultValue="go"
+values={[
+{label: 'Go', value: 'go'},
+{label: 'JavaScript', value: 'javascript'},
+{label: 'Python', value: 'python'},
+{label: 'Ruby', value: 'ruby'},
+{label: 'Java', value: 'java'},
+]}>
+<TabItem value="go">
+
+```yaml title=buf.gen.yaml
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/owner/repository/gen/go
+plugins:
+  - plugin: buf.build/protocolbuffers/go
+    out: gen/go
+    opt: paths=source_relative
+  - plugin: buf.build/grpc/go
+    out: gen/go
+    opt: paths=source_relative
+```
+
+  </TabItem>
+  <TabItem value="javascript">
+
+```yaml title=buf.gen.yaml
+version: v1
+plugins:
+  - plugin: buf.build/bufbuild/es
+    out: gen/js
+  - plugin: buf.build/bufbuild/connect-web
+    out: gen/js
+```
+
+  </TabItem>
+  <TabItem value="python">
+
+```yaml title=buf.gen.yaml
+version: v1
+plugins:
+  - plugin: buf.build/protocolbuffers/python
+    out: gen/python
+  - plugin: buf.build/grpc/python
+    out: gen/python
+```
+
+  </TabItem>
+  <TabItem value="ruby">
+
+```yaml title=buf.gen.yaml
+version: v1
+plugins:
+  - plugin: buf.build/protocolbuffers/ruby
+    out: gen/ruby
+  - plugin: buf.build/grpc/ruby
+    out: gen/ruby
+```
+
+  </TabItem>
+  <TabItem value="java">
+
+```yaml title=buf.gen.yaml
+version: v1
+plugins:
+  - plugin: buf.build/protocolbuffers/java
+    out: gen/java
+  - plugin: buf.build/grpc/java
+    out: gen/java
+```
+
+  </TabItem>
+</Tabs>

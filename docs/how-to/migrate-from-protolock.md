@@ -67,7 +67,7 @@ commands and migration.
 - Protolock relies on `proto.lock` files as the only way to store the
   representation of your previous Protobuf schema, and these files are
   represented by a custom structure. `buf` allows you to use lock files through
-  `buf build`, but also allows [other methods](../breaking/usage.md) to store
+  `buf build`, but also allows [other methods](../breaking/usage.mdx) to store
   and retrieve your previous Protobuf schema, including:
   - Cloning the head of a branch of a Git repository, either local or remote,
     and compiling on the fly.
@@ -150,7 +150,7 @@ be to specify your Buf image location with `--against path/to/lock.bin`.
 ## Equivalent commands
 
 There are multiple methods to compare versions in `buf`, see the
-[breaking usage](../breaking/usage.md) documentation for more details.
+[breaking usage](../breaking/usage.mdx) documentation for more details.
 
 This section assumes you are using stored [Buf image](../reference/images.md)
 files as your method of comparing versions of your Protobuf schema.

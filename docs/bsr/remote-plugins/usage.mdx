@@ -1,0 +1,240 @@
+---
+id: usage
+title: Usage
+---
+
+> We highly recommend completing [the tour](../../tour/generate-go-code.md) to
+> get an overview of `buf generate` with remote plugins.
+
+## Configuration
+
+The `buf.gen.yaml` file controls how the `buf generate` command executes
+Protobuf plugins for any [input](../../reference/inputs.md). Here, we can
+specify [remote plugins](overview.mdx) to perform code generation. For more
+information on the `buf.gen.yaml` configuration, see the
+[reference](../../configuration/v1/buf-gen-yaml.md).
+
+Buf verifies and maintains the commonly-used plugins used across the Protobuf
+ecosystem. To discover all publicly-available plugins, go to
+[buf.build/plugins][plugins].
+
+## Choose your input
+
+Remote plugins generate code for [inputs](../../reference/inputs.md). An input
+can be a git repository, tarball, zip file, a or local directory containing
+Protobuf files configured with a
+[`buf.yaml`](../../configuration/v1/buf-yaml.md) configuration file. Buf refers
+to such directories of Protobuf files as [modules](../overview.mdx#modules).
+
+For our purposes, we'll assume you have a `buf.yaml` in your current directory
+that defines a module. To create a `buf.yaml` in your current directory.
+
+```terminal
+$ buf mod init
+```
+
+```yaml title="buf.yaml"
+version: v1
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT
+```
+
+See the [build](../../build/usage.md) documentation for full details on how to
+configure modules to build with `buf`.
+
+## Create a [`buf.gen.yaml`](/configuration/v1/buf-gen-yaml)
+
+Now that you have an [input](../../reference/inputs.md) to generate code for, we
+need to define a [`buf.gen.yaml`](/configuration/v1/buf-gen-yaml) and specify
+what `protoc` plugins you want to use.
+
+A remote plugin can be pinned to a specific version, or if you want to always
+use the latest version of the plugin, the version can be omitted. Here's some
+examples for common languages and RPC frameworks:
+
+import GenYaml from "./_gen-yaml.mdx";
+
+<GenYaml />
+
+Note, we're using the `plugin` key to reference a remote plugin. More
+information can be
+[found in the buf.gen.yaml docs](/configuration/v1/buf-gen-yaml#plugin-name-or-remote).
+
+Plugins are invoked in the order they are specified in your `buf.gen.yaml`, but
+each plugin has a per-directory parallel invocation, with results from each
+invocation combined before writing the result. For more information, see the
+[`buf.gen.yaml` reference](../../configuration/v1/buf-gen-yaml.md).
+
+> As a best practice, when referencing remote, plugins we recommend including
+> the version of the plugin to ensure reproducible code generation. It is
+> possible to reference both local and remote plugins within a single template
+> file.
+
+## Run generate
+
+To generate using the module and `buf.gen.yaml` defined in your current
+directory:
+
+```terminal
+$ buf generate
+```
+
+The `buf generate` command will:
+
+- Send the Protobuf files specified in your input to the Buf Schema Registry
+  remote plugin executor.
+- Invoke each plugin specified in your `buf.gen.yaml`.
+- Send the results back, and unpack them on your local file system.
+
+By default, `buf generate` looks for a
+[`buf.gen.yaml`](/configuration/v1/buf-gen-yaml) in your current directory. An
+alternate location can be specified by usin the `--template` flag:
+
+```terminal
+$ buf generate --template templates/buf.go.gen.yaml
+```
+
+You can also run `buf generate`. For example if all of your `.proto` files are
+in directory `foo`:
+
+```terminal
+# generate using the module defined in the foo/ directory
+$ buf generate foo
+# generate using the files contained in the root directory
+# of the github.com/acme/weather repository on the default branch
+$ buf generate https://github.com/acme/weather.git
+# generate using the buf.gen.yaml file at templates/buf.go.gen.yaml
+# using the files in the buf.build/grpc/grpc module
+$ buf generate --template templates/buf.go.gen.yaml buf.build/acme/petapis
+```
+
+If you used one of the example `buf.gen.yaml` files from above, you should end
+up with this file structure:
+
+import Tree from "./_tree.mdx";
+
+<Tree />
+
+## Common use cases
+
+### protoc-gen-go
+
+[`protoc-gen-go`](https://github.com/protocolbuffers/protobuf-go) is generates
+message and enum stubs for Golang. The BSR hosts this plugin at
+[buf.build/protocolbuffers/go](https://buf.build/protocolbuffers/go).
+
+```yaml title="buf.gen.yaml" {5}
+version: v1
+plugins:
+  - plugin: buf.build/protocolbuffers/go
+    out: gen/go
+    # You almost always want to set this option with protoc-gen-go
+    opt: paths=source_relative
+```
+
+### protoc-gen-go + protoc-gen-validate
+
+[`protoc-gen-validate`](https://github.com/bufbuild/protoc-gen-validate) is a
+plugin that generates polyglot message validators. The BSR hosts this plugin
+with `lang=go` always enabled at
+[buf.build/bufbuild/validate-go](https://buf.build/bufbuild/validate-go).
+
+```yaml title="buf.gen.yaml" {5,9}
+version: v1
+plugins:
+  # The protoc-gen-go stubs are required for grpc-go
+  - plugin: buf.build/protocolbuffers/go
+    out: gen/go
+    # You almost always want to set this option with protoc-gen-go
+    opt: paths=source_relative
+  - plugin: buf.build/bufbuild/validate-go
+    # Make sure to generate your protoc-gen-validate code to the same
+    # directory as protoc-gen-go
+    out: gen/go
+    opt:
+      # You almost always want to set this option with protoc-gen-validate
+      - paths=source_relative
+      - lang=go
+```
+
+### grpc-go
+
+[`protoc-gen-go-grpc`](https://github.com/grpc/grpc-go/tree/master/cmd/protoc-gen-go-grpc)
+generates Golang service stubs for gRPC. The BSR hosts this plugin at
+[buf.build/grpc/go](https://buf.build/grpc/go). Note that we'd recommend
+checking out connect-go instead of using grpc-go (see the next section).
+
+```yaml title="buf.gen.yaml" {5,8}
+version: v1
+plugins:
+  # The protoc-gen-go stubs are required for grpc-go
+  - plugin: buf.build/protocolbuffers/go
+    out: gen/go
+    # You almost always want to set this option with protoc-gen-go
+    opt: paths=source_relative
+  - plugin: buf.build/grpc/go
+    # Make sure to generate your grpc-go code to the same
+    # directory as protoc-gen-go
+    out: gen/go
+    # You almost always want to set this option with protoc-gen-go-grpc
+    opt: paths=source_relative
+```
+
+### connect-go
+
+[Connect](https://connect.build) is a slim library for building browser and
+gRPC-compatible HTTP APIs. Handlers and clients support three protocols: gRPC,
+gRPC-Web, and Connect's own protocol.
+
+[`protoc-gen-connect-go`](https://github.com/bufbuild/connect-go) generates
+Golang service stubs for Connect. The BSR hosts this plugin at
+[buf.build/bufbuild/connect-go](https://buf.build/bufbuild/connect-go).
+
+```yaml title=buf.gen.yaml {5,8}
+version: v1
+plugins:
+  # The protoc-gen-go stubs are required for grpc-go
+  - plugin: buf.build/protocolbuffers/go
+    out: gen/go
+    # You almost always want to set this option with protoc-gen-go
+    opt: paths=source_relative
+  - plugin: buf.build/bufbuild/connect-go
+    # Unlike grpc-go, connect stubs do not need to be generated to the
+    # same directory, however you are free to do so
+    out: gen/go
+    # You almost always want to set this option with protoc-gen-connect-go
+    opt: paths=source_relative
+```
+
+### connect-web
+
+[Connect-Web](https://connect.build/docs/web/getting-started/) is a simple
+library to call remote procedures from a web browser. Unlike REST, you get a
+type-safe client and never have to think about serialization again.
+
+[`protoc-gen-connect-web`](https://github.com/bufbuild/connect-web) generates
+client service stubs for TypeScript and JavaScript. It requires the
+[`protoc-gen-es`](https://gitbub.com/bufbuild/protobuf-es) plugin to generate
+message and service stubs. The code those two plugins generate requires the
+runtime libraries
+[`@bufbuild/connect-web`](https://www.npmjs.com/package/@bufbuild/connect-web),
+and [`@bufbuild/protobuf`](https://www.npmjs.com/package/@bufbuild/protobuf).
+
+The BSR hosts these plugins at
+[buf.build/bufbuild/connect-web](https://buf.build/bufbuild/connect-web) and
+[buf.build/bufbuild/es](https://buf.build/bufbuild/es).
+
+```yaml title=buf.gen.yaml {5,7}
+version: v1
+plugins:
+  - plugin: buf.build/bufbuild/es
+    out: gen/es
+  - plugin: buf.build/bufbuild/connect-web
+    out: gen/es
+```
+
+[plugins]: https://buf.build/plugins

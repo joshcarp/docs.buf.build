@@ -14,9 +14,9 @@ The BSR stores and manages Protobuf files as versioned
 [modules](overview.mdx#modules) so that individuals and organizations can
 consume and publish their APIs without friction.
 
-The BSR comes with a browsable UI, dependency management, API validation and
-versioning, generated documentation, and an extensible plugin system which
-enables remote code generation.
+The BSR comes with a browsable UI, dependency management, API validation,
+versioning, generated documentation, and an extensible plugin system that powers
+remote code generation.
 
 ### BSR goals
 
@@ -39,26 +39,19 @@ Rust, and Go modules in Go).
    Protobuf files through a browsable UI with syntax highlighting, definitions,
    and references.
 
-4. **Code generation** - The BSR makes possible two distinct forms of code
-   generation:
+4. **Remote Plugins** - The Buf team manages hosted protobuf plugins that can
+   be referenced in [`buf.gen.yaml`][buf-gen-yaml] files. Code generation takes
+   place remotely on the BSR and generated source code is written out to disk.
 
-   - _Local code generation_: The BSR contains remote references that allow you
-     to immediately generate code for your language of choice. Use your existing
-     `protoc` plugins, run `buf generate`, and you're ready to go.
-
-   - _Remote code generation (alpha)_: Don't want to manage plugins? No problem.
-     The BSR offers remote code generation through hosted plugins and templates.
-
-     The remote-generated code is stored in a managed software repository that
-     you fetch like any other library with tools you already know: `go get`,
-     `mvn install`, `pip install`, `npm install`, etc.
+5. **Remote Packages**: The BSR exposes generated artifacts through managed
+   software repositories you fetch like any other library with tools you already
+   know: `go get` or `npm install`.
 
 ### Why the BSR?
 
 You're probably wondering why adopting the Buf Schema Registry (BSR) is an
-improvement over your existing Protobuf workflows. Above we highlighted _what_
-features are available, but let's break down why the BSR aims to solve existing
-problems.
+improvement over your existing Protobuf workflows. We've highlighted available 
+features above, but let's break down why the BSR aims to solve existing problems.
 
 **The Protobuf ecosystem deserves build guarantees**
 
@@ -107,26 +100,20 @@ in-sync.
 Define. Generate. Consume.
 
 Defining a Protobuf-based API enforces a contract between producer and
-consumers. The issue is that consumers are typically an afterthought in the
-process.
+consumers, however consumers are typically an afterthought in the process.
 
 Before a client can consume a Protobuf-based API they need to generate an SDK
 for their language of choice. Traditionally consumers are left to figure out how
 to build and generate clients, but this is often cumbersome as little guidance
-is provided and furthermore not all Protobuf files correctly encode options for
-a given language.
+is provided and not all Protobuf files correctly encode options for a given
+language.
 
-The Buf ecosystem solves this by decoupling consumer and producer concerns. The
-`buf` CLI can modify language-specific options on the fly, and the BSR
-facilitates generating client SDKs by offering local and remote code generation.
-
-Generating an SDK client should only require you to keep code up to date like
-any other library in your language of choice. It shouldn't require you to
-generate anything manually.
+Fetching a client SDK from the BSR is a single `npm install` or `go get`
+command.
 
 ## Let's get started
 
-Once you've [installed](../installation.md) the latest version `buf`, you're
+Once you've [installed](../installation.mdx) the latest version of `buf`, you're
 ready to use the BSR!
 
 Here are a few ways to get moving:
@@ -139,13 +126,4 @@ Here are a few ways to get moving:
 - **[The Tour](../tour/introduction.md)** <br/> The tour provides an overview of
   the BSR and takes approximately 20 minutes to complete.
 
-## Experimental features
-
-[Remote generation](remote-generation/overview.mdx) is currently an _alpha
-feature_. This feature lets the BSR generate data types and service stubs for
-your modules and store the generated code in a **hosted registry**. With this,
-you can consume the generated code like any other library in your language of
-choice.
-
-> Note, this feature is currently available for Go. But we have plans to add
-> additional support for other languages.
+[buf-gen-yaml]: /configuration/v1/buf-gen-yaml#plugins

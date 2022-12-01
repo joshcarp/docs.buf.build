@@ -118,7 +118,7 @@ $ buf build --exclude-source-info -o -#format=json | jq '.file[] | .package'
 As you can see from the output, these packages are used in the project:
 
 | Package name      | Meaning                                                                                                               |
-| :---------------- | :-------------------------------------------------------------------------------------------------------------------- |
+|:------------------|:----------------------------------------------------------------------------------------------------------------------|
 | `google.protobuf` | A dependency on the [Well-Known Types](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf) |
 | `google.type`     | A dependency on a Google API                                                                                          |
 | `pet.v1`          | The pet store API itself                                                                                              |

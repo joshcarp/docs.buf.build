@@ -27,7 +27,7 @@ $ buf ls-files --help
 
 - Install [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - Install [`jq`](https://stedolan.github.io/jq)
-- Install [`buf`](../installation.md)
+- Install [`buf`](../installation.mdx)
 - (Optional) [Editor Integration](../editor-integration.mdx)
 
 ## Clone the Git repository {#clone-the-git-repository}

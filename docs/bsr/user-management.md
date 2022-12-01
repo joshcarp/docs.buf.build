@@ -17,9 +17,7 @@ request to be re-added with the desired role.
 - Can delete organization. All resources such as repositories, templates and
   plugins must be deleted before the organization can be deleted.
 - Can add and delete resources such as
-  [repositories](../bsr/overview.mdx#modules),
-  [templates](../bsr/remote-generation/overview#templates) and
-  [plugins](../bsr/remote-generation/overview#plugins).
+  [repositories](../bsr/overview.mdx#modules)
 
 ### Admin {#org-admin}
 
@@ -96,9 +94,9 @@ role on the repository is **Admin**.
 ### Write {#resource-write}
 
 - Can perform write operations on resources, such as:
-  - Pushing to a repository
-  - Creating tags
-  - Updating template versions and plugins
+    - Pushing to a repository
+    - Creating tags
+    - Updating template versions and plugins
 
 ### Read {#resource-read}
 

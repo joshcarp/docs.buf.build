@@ -7,7 +7,7 @@ The `buf` CLI acts as a build system for all your `.proto` compilation and code
 generation needs. This guide describes how to migrate your existing `protoc`
 setup and migrate to using `buf`.
 
-This guide assumes that you've [installed `buf`](../installation.md) and
+This guide assumes that you've [installed `buf`](../installation.mdx) and
 generate code by calling`protoc` manually from scripts or a tool like `make`.
 Other guides are available for users currently using
 [Protolock](migrate-from-protolock.md) or
@@ -141,11 +141,11 @@ invocation used to generate Go/gRPC code with this
 ```yaml title="buf.gen.yaml"
 version: v1
 plugins:
-  - name: go
+  - plugin: go
     out: .
     opt:
       - paths=source_relative
-  - name: go-grpc
+  - plugin: go-grpc
     out: .
     opt:
       - paths=source_relative

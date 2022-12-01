@@ -98,7 +98,7 @@ with the BSR. For a quick overview, see our [roadmap](roadmap.md).
 
 ## Where to go from here
 
-See the [installation](installation.md) page to install the `buf` CLI.
+See the [installation](installation.mdx) page to install the `buf` CLI.
 
 Next, we recommend completing the [tour](tour/introduction.md). The tour
 provides an overview of most of the existing functionality of Buf and takes

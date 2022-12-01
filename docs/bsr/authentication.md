@@ -75,8 +75,10 @@ For more information on `.netrc`, check out the
 If you wish to add authentication to your continuous integration jobs, we
 recommend storing the token in your providers secret storage, if possible. Such
 as:
-[GitHub Actions](https://docs.github.com/en/actions/reference/encrypted-secrets#about-encrypted-secrets),
-[Travis CI](https://docs.travis-ci.com/user/environment-variables/#defining-encrypted-variables-in-travisyml),
+[GitHub Actions](https://docs.github.com/en/actions/reference/encrypted-secrets#about-encrypted-secrets)
+,
+[Travis CI](https://docs.travis-ci.com/user/environment-variables/#defining-encrypted-variables-in-travisyml)
+,
 [CircleCI](https://circleci.com/docs/2.0/env-vars/).
 
 Access the secret token as specified by your CI provider and make it available

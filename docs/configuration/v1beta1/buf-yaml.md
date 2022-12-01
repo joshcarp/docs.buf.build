@@ -31,9 +31,6 @@ build:
   roots:
     - .
   excludes: []
-breaking:
-  use:
-    - FILE
 lint:
   use:
     - DEFAULT
@@ -42,6 +39,9 @@ lint:
   rpc_allow_google_protobuf_empty_requests: false
   rpc_allow_google_protobuf_empty_responses: false
   service_suffix: Service
+breaking:
+  use:
+    - FILE
 ```
 
 ## Fields
