@@ -140,7 +140,7 @@ plugins:
 
 [`protoc-gen-validate`](https://github.com/bufbuild/protoc-gen-validate) is a
 plugin that generates polyglot message validators. The BSR hosts this plugin
-with `lang=go` always enabled at
+pre-enabled for Go code generation at
 [buf.build/bufbuild/validate-go](https://buf.build/bufbuild/validate-go).
 
 ```yaml title="buf.gen.yaml" {5,9}
@@ -155,10 +155,8 @@ plugins:
     # Make sure to generate your protoc-gen-validate code to the same
     # directory as protoc-gen-go
     out: gen/go
-    opt:
-      # You almost always want to set this option with protoc-gen-validate
-      - paths=source_relative
-      - lang=go
+    # You almost always want to set this option with protoc-gen-go
+    opt: paths=source_relative
 ```
 
 ### grpc-go
