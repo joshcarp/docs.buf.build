@@ -171,7 +171,7 @@ migration path. We've taken
 [stewardship][protoc-gen-validate-ownership] of protoc-gen-validate from the Envoy
 team, and will continue to work to improve it, however protoc-gen-validate generated
 code is required to be generated to the same package as protoc-gen-go code, which does
-not fit cleanly into the remote packages model.In the meantime, switch to [remote plugins](../remote-plugins/overview.mdx)
+not fit cleanly into the remote packages model. In the meantime, switch to [remote plugins](../remote-plugins/overview.mdx)
 using `buf generate`.
 
 ## BSR NPM registry

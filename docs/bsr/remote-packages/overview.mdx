@@ -18,11 +18,18 @@ you can push [modules][modules] to the BSR and install code stubs generated
 from those modules using dependency management tools like [npm](npm.mdx)
 and [go](go.mdx).
 
+**Go**
+
 ```
 # Get the Connect client and server packages for the buf.build/bufbuild/eliza module
 $ go get buf.build/gen/go/bufbuild/eliza/bufbuild/connect-go
+```
 
+**NPM**
+
+```
 # Install the Connect client packages for the buf.build/bufbuild/eliza module
+$ npm config set @buf:registry https://buf.build/gen/npm/v1
 $ npm install @buf/bufbuild_eliza.bufbuild_connect-web
 ```
 

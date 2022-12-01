@@ -26,14 +26,15 @@ buf.build/gen/npm/v1
 
 NPM is configured to use the public NPM registry at
 [registry.NPMjs.org][npm-registry] by default. To configure NPM to use Buf's NPM
-registry, use this command to [set][npm-config] your NPM config:
+registry for the `@buf` package scope, use this command to [set][npm-config] your
+NPM config:
 
 ```terminal
 $ npm config set @buf:registry https://buf.build/gen/npm/v1
 ```
 
-This binds the `@buf` package scope to the BSR and updates your global
-[`.npmrc`][npmrc] accordingly. You can configure [Yarn] in an analogous way:
+This updates your global [`.npmrc`][npmrc] to fetch `@buf/*` packages from the BSR.
+You can configure [Yarn] in an analogous way:
 
 ```terminal
 $ yarn config set @buf:registry https://buf.build/gen/npm/v1
