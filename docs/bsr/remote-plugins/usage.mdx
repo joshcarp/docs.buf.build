@@ -127,7 +127,7 @@ import Tree from "./_tree.mdx";
 message and enum stubs for Golang. The BSR hosts this plugin at
 [buf.build/protocolbuffers/go](https://buf.build/protocolbuffers/go).
 
-```yaml title="buf.gen.yaml" {5}
+```yaml title="buf.gen.yaml" {3}
 version: v1
 plugins:
   - plugin: buf.build/protocolbuffers/go
@@ -143,7 +143,7 @@ plugin that generates polyglot message validators. The BSR hosts this plugin
 pre-enabled for Go code generation at
 [buf.build/bufbuild/validate-go](https://buf.build/bufbuild/validate-go).
 
-```yaml title="buf.gen.yaml" {5,9}
+```yaml title="buf.gen.yaml" {4,8}
 version: v1
 plugins:
   # The protoc-gen-go stubs are required for grpc-go
@@ -166,7 +166,7 @@ generates Golang service stubs for gRPC. The BSR hosts this plugin at
 [buf.build/grpc/go](https://buf.build/grpc/go). Note that we'd recommend
 checking out connect-go instead of using grpc-go (see the next section).
 
-```yaml title="buf.gen.yaml" {5,8}
+```yaml title="buf.gen.yaml" {4,8}
 version: v1
 plugins:
   # The protoc-gen-go stubs are required for grpc-go
@@ -192,7 +192,7 @@ gRPC-Web, and Connect's own protocol.
 Golang service stubs for Connect. The BSR hosts this plugin at
 [buf.build/bufbuild/connect-go](https://buf.build/bufbuild/connect-go).
 
-```yaml title=buf.gen.yaml {5,8}
+```yaml title=buf.gen.yaml {4,8}
 version: v1
 plugins:
   # The protoc-gen-go stubs are required for grpc-go
@@ -226,7 +226,7 @@ The BSR hosts these plugins at
 [buf.build/bufbuild/connect-web](https://buf.build/bufbuild/connect-web) and
 [buf.build/bufbuild/es](https://buf.build/bufbuild/es).
 
-```yaml title=buf.gen.yaml {5,7}
+```yaml title=buf.gen.yaml {3,5}
 version: v1
 plugins:
   - plugin: buf.build/bufbuild/es
