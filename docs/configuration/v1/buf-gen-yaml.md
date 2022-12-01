@@ -161,7 +161,7 @@ plugins:
 
 There are two options:
 
-1. `directory` **(default)**
+1. `directory` **(default for local plugins)**
 
 This results in `buf` splitting the input files by directory and making separate
 plugin invocations in parallel. That's roughly the concurrent equivalent of this
@@ -174,7 +174,8 @@ done
 ```
 
 Almost every `protoc` plugin either requires this, so this is the recommended
-`strategy`. The `directory` strategy is used by default if omitted.
+`strategy`. The `directory` strategy is used by default if omitted for local plugins.
+Remote plugins use `all` for every invocation.
 
 2. `all`
 
@@ -186,6 +187,7 @@ $ protoc -I . $(find . -name '*.proto')
 ```
 
 This is needed for certain plugins that expect all files to be given at once.
+It is also used for remote plugin generation to improve code generation performance.
 
 ### `managed`
 

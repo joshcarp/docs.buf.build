@@ -64,9 +64,9 @@ Note, we're using the `plugin` key to reference a remote plugin. More
 information can be
 [found in the buf.gen.yaml docs](/configuration/v1/buf-gen-yaml#plugin-name-or-remote).
 
-Plugins are invoked in the order they are specified in your `buf.gen.yaml`, but
-each plugin has a per-directory parallel invocation, with results from each
-invocation combined before writing the result. For more information, see the
+Plugins are invoked in the order they are specified in your `buf.gen.yaml` with
+results from each invocation combined before writing the result. For more
+information, see the
 [`buf.gen.yaml` reference](../../configuration/v1/buf-gen-yaml.md).
 
 > As a best practice, when referencing remote, plugins we recommend including
@@ -123,7 +123,7 @@ import Tree from "./_tree.mdx";
 
 ### protoc-gen-go
 
-[`protoc-gen-go`](https://github.com/protocolbuffers/protobuf-go) is generates
+[`protoc-gen-go`](https://github.com/protocolbuffers/protobuf-go) generates
 message and enum stubs for Golang. The BSR hosts this plugin at
 [buf.build/protocolbuffers/go](https://buf.build/protocolbuffers/go).
 
