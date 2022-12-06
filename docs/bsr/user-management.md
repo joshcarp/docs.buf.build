@@ -98,6 +98,12 @@ role on the repository is **Admin**.
     - Creating tags
     - Updating template versions and plugins
 
+### Limited Write {#resource-limited-write}
+
+- Can write drafts to a repository.
+
+_Only applies to repositories._
+
 ### Read {#resource-read}
 
 - Can view the resource.
