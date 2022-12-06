@@ -17,13 +17,15 @@ The buf.gen.yaml configuration file is largely unchanged, except for:
    `plugin` key understands both local and remote references. Requires [buf CLI
    version 1.8][buf-tag-18] or later.
 1. Drop the `/plugins/` path when referencing remote plugins
+1. Remove any revision numbers (the [revision][buf-gen-yaml-revision] is now a
+   separate key and typically not specified.)
 
-Full example covering both changes:
+Full example covering all changes:
 
 ```diff
 plugins:
--  - remote: buf.build/bufbuild/plugins/connect-go
-+  - plugin: buf.build/bufbuild/connect-go
+-  - remote: buf.build/bufbuild/plugins/connect-go:v1.3.1-1
++  - plugin: buf.build/bufbuild/connect-go:v1.3.1
 ```
 
 ## Public plugins are now solely maintained by the Buf team
@@ -54,4 +56,5 @@ but it will continue to work until April 30, 2023, at which time you'll need to
 migrate to remote plugins or [remote packages](../remote-packages/overview.mdx).
 
 [bufbuild-plugins-issue]: https://github.com/bufbuild/plugins/issues/new/choose
+[buf-gen-yaml-revision]: https://docs.buf.build/configuration/v1/buf-gen-yaml#revision
 [buf-tag-18]: https://github.com/bufbuild/buf/releases/tag/v1.8.0
