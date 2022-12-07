@@ -86,7 +86,7 @@ builds pin the `buf` version using the version attribute.
 ```python title="WORKSPACE" {1-2}
 # rules_buf fetches the sha based on the version number, the version is enough for hermetic builds.
 -rules_buf_toolchains()
-+rules_buf_toolchains(version = "v1.9.0")
++rules_buf_toolchains(version = "v1.10.0")
 ```
 
 ## Rules
