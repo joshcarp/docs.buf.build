@@ -167,17 +167,17 @@ Edit the [`buf.gen.yaml`](../configuration/v1/buf-gen-yaml.md) file so that it
 configures the
 `protoc-gen-go` and `protoc-gen-go-grpc` plugins (and their options):
 
-```diff title="buf.gen.yaml" {3,4,6,7,8,10,11}
-version: v1
-plugins:
--   - name: go
-+   - plugin: buf.build/protocolbuffers/go:v1.28.1
-      out: gen/go
--     opt: paths=source_relative
--   - name: go-grpc
-+   - plugin: buf.build/grpc/go:v1.2.0
-      out: gen/go
--     opt: paths=source_relative
+```diff title="buf.gen.yaml" {3,4,7,8}
+ version: v1
+ plugins:
+-  - plugin: go
++  - plugin: buf.build/protocolbuffers/go:v1.28.1
+     out: gen/proto/go
+     opt: paths=source_relative
+-  - plugin: go-grpc
++  - plugin: buf.build/grpc/go:v1.2.0
+     out: gen/proto/go
+     opt: paths=source_relative
 ```
 
 These edits remove the local code generation from a previous step and replace it

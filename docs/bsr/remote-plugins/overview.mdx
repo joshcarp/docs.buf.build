@@ -31,9 +31,11 @@ plugins:
   # Use protoc-gen-go at v1.28.1
   - plugin: buf.build/protocolbuffers/go:v1.28.1
     out: gen/go
+    opt: paths=source_relative
   # Use the latest version of protoc-gen-go-grpc
   - plugin: buf.build/grpc/go
     out: gen/go
+    opt: paths=source_relative
 ```
 
 Just invoke `buf generate` and you're done - no maintaining these plugins, no

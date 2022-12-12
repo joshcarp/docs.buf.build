@@ -81,7 +81,9 @@ plugins:
     opt: paths=source_relative
   - plugin: go-grpc
     out: gen/go
-    opt: paths=source_relative
+    opt:
+      - paths=source_relative
+      - require_unimplemented_servers=false
 ```
 
 By default, `buf generate` looks for a file of this shape named `buf.gen.yaml`
@@ -158,19 +160,19 @@ you want to use. We can now modify the `buf.gen.yaml` for
 [grpc](https://buf.build/grpc/go), remote plugins so `protoc-gen-go` and
 `protoc-gen-go-grpc` do not need to be in your `$PATH`:
 
-```diff title="buf.gen.yaml" {3,4,6,7,8,10,11,12}
+```diff title="buf.gen.yaml" {3,4,7,8}
 version: v1
 plugins:
--   - name: go
+-   - plugin: go
 +   - plugin: buf.build/protocolbuffers/go:v1.28.1
       out: gen/go
--     opt: paths=source_relative
--   - name: go-grpc
+      opt: paths=source_relative
+-   - plugin: go-grpc
 +   - plugin: buf.build/grpc/go:v1.2.0
       out: gen/go
--     opt:
--     - paths=source_relative
--     - require_unimplemented_servers=false
+      opt:
+      - paths=source_relative
+      - require_unimplemented_servers=false
 ```
 
 ### Run generate
@@ -234,8 +236,8 @@ $ buf generate --template buf.gen.java.yaml
 You could also specify those different templates as JSON:
 
 ```terminal
-$ buf generate --template '{"version":"v1","plugins":[{"name":"go","out":"gen/go"}]}'
-$ buf generate --template '{"version":"v1","plugins":[{"name":"java","out":"gen/java"}]}'
+$ buf generate --template '{"version":"v1","plugins":[{"plugin":"go","out":"gen/go"}]}'
+$ buf generate --template '{"version":"v1","plugins":[{"plugin":"java","out":"gen/java"}]}'
 ```
 
 ### Generating to a specific directory {#output}
