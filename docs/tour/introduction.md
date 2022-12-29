@@ -7,8 +7,7 @@ The tour introduces you to the `buf` CLI and the Buf Schema Registry
 ([BSR](../bsr/introduction.md)). Along the way, you will enforce lint standards,
 detect breaking changes, generate code, create a
 [module](../bsr/overview.mdx#modules), manage a non-trivial dependency graph,
-and publish the module to the BSR so that it can be consumed by others. The tour
-takes approximately 20 minutes to complete.
+and publish the module to the BSR for others to consume.
 
 At any time, you can see the help for a command using `--help`:
 
