@@ -12,12 +12,12 @@ const languages: LanguageProps[] = [
   {
     name: "Go",
     logos: ["/img/logos/go.svg"],
-    href: "./go"
+    href: "/bsr/remote-packages/go"
   },
   {
     name: "JavaScript and TypeScript",
     logos: ["/img/logos/js.svg", "/img/logos/ts.svg"],
-    href: "./npm"
+    href: "/bsr/remote-packages/npm"
   }
 ];
 
