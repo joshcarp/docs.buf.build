@@ -147,6 +147,9 @@ The [Gazelle extension](#gazelle-dependencies) does this by default.
 
 `buf_lint_test` is a test rule that lints one or more `proto_library` targets.
 
+**NOTE:** Unused imports cannot be detected due to how the lint plugin captures
+warnings ([Issue #32](https://github.com/bufbuild/rules_buf/issues/32)).
+
 #### Attributes
 
 [//]:
