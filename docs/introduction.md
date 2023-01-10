@@ -92,10 +92,6 @@ while enabling your clients to consume APIs reliably and efficiently. Similar to
 `npm` for JavaScript, `pip` for Python, or `cargo` for Rust, the BSR _finally_
 brings dependency management to your Protobuf APIs.
 
-Over time, our goal is to make the BSR the only tool you need to manage your
-Protobuf workflow from end to end. To that end, there's a lot we are planning
-with the BSR. For a quick overview, see our [roadmap](roadmap.md).
-
 ## Where to go from here
 
 See the [installation](installation.mdx) page to install the `buf` CLI.

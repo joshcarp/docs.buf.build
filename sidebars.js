@@ -238,7 +238,6 @@ const sidebars = {
             collapsed: false
         },
         "editor-integration",
-        "roadmap",
         "faq",
         "contact"
     ]

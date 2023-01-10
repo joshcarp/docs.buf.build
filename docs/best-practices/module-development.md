@@ -75,8 +75,7 @@ manifests itself, then some users may be unable to compile their module.
 > In the future, we plan to enable a configurable (opt-in), module compatibility
 > guarantee so that it's _impossible_ to push backwards-incompatible changes to
 > your module. With this, consumers can freely update to the latest version on
-> any module and _never_ break their builds. For more, check out the
-> [roadmap](../roadmap.md).
+> any module and _never_ break their builds.
 
 ## Package versions
 
