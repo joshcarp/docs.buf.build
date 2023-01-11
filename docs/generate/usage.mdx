@@ -253,7 +253,7 @@ $ buf generate https://github.com/foo/bar.git --template data/generate.yaml -o b
 The paths in the template and the `-o` flag are interpreted as relative to your
 **current directory**, so you can place your template files anywhere.
 
-## Limit to specific files
+### Limit to specific files
 
 By default, `buf` builds all files under the `buf.yaml` configuration file. You
 can instead manually specify the file or directory paths to build. This is an
@@ -274,6 +274,60 @@ $ buf generate --path proto/foo/foo.proto --path proto/foo/bar.proto
 
 ```terminal title="Only generate for the files in the directory proto/foo on your GitHub repository"
 $ buf generate https://github.com/foo/bar.git --template data/generate.yaml --path proto/foo
+```
+
+### Limit to specific types
+
+The `buf generate` output is generated code for the types defined in your Protobuf
+file(s). These can be messages, enums, or even RPC services and methods (if you are
+using a plugin that supports RPC frameworks).
+
+By default, `buf` generates code for **all** types in your source file(s).
+But you can request `buf` only generate the types which you absolutely need,
+omitting everything else from the generated output.
+
+This can be achieved by specifying a list of types you want to include in the
+`buf.gen.yaml`. All names must be fully-qualified. If any name is unknown, the
+request will fail and no output will be returned. The resulting schema contains
+these elements and all of their dependencies. Other types will be excluded from the
+resulting generated code.
+
+When a message is included, any type references therein, such as from fields that
+refer to other message or enum types, are also included. If any included message
+is extendable (proto2-only feature), its known extensions will be included.
+
+If a particular method is included, its request and response message types will
+also be included, but other methods that belong to the same service will not
+(unless they are also included). If a service is included, all of its methods
+(and their request and response types) are included.
+
+If any included types have custom options the definitions for those custom options
+will also be included.
+
+If you only want to generate code for a subset of your types, you can
+do so via the `buf.gen.yaml`:
+
+```diff title="buf.gen.yaml"
+version: v1
++types:
++  include:
++    - buf.alpha.lint.v1.IDPaths
+plugins:
+  - plugin: go
+    out: gen/go
+    opt: paths=source_relative
+  - plugin: go-grpc
+    out: gen/go
+    opt:
+      - paths=source_relative
+      - require_unimplemented_servers=false
+```
+
+You can also use the `--include-types` flag, which overrides whatever might
+be configured in `buf.gen.yaml`.
+
+```terminal title="Only generate the type with a fully qualified name of buf.alpha.lint.v1.IDPaths"
+$ buf generate --include-types buf.alpha.lint.v1.IDPaths
 ```
 
 ## Docker
