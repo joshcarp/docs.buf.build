@@ -231,7 +231,7 @@ buf: > (#2) Accept-Encoding: gzip
 buf: > (#2) Connect-Protocol-Version: 1
 buf: > (#2) Connect-Timeout-Ms: 119823
 buf: > (#2) Content-Type: application/proto
-buf: > (#2) User-Agent: buf/1.11.1-dev connect-go/1.4.1 (go1.19.3)
+buf: > (#2) User-Agent: buf/1.12.0 connect-go/1.4.1 (go1.19.3)
 buf: > (#2)
 buf: } (#2) [24 bytes data]
 buf: * (#2) Finished upload
