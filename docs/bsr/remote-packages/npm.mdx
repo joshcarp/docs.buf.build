@@ -25,7 +25,7 @@ buf.build/gen/npm/v1
 :::
 
 NPM is configured to use the public NPM registry at
-[registry.NPMjs.org][npm-registry] by default. To configure NPM to use Buf's NPM
+[registry.npmjs.org][npm-registry] by default. To configure NPM to use Buf's NPM
 registry for the `@buf` package scope, use this command to [set][npm-config] your
 NPM config:
 
@@ -84,13 +84,13 @@ import Syntax from "@site/src/components/Syntax";
         {separator: " "},
         {label: "@buf", kind: "constant"},
         {separator: "/"},
-        {label: "{moduleOwner}", kind: "constant"},
+        {label: "moduleOwner", kind: "variable", href: "/bsr/overview#modules"},
         {separator: "_"},
-        {label: "{moduleName}", kind: "constant"},
+        {label: "moduleName", kind: "variable", href: "/bsr/overview#modules"},
         {separator: "."},
-        {label: "{pluginOwner}", kind: "constant"},
+        {label: "pluginOwner", kind: "variable", href: "#plugins"},
         {separator: "_"},
-        {label: "{pluginName}", kind: "constant"}
+        {label: "pluginName", kind: "variable", href: "#plugins"}
     ]}
 />
 
@@ -118,7 +118,7 @@ fly"&mdash;that is, they're lazily generated and then cached. The first
 
 :::
 
-You can use _any_ plugin that generates Javascript/Typescript, which can
+You can use _any_ plugin that generates JavaScript/TypeScript, which can
 simplify Protobuf workflows down to two steps:
 
 1. `buf push` your [module][modules] to the BSR

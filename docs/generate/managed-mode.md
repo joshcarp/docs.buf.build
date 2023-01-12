@@ -381,9 +381,9 @@ The problem really comes to a head when it comes to import paths. With
 With the `buf` CLI and managed mode, you can avoid these complex `protoc`
 invocations and use [configuration](#configuration) instead.
 
-[apple-warning]:
+[apple_warning]:
   https://github.com/apple/swift-protobuf/blob/main/Documentation/API.md#generated-struct-name
-[buf-gen-yaml]: /configuration/v1/buf-gen-yaml.md
+[buf_gen_yaml]: /configuration/v1/buf-gen-yaml.md
 [cc_enable_arenas]:
   https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto#L419
 [csharp_namespace]:

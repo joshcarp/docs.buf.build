@@ -283,7 +283,7 @@ $ buf build -o -#format=json | jq '.file[] | .package' | sort | uniq | head
 "google.ads.googleads.v2.errors"
 ```
 
-Images always include the `ImageFileExtension` field. if you want a pure
+Images always include the `ImageFileExtension` field. If you want a pure
 `FileDescriptorSet` without this field set, to mimic `protoc` entirely:
 
 ```terminal
