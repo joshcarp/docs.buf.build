@@ -132,7 +132,12 @@
     },
     {
       "source": "/grpc",
-      "destination": "/how-to/grpc",
+      "destination": "/curl/usage",
+      "permanent": true
+    },
+    {
+      "source": "/how-to/grpc",
+      "destination": "/curl/usage",
       "permanent": true
     },
     {

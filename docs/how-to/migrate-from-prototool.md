@@ -13,11 +13,6 @@ commands and migration.
 
 ## Prototool pros
 
-- Prototool has gRPC CLI functionality via `prototool grpc`. This functionality
-  roughly models parts of [grpcurl](https://github.com/fullstorydev/grpcurl) but
-  with fewer available features. We think gRPC CLI functionality is better left
-  to gRPC-specific tooling for now. See our [gRPC](grpc.md) documentation for
-  how to use `buf` with `grpcurl`.
 - Prototool has a much more prescriptive set of lint rules via the `uber2` lint
   group. This is a much more opinionated set of lint rules than `buf`'s
   `DEFAULT` category. We feel that the `DEFAULT` category is a set of rules that
@@ -341,12 +336,11 @@ See the [generation documentation](../generate/usage.mdx) for more details.
 
 ### `prototool grpc`
 
-There is no equivalent in `buf`.
+```sh
+$ buf curl
+```
 
-`buf` does not have gRPC functionality, as discussed above. We recommend using
-[grpcurl](https://github.com/fullstorydev/grpcurl) instead. See the
-[gRPC](grpc.md) documentation for details on how to use `FileDescriptorSet`s
-produced by `buf` for `grpcurl` input.
+See the [documentation for invoking RPCs](../curl/usage.md) for more details.
 
 ### `prototool lint`
 

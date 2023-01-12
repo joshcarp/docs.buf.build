@@ -82,6 +82,12 @@ const sidebars = {
         },
         {
             type: "category",
+            label: "Invoking RPCs",
+            items: ["curl/usage"],
+            collapsed: false
+        },
+        {
+            type: "category",
             label: "The Buf Schema Registry (BSR)",
             items: [
                 "bsr/introduction",
@@ -163,7 +169,6 @@ const sidebars = {
             items: [
                 "how-to/replace-protoc-with-buf",
                 "how-to/iterate-on-modules",
-                "how-to/grpc",
                 "how-to/migrate-from-protolock",
                 "how-to/migrate-from-prototool"
             ],
