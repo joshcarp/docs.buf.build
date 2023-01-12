@@ -76,6 +76,18 @@ steps:
       version: "latest"
 ```
 
+To access your private [Remote Packages](/bsr/remote-packages/overview) in [Buf Schema Registry](/bsr/introduction)(BSR), you may
+optionally supply with you Buf username and a [Buf API Token](/bsr/authentication#buf_token):
+
+```yaml
+steps:
+  - uses: actions/checkout@v2
+  - uses: bufbuild/buf-setup-action@v1
+    with:
+      buf_user: ${{ secrets.BUF_USER }}
+      buf_api_token: ${{ secrets.BUF_API_TOKEN }}
+```
+
 ## `buf-lint`
 
 Now that you have installed `buf`, let's configure lint. The `buf-lint` action
