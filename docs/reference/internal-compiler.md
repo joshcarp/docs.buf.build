@@ -54,7 +54,8 @@ quite literally replaces `protoc` outside of the built-in plugins (`--java_out`,
 equivalence to `protoc`, including both `proto2` and `proto3` definitions,
 imports, [`FileDescriptorProto`][filedescriptorproto] ordering,
 [SourceCodeInfo](https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto),
-and custom options.
+and custom options. (We even took what we learned from building this compiler
+to write a [comprehensive language specification](https://protobuf.com/docs/language-spec)!)
 
 The resulting `FileDescriptorSet`s are almost byte equivalent to `protoc`, in
 fact - under most scenarios without `SourceCodeInfo`, you can actually compare
