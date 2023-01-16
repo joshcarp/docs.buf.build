@@ -29,13 +29,14 @@ request to be re-added with the desired role.
 ### Member {#org-member}
 
 - Can view the organization and its members.
-- Have the [Base resource role](#base-resource-roles) over the organizations
-  resources, which defaults to [Write](#resource-write).
+- Inherits the [base resource roles](#base-resource-roles) on existing organization
+  resources (the default is [Write](#resource-write)).
 
 ### Machine {#org-machine}
 
-- Can write to organization resources, regardless of the organization's
-  [base resource roles](#base-resource-roles).
+- Can view the organization and its members.
+- Inherits [Write](#resource-write) roles over existing organization resources, 
+  regardless of the organization's [base resource roles](#base-resource-roles).
 
 This role is useful in CI pipelines - you can set the organization base roles to
 [Read](#resource-read) and configure a Machine user to push to a BSR repository
