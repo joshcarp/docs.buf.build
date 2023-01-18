@@ -6,10 +6,11 @@ groupId="language-selection"
 defaultValue="go"
 values={[
 {label: 'Go', value: 'go'},
+{label: 'Java', value: 'java'},
 {label: 'JavaScript', value: 'javascript'},
 {label: 'Python', value: 'python'},
 {label: 'Ruby', value: 'ruby'},
-{label: 'Java', value: 'java'},
+{label: 'Swift', value: 'swift'},
 ]}>
 <TabItem value="go">
 
@@ -70,6 +71,20 @@ plugins:
     out: gen/java
   - plugin: buf.build/grpc/java
     out: gen/java
+```
+
+  </TabItem>
+  <TabItem value="swift">
+
+```yaml title=buf.gen.yaml
+version: v1
+plugins:
+  - plugin: buf.build/apple/swift
+    opt: Visibility=Public
+    out: gen/swift
+  - plugin: buf.build/bufbuild/connect-swift
+    opt: Visibility=Public
+    out: gen/swift
 ```
 
   </TabItem>

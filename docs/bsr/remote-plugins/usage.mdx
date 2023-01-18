@@ -16,7 +16,7 @@ information on the `buf.gen.yaml` configuration, see the
 
 Buf verifies and maintains the commonly-used plugins used across the Protobuf
 ecosystem. To discover all publicly-available plugins, go to
-[buf.build/plugins][plugins].
+[buf.build/plugins](https://buf.build/plugins).
 
 ## Choose your input
 
@@ -184,7 +184,8 @@ plugins:
 
 ### connect-go
 
-[Connect](https://connect.build) is a slim library for building browser and
+[Connect-Go](https://connect.build/docs/go/getting-started)
+is a slim library for building browser and
 gRPC-compatible HTTP APIs. Handlers and clients support three protocols: gRPC,
 gRPC-Web, and Connect's own protocol.
 
@@ -210,7 +211,7 @@ plugins:
 
 ### connect-web
 
-[Connect-Web](https://connect.build/docs/web/getting-started/) is a simple
+[Connect-Web](https://connect.build/docs/web/getting-started) is a simple
 library to call remote procedures from a web browser. Unlike REST, you get a
 type-safe client and never have to think about serialization again.
 
@@ -235,4 +236,30 @@ plugins:
     out: gen/es
 ```
 
-[plugins]: https://buf.build/plugins
+### connect-swift
+
+[Connect-Swift](https://connect.build/docs/swift/getting-started)
+is a small library that provides support for using generated,
+type-safe, and idiomatic Swift APIs to communicate with your app's servers.
+It can be used with both the gRPC-Web and Connect protocols.
+
+[`protoc-gen-connect-swift`](https://github.com/bufbuild/connect-swift)
+is responsible for generating Swift clients, and relies on the models generated
+by [`protoc-gen-swift`](https://github.com/apple/swift-protobuf).
+The BSR hosts both of these plugins at
+[buf.build/bufbuild/connect-swift](https://buf.build/bufbuild/connect-swift)
+and [buf.build/apple/swift](https://buf.build/apple/swift), respectively.
+
+To get started with Connect-Swift, check out the
+[demo tutorial](https://connect.build/docs/swift/getting-started).
+
+```yaml title=buf.gen.yaml {3,6}
+version: v1
+plugins:
+  - plugin: buf.build/apple/swift
+    opt: Visibility=Public
+    out: gen/swift
+  - plugin: buf.build/bufbuild/connect-swift
+    opt: Visibility=Public
+    out: gen/swift
+```

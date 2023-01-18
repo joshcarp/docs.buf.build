@@ -6,10 +6,11 @@ groupId="language-selection"
 defaultValue="go"
 values={[
 {label: 'Go', value: 'go'},
+{label: 'Java', value: 'java'},
 {label: 'JavaScript', value: 'javascript'},
 {label: 'Python', value: 'python'},
 {label: 'Ruby', value: 'ruby'},
-{label: 'Java', value: 'java'},
+{label: 'Swift', value: 'swift'},
 ]}>
 <TabItem value="go">
 
@@ -80,6 +81,20 @@ values={[
             └── v1
                 ├── PetOuterClass.java
                 └── PetStoreServiceGrpc.java
+```
+
+  </TabItem>
+  <TabItem value="swift">
+
+```sh
+.
+├── buf.gen.yaml
+└── gen
+    └── swift
+        └── pet
+            └── v1
+                ├── pet.connect.swift
+                └── pet.pb.swift
 ```
 
   </TabItem>
