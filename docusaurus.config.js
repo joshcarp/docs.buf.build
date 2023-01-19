@@ -99,7 +99,7 @@ module.exports = {
           bufAppearance: "dark-button"
         },
         {
-          href: "https://join.slack.com/t/bufbuild/shared_invite/zt-f5k547ki-VDs_iC4TblNCu7ubhRD17w",
+          href: "https://buf.build/links/slack",
           label: "Slack",
           position: "right",
           bufAppearance: "slack"

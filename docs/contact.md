@@ -8,7 +8,7 @@ We'd love to stay in touch, here's a few ways to stay up to date:
 - Star and/or watch [github.com/bufbuild/buf](https://github.com/bufbuild/buf)
   for development and release updates.
 - Join the
-  [Buf Slack](https://join.slack.com/t/bufbuild/shared_invite/zt-f5k547ki-VDs_iC4TblNCu7ubhRD17w)
+  [Buf Slack](https://buf.build/links/slack)
   to stay in touch and discuss Buf.
 
 To contact us:
