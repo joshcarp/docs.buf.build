@@ -176,3 +176,20 @@ blockquote {
   background-color: rgb(246, 248, 250);
   border-left: 4px solid var(--ifm-color-primary);
 }
+
+.card {
+  background-color: #f6f8fa;
+  --ifm-link-color: var(--ifm-color-emphasis-800);
+  --ifm-link-hover-color: var(--ifm-color-emphasis-700);
+  --ifm-link-hover-decoration: none;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  box-shadow: 0 1.5px 3px 0 rgba(0,0,0,.15);
+  transition: all var(--ifm-transition-fast) ease;
+  transition-property: border,box-shadow
+}
+
+.card:hover {
+  background-color: #fff;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 3px 6px 0 rgba(0,0,0,.2)
+}
