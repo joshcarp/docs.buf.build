@@ -34,7 +34,27 @@ The order of precedence for CLI authentication is:
 
 ### BUF_TOKEN
 
-An environment variable that holds the API token, used for authentication.
+`BUF_TOKEN` is an environment variable that holds the API token, used for authentication.
+
+#### Single Token
+
+`BUF_TOKEN` can contain a default token. This token is used when authenticating with
+the BSR. You can set `BUF_TOKEN` by:
+```terminal
+$ export BUF_TOKEN=${YOUR_TOKEN}
+```
+
+#### Multiple BSR Remote Tokens
+
+The `BUF_TOKEN` environment variable can also contain tokens with specified BSR address.
+Each token has the format `${USER}:${BUF_TOKEN}@${REMOTE_ADDRESS}` with multiple tokens 
+separated by `,`. The `buf` CLI will find the correct authentication token for different
+remote address. You can set `BUF_TOKEN` by:
+```terminal
+$ export BUF_TOKEN=${USER1}:${TOKEN1}@{REMOTE1},${USER2}:${TOKEN2}@{REMOTE2},...,{DEFAULT_TOKEN}
+```
+The default token is used when authenticating with remote addresses when a matching remote
+token is not provided. The default token is not required.
 
 ### netrc file
 
