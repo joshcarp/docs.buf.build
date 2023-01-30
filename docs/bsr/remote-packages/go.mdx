@@ -149,15 +149,27 @@ is correctly configured. Begin by logging into the BSR:
 $ buf registry login
 ```
 
-The `go` tool uses [`.netrc` credentials][netrc] if available, and you can use
-`buf registry login` to add this to your `.netrc` file. You can obtain an API
-token (password) from the [Settings page][settings].
+The `go` tool authenticates with proxies using [`.netrc` credentials or
+credentials directly specified in GOPROXY URLs][go-private-module-proxy-auth].
+You can use `buf registry login` to add BSR credentials to your `.netrc` file.
+You can obtain an API token (usable as netrc password) from the [Settings
+page][settings].
 
 ```sh title="~/.netrc"
 machine buf.build
         login <USERNAME>
         password <TOKEN>
 ```
+
+Or using direct credentials:
+
+```
+GOPROXY=https://$BSR_USER:$BSR_TOKEN@buf.build/gen/go
+```
+
+Like mentioned in the Go docs on using direct credentials: use caution when
+taking this approach as environment variables may appear in shell history and in
+logs.
 
 import EnvVars from './_env-vars.mdx';
 
@@ -179,7 +191,7 @@ that should be added please [file an issue][bufbuild-plugins-issue]!
 [connect-go]: https://buf.build/bufbuild/connect-go
 [goproxy]: https://golang.org/ref/mod#goproxy-protocol
 [modules]: ../overview.mdx#modules
-[netrc]: https://golang.org/ref/mod#private-module-proxy-auth
+[go-private-module-proxy-auth]: https://golang.org/ref/mod#private-module-proxy-auth
 [private]: https://golang.org/ref/mod#private-modules
 [settings]: https://buf.build/settings/user
 [semver]: https://semver.org
