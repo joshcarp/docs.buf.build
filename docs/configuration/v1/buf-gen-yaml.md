@@ -46,15 +46,14 @@ Each entry in the `buf.gen.yaml` `plugins` key is a `protoc` plugin
 configuration, which is a program that generates code by interacting with the
 compiled representation of your module.
 
-#### `plugin`, `name` or `remote`
+#### `plugin`
 
-One of `plugin`, `name` or `remote` for a plugin is **required**.
+`plugin` is **required**.
 
 Local Plugins:
 
-To execute a locally installed plugin, specify the plugin name via either the
-`plugin` or `name` fields. All `protoc` plugins begin with the `protoc-gen-`
-prefix.
+To execute a locally installed plugin, specify the plugin name via the
+`plugin` field. All `protoc` plugins begin with the `protoc-gen-` prefix.
 
 By default, a `protoc-gen-<name>` program is expected to be on your `PATH` so
 that it can be discovered and executed by `buf`. This can be overridden with the
@@ -62,12 +61,12 @@ that it can be discovered and executed by `buf`. This can be overridden with the
 
 Remote Plugins:
 
-The `plugin` or `remote` (deprecated) fields can specify a remotely executed
+The `plugin` field can specify a remotely executed
 plugin (`<remote>/<owner>/<plugin-name>:<plugin-version>` or
 `<remote>/<owner>/<plugin-name>`). If a remotely executed plugin omits the
 `<plugin-version>`, the latest version will be used. If a `<plugin-version>` is
-specified with `<plugin>`, the optional [revision](#revision) can be specified
-to pin an exact version/revision of a plugin.
+specified, the optional [revision](#revision) can be specified
+to pin an exact revision of a plugin version.
 
 #### `out`
 
@@ -117,8 +116,7 @@ plugins:
     path: bin/proto/protoc-gen-foo
 ```
 
-This field is **exclusive** with `remote` and only works with `name` for local
-plugins.
+This field only works with local plugins.
 
 #### `revision`
 
