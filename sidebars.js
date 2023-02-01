@@ -94,6 +94,23 @@ const sidebars = {
                 "bsr/overview",
                 "bsr/authentication",
                 "bsr/usage",
+                "bsr/api-access",
+                {
+                    type: "category",
+                    label: "Reflection",
+                    items: [
+                        "bsr/reflection/overview",
+                        "bsr/reflection/usage",
+                        "bsr/reflection/prototransform",
+                    ],
+                    customProps: {
+                        badge: {
+                            label: "new",
+                            severity: "info"
+                        }
+                    },
+                    collapsed: false
+                },
                 "bsr/documentation",
                 "bsr/user-management",
                 {
