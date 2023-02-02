@@ -3,10 +3,10 @@ id: prototransform
 title: Prototransform
 ---
 
-Like any Connect API, you can use the Buf Reflection API using a client generated via
-[`buf generate buf.build/bufbuild/reflect`](/generate/usage) or by downloading a
-[remote package](/bsr/remote-packages/overview.mdx). This API client will allow you to
-download descriptor protos.
+Like any Connect API, you can use the Buf Reflection API using a client
+[generated](/generate/usage) via the Buf CLI (e.g. `buf generate buf.build/bufbuild/reflect`)
+or by downloading a [remote package](/bsr/remote-packages/overview.mdx). This API client will
+allow you to download descriptor protos.
 
 A richer client library, that makes use of dynamic messages (provided by various Protobuf
 runtimes), is needed to fully unlock some powerful use cases enabled by the API.
