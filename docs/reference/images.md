@@ -97,9 +97,7 @@ Protobuf definition is shown below (notice the `ModuleName` in the
 `ImageFileExtension`):
 
 ```protobuf
-// A Buf image is an extended FileDescriptorSet.
-//
-// See https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto
+// Image is an extended FileDescriptorSet.
 message Image {
   repeated ImageFile file = 1;
 }
@@ -107,11 +105,8 @@ message Image {
 // ImageFile is an extended FileDescriptorProto.
 //
 // Since FileDescriptorProto does not have extensions, we copy the fields from
-// FileDescriptorProto, and then add our own extensions via the
-// buf_image_file_extension field. This is compatible with a
-// FileDescriptorProto.
-//
-// See https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto
+// FileDescriptorProto, and then add our own extensions via the buf_extension
+// field. This is compatible with a FileDescriptorProto.
 message ImageFile {
   optional string name = 1;
   optional string package = 2;
@@ -129,77 +124,22 @@ message ImageFile {
   // buf_extension contains buf-specific extensions to FileDescriptorProtos.
   //
   // The prefixed name and high tag value is used to all but guarantee there
-  // is never a conflict with Google's FileDescriptorProto definition.
+  // will never be any conflict with Google's FileDescriptorProto definition.
   // The definition of a FileDescriptorProto has not changed in years, so
   // we're not too worried about a conflict here.
   optional ImageFileExtension buf_extension = 8042;
 }
 
-// ImageFileExtension contains extensions to ImageFiles.
-//
-// The fields are not included directly on the ImageFile so that we can both
-// detect if extensions exist, which signifies this was created by buf and not
-// by protoc, and so that we can add fields in a freeform manner without
-// worrying about conflicts with FileDescriptorProto.
 message ImageFileExtension {
   // is_import denotes whether this file is considered an "import".
-  //
-  // An import is a file which was not derived from the local source files.
-  // There are two cases where this could be true:
-  //
-  // 1. A Well-Known Type included from the compiler.
-  // 2. A file that was included from a Buf module dependency.
-  //
-  // We use "import" as this matches with the protoc concept of
-  // --include_imports, however import is a bit of an overloaded term.
-  //
-  // This is always set.
   optional bool is_import = 1;
   // ModuleInfo contains information about the Buf module this file belongs to.
-  //
-  // This field is optional and is not set if the module is not known.
   optional ModuleInfo module_info = 2;
-  // is_syntax_unspecified denotes whether the file did not have a syntax
-  // explicitly specified.
-  //
-  // Per the FileDescriptorProto spec, it would be fine in this case to just
-  // leave the syntax field unset to denote this and to set the syntax field
-  // to "proto2" if it is specified. But protoc does not set the syntax
-  // field if it was "proto2", and plugins may (incorrectly) depend on this.
-  // We also want to maintain consistency with protoc as much as possible.
-  // So instead, we have this field which denotes whether syntax was not
-  // specified.
-  //
-  // This is always be set.
+  // is_syntax_unspecified denotes whether the file did not have a syntax explicitly specified.
   optional bool is_syntax_unspecified = 3;
   // unused_dependency are the indexes within the dependency field on
   // FileDescriptorProto for those dependencies that are not used.
-  //
-  // This matches the shape of the public_dependency and weak_dependency
-  // fields.
   repeated int32 unused_dependency = 4;
-}
-
-// ModuleInfo contains information about a Buf module that an ImageFile
-// belongs to.
-message ModuleInfo {
-  // name is the name of the Buf module.
-  //
-  // This is always set.
-  optional ModuleName name = 1;
-  // commit is the repository commit.
-  //
-  // This field is optional and not set if the commit is not known.
-  optional string commit = 2;
-}
-
-// ModuleName is a module name.
-//
-// All fields are always set.
-message ModuleName {
-  optional string remote = 1;
-  optional string owner = 2;
-  optional string repository = 3;
 }
 ```
 
