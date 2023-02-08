@@ -6,84 +6,110 @@ const sidebars = {
         "installation",
         {
             type: "category",
-            label: "Tour",
+            label: "Guides",
             items: [
-                "tour/introduction",
-                "tour/configure-and-build",
-                "tour/list-all-protobuf-files",
-                "tour/lint-your-api",
-                "tour/detect-breaking-changes",
-                "tour/generate-code",
-                "tour/log-into-the-bsr",
-                "tour/push-a-module",
-                "tour/view-generated-documentation",
-                "tour/add-a-dependency",
-                "tour/generate-go-code",
-                "tour/implement-grpc-endpoints",
-                "tour/use-a-workspace",
-                "tour/use-managed-mode",
-                "tour/push-workspace-modules",
                 {
-                    type: "doc",
-                    id: "tour/use-remote-packages",
-                    customProps: {
-                        badge: {
-                            label: "new",
-                            severity: "info"
-                        }
-                    }
+                    type: "category",
+                    label: "Tour",
+                    items: [
+                        "tour/introduction",
+                        "tour/configure-and-build",
+                        "tour/list-all-protobuf-files",
+                        "tour/lint-your-api",
+                        "tour/detect-breaking-changes",
+                        "tour/generate-code",
+                        "tour/log-into-the-bsr",
+                        "tour/push-a-module",
+                        "tour/view-generated-documentation",
+                        "tour/add-a-dependency",
+                        "tour/generate-go-code",
+                        "tour/implement-grpc-endpoints",
+                        "tour/use-a-workspace",
+                        "tour/use-managed-mode",
+                        "tour/push-workspace-modules",
+                        {
+                            type: "doc",
+                            id: "tour/use-remote-packages",
+                            customProps: {
+                                badge: {
+                                    label: "new",
+                                    severity: "info"
+                                }
+                            }
+                        },
+                        "tour/wrapping-up",
+                    ],
+                    collapsed: false
                 },
-                "tour/wrapping-up",
+                {
+                    type: "category",
+                    label: "How To",
+                    items: [
+                        "how-to/replace-protoc-with-buf",
+                        "how-to/iterate-on-modules",
+                        "how-to/migrate-from-protolock",
+                        "how-to/migrate-from-prototool"
+                    ],
+                    collapsed: false
+                },
             ],
             collapsed: false
         },
         {
             type: "category",
-            label: "Build",
-            items: ["build/usage"],
-            collapsed: false
-        },
-        {
-            type: "category",
-            label: "Generate",
+            label: "The Buf CLI",
             items: [
-                "generate/usage",
-                "generate/managed-mode",
+
+                {
+                    type: "category",
+                    label: "Build",
+                    items: ["build/usage"],
+                    collapsed: false
+                },
+                {
+                    type: "category",
+                    label: "Generate",
+                    items: [
+                        "generate/usage",
+                        "generate/managed-mode",
+                    ],
+                    collapsed: false
+                },
+                {
+                    type: "category",
+                    label: "Lint",
+                    items: [
+                        "lint/overview",
+                        "lint/usage",
+                        "lint/configuration",
+                        "lint/rules"
+                    ],
+                    collapsed: false
+                },
+                {
+                    type: "category",
+                    label: "Breaking Change Detection",
+                    items: [
+                        "breaking/overview",
+                        "breaking/usage",
+                        "breaking/configuration",
+                        "breaking/rules"
+                    ],
+                    collapsed: false
+                },
+                {
+                    type: "category",
+                    label: "Format",
+                    items: ["format/usage", "format/style"],
+                    collapsed: false
+                },
+                {
+                    type: "category",
+                    label: "Invoking RPCs",
+                    items: ["curl/usage"],
+                    collapsed: false
+                },
             ],
-            collapsed: false
-        },
-        {
-            type: "category",
-            label: "Lint",
-            items: [
-                "lint/overview",
-                "lint/usage",
-                "lint/configuration",
-                "lint/rules"
-            ],
-            collapsed: false
-        },
-        {
-            type: "category",
-            label: "Breaking Change Detection",
-            items: [
-                "breaking/overview",
-                "breaking/usage",
-                "breaking/configuration",
-                "breaking/rules"
-            ],
-            collapsed: false
-        },
-        {
-            type: "category",
-            label: "Format",
-            items: ["format/usage", "format/style"],
-            collapsed: false
-        },
-        {
-            type: "category",
-            label: "Invoking RPCs",
-            items: ["curl/usage"],
             collapsed: false
         },
         {
@@ -182,17 +208,6 @@ const sidebars = {
         },
         {
             type: "category",
-            label: "How To",
-            items: [
-                "how-to/replace-protoc-with-buf",
-                "how-to/iterate-on-modules",
-                "how-to/migrate-from-protolock",
-                "how-to/migrate-from-prototool"
-            ],
-            collapsed: false
-        },
-        {
-            type: "category",
             label: "Configuration",
             items: [
                 "configuration/overview",
@@ -251,10 +266,10 @@ const sidebars = {
                                 "reference/deprecated/remote-generation/plugin-example",
                                 "reference/deprecated/remote-generation/template-example"
                             ],
-                            collapsed: true
+                            collapsed: false
                         }
                     ],
-                    collapsed: false
+                    collapsed: true
                 }
             ],
             collapsed: false
