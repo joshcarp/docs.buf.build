@@ -28,7 +28,8 @@ module.exports = {
   ],
   plugins: [
     path.resolve("src/plugins/fathom"),
-    path.resolve("src/plugins/stars")
+    path.resolve("src/plugins/stars"),
+    '@docusaurus/plugin-ideal-image'
   ],
   title: "Buf®",
   tagline: "Building a better way to work with Protocol Buffers",
