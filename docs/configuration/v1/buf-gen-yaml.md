@@ -116,6 +116,20 @@ plugins:
     path: bin/proto/protoc-gen-foo
 ```
 
+The path can include some arguments. If the path has more than one element, the
+first is the plugin binary and the others are optional additional arguments to 
+pass to the binary. For example, you can run the version of `protoc-gen-go`
+that matches the `google.golang.org/protobuf` specified by `go.mod` by:
+
+```yaml title="buf.gen.yaml"
+version: v1
+plugins:
+  - name: go
+    path: ["go", "run", "google.golang.org/protobuf/cmd/protoc-gen-go"]
+    out: gen/proto
+    opt: paths=source_relative
+```
+
 This field only works with local plugins.
 
 #### `revision`
@@ -186,6 +200,38 @@ $ protoc -I . $(find . -name '*.proto')
 
 This is needed for certain plugins that expect all files to be given at once.
 It is also used for remote plugin generation to improve code generation performance.
+
+#### `protoc_path`
+The `protoc_path` of a plugin is optional and only applies to the code generators
+that are _built-in_ to `protoc`. Normally, a plugin is a separate executable whose
+binary name is like `protoc-gen-<name>`. But for a handful of plugins, the executable
+used is `protoc` itself. The following plugins result in invoking `protoc` instead of
+a dedicated plugin binary:
+1. `cpp` 
+2. `csharp`
+3. `java`
+4. `js` (before v21)
+5. `kotlin` (after v3.17)
+6. `objc`
+7. `php`
+8. `pyi`
+9. `python`
+10. `ruby`
+
+Normally for the above plugins, `buf` will execute the `protoc` binary that is found in
+your `$PATH`. But this configuration option lets you point to a specific binary. This
+is particularly useful if you need to support a specific version of `protoc`, which
+could differ from the version in `$PATH`. For example, you can run a specific version of 
+`protoc` instead of the `protoc` installed in `$PATH` by:
+
+```yaml title="buf.gen.yaml"
+version: v1
+plugins:
+  - plugin: go
+    revision: 1
+    out: gen/proto/go
+    protoc_path: /path/to/specific/version/bin/protoc
+```
 
 ### `managed`
 
