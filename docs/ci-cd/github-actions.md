@@ -62,7 +62,7 @@ version:
 ```yaml {2-3}
 - uses: bufbuild/buf-setup-action@v1
   with:
-    version: "1.13.1"
+    version: "1.14.0"
 ```
 
 To resolve the latest release from GitHub, you can specify `latest`, but this is
