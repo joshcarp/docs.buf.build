@@ -74,7 +74,8 @@ version: v1
 managed:
   enabled: true
   java_multiple_files: false
-  java_package_prefix: com
+  java_package_prefix:
+    default: com
   java_string_check_utf8: false
   go_package_prefix:
     default: github.com/acme/weather/private/gen/proto/go
@@ -113,6 +114,23 @@ effect third-party plugins as well. Accepted values:
 | `CODE_SIZE`    | Generate minimal classes and instead rely on shared, reflection-based code for serialization, parsing, and other operations |
 | `LITE_RUNTIME` | Generate classes that depend only on the "lite" Protobuf runtime                                                            |
 
+This key also supports *optional* `default`, `except`, and `override` keys:
+
+```yaml title="buf.gen.yaml"
+version: v1
+managed:
+  enabled: true
+  optimize_for:
+    # optional default, if not set, it uses the default behavior described
+    default: SPEED
+    except:
+      # modules listed here will be exempt from getting this file option from managed mode
+      - buf.build/<owner>/<module>
+    override:
+      # modules listed here will get the override value
+      buf.build/<owner>/<module>: CODE_SIZE
+```
+
 #### `override`
 
 This setting enables you to apply per-file overrides for any given setting. In
@@ -149,6 +167,21 @@ You can set [`optimize_for`](#optimize_for) for C++ using managed mode.
 If you enable managed mode, [`csharp_namespace`][csharp_namespace] is set to the
 package name with each package sub-name capitalized. This converts the
 `acme.weather.v1` package name, for example, to `Acme.Weather.V1`.
+
+This key also supports **optional** `except`, and `override` keys:
+
+```yaml title="buf.gen.yaml"
+version: v1
+managed:
+  enabled: true
+  csharp_namespace:
+    except:
+      # modules listed here will be exempt from getting this file option from managed mode
+      - buf.build/<owner>/<module>
+    override:
+      # modules listed here will get the override value
+      buf.build/<owner>/<module>: Your.Namespace
+```
 
 ### Go
 
@@ -241,6 +274,23 @@ The `java_package_prefix` key is an **optional** string that controls which
 [`java_package`][java_package] prefix value is used in all the files in the
 generation target [input]. The default is `com`.
 
+This key also supports **optional** `default`, `except`, and `override` keys:
+
+```yaml title="buf.gen.yaml"
+version: v1
+managed:
+  enabled: true
+  java_package_prefix:
+    # optional default, if not set, it uses the default behavior described
+    default: org
+    except:
+      # modules listed here will be exempt from getting this file option from managed mode
+      - buf.build/<owner>/<module>
+    override:
+      # modules listed here will get the override value
+      buf.build/<owner>/<module>: foo
+```
+
 #### `java_outer_classname`
 
 If you enable managed mode, [`java_outer_classname`][java_outer_classname] is
@@ -287,6 +337,21 @@ If you're generating Ruby code and you enable managed mode,
 [`ruby_package`][ruby_package] is set to the package name with each package
 sub-name capitalized, with `::` substituted for `.`. This would automatically
 convert the `acme.weather.v1` package name, for example, to `Acme::Weather::V1`.
+
+This key also supports **optional** `except`, and `override` keys:
+
+```yaml title="buf.gen.yaml"
+version: v1
+managed:
+  enabled: true
+  ruby_package:
+    except:
+      # modules listed here will be exempt from getting this file option from managed mode
+      - buf.build/<owner>/<module>
+    override:
+      # modules listed here will get the override value
+      buf.build/<owner>/<module>: A::Package::Name
+```
 
 ## Managed mode example {#example}
 
