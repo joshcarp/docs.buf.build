@@ -22,8 +22,12 @@ module.exports = {
         sitemap: {
           changefreq: "daily",
           priority: 0.7
-        }
-      }
+        },
+        gtag: {
+          trackingID: process.env.GOOGLE_ANALYTICS_GTAG,
+          anonymizeIP: true,
+        },
+      },
     ]
   ],
   plugins: [
