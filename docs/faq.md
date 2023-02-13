@@ -138,19 +138,3 @@ $ protoc -I . \
 ```
 
 We apologize for any inconvenience this warning may have caused.
-
-## Depending on well-known types {#why-cant-i-import-bufbuildbetawellknowntypes-as-a-dependency-in-my-module}
-
-You may have seen this error when running `buf mod update`:
-
-```
-Failure: repository beta/wellknowntypes cannot be resolved as a dependency, see https://buf.build/beta/wellknowntypes for more information
-```
-
-This happens when `buf.build/beta/wellknowntypes` is a dependency in your
-module. The well-known types are built into the compiler and referenced at
-compile time. Module `beta/wellknowntypes` exists for documentation purpose
-only.
-
-You can fix this by removing `buf.build/beta/wellknowntypes` from your
-dependencies in `buf.yaml` and running `buf mod update` again.
