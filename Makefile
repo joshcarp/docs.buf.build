@@ -51,7 +51,7 @@ ci:
 	npm run build:ci
 
 .PHONY: updateversion
-updateversion:
+updateversion: updatereference
 ifndef VERSION
 	$(error "VERSION must be set")
 endif
@@ -60,3 +60,11 @@ endif
 	$(SED_I) "s/version = \"v[0-9].[0-9][0-9]*\.[0-9][0-9]*\"/version = \"v$(VERSION)\"/g" docs/build-systems/bazel.md
 	$(SED_I) "s/BUF_VERSION=[0-9].[0-9][0-9]*\.[0-9][0-9]*/BUF_VERSION=$(VERSION)/g" docs/ci-cd/setup.mdx
 	$(SED_I) "s/downloadRelease: \"[0-9].[0-9][0-9]*\.[0-9][0-9]*\"/downloadRelease: \"$(VERSION)\"/g" docusaurus.config.js
+
+.PHONY: updatereference
+updatereference:
+ifndef VERSION
+	$(error "VERSION must be set")
+endif
+	go install github.com/bufbuild/buf/cmd/buf@$(VERSION); \
+	buf webpages docs/reference/ --exclude-command "buf completion" --exclude-command "buf ls-files" --slug-prefix reference/cli
