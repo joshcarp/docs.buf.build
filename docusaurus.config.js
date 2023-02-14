@@ -23,17 +23,17 @@ module.exports = {
           changefreq: "daily",
           priority: 0.7
         },
-        gtag: {
-          trackingID: process.env.GOOGLE_ANALYTICS_GTAG,
-          anonymizeIP: true,
-        },
       },
     ]
   ],
   plugins: [
     path.resolve("src/plugins/fathom"),
     path.resolve("src/plugins/stars"),
-    '@docusaurus/plugin-ideal-image'
+    '@docusaurus/plugin-ideal-image',
+    ["@docusaurus/plugin-google-gtag",{
+      trackingID: process.env.GOOGLE_ANALYTICS_GTAG,
+      anonymizeIP: true,
+    } ]
   ],
   title: "Buf®",
   tagline: "Building a better way to work with Protocol Buffers",
