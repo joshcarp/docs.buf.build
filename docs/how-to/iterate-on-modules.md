@@ -5,7 +5,7 @@ title: Iterate on modules
 
 > For a comprehensive guide on working with
 > [modules](../bsr/overview.mdx#modules) and the Buf Schema Registry
-> ([BSR](../bsr/overview.mdx)), check out the [tour](../tour/introduction.md)!
+> ([BSR](../bsr/overview.mdx)), check out the [tour](../tutorials/getting-started-with-buf-cli.md)!
 
 As requirements change, you'll inevitably need to evolve your Protobuf APIs, and
 potentially update your dependencies. As much as `buf`'s breaking change

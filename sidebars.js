@@ -35,34 +35,10 @@ const sidebars = {
             items: [
                 {
                     type: "category",
-                    label: "Tour",
+                    label: "Getting Started",
                     items: [
-                        "tour/introduction",
-                        "tour/configure-and-build",
-                        "tour/list-all-protobuf-files",
-                        "tour/lint-your-api",
-                        "tour/detect-breaking-changes",
-                        "tour/generate-code",
-                        "tour/log-into-the-bsr",
-                        "tour/push-a-module",
-                        "tour/view-generated-documentation",
-                        "tour/add-a-dependency",
-                        "tour/generate-go-code",
-                        "tour/implement-grpc-endpoints",
-                        "tour/use-a-workspace",
-                        "tour/use-managed-mode",
-                        "tour/push-workspace-modules",
-                        {
-                            type: "doc",
-                            id: "tour/use-remote-packages",
-                            customProps: {
-                                badge: {
-                                    label: "new",
-                                    severity: "info"
-                                }
-                            }
-                        },
-                        "tour/wrapping-up",
+                        "tutorials/getting-started-with-buf-cli",
+                        "tutorials/getting-started-with-bsr",
                     ],
                     collapsed: false
                 },

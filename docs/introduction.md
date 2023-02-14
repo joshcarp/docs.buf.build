@@ -8,20 +8,37 @@ import { Card, Cards } from "@site/src/components/Cards";
 <Cards>
   <Card
     image=""
-    name="💨 Quick Start"
+    name="⚡️ Quick Start"
     url="installation"
     description="Download and install Buf on your machine in a few easy steps"
   />
   <Card
     image=""
-    name="🚘 Tour"
-    url="/tour/introduction"
+    name="👨‍💻 Getting Started with the Buf CLI"
+    url="/tutorials/getting-started-with-buf-cli"
     description="Learn Buf basics and the benefits of Schema Driven Development"
   />
   <Card
+    image=""
+    name="🚀 Getting Started with the Buf Schema Registry"
+    url="/tutorials/getting-started-with-buf-cli"
+    description="Say hello to confidence, simplicity, and ease of use with the Buf Schema Registry."
+  />
+  <Card
+    image=""
+    name="🤝 Getting Started with Connect"
+    url="https://connect.build/docs/introduction"
+    description="Connect is a family of libraries for building browser and gRPC-compatible HTTP APIs."
+  />
+</Cards>
+
+### Manuals
+
+<Cards>
+  <Card
     image="img/logos/cli@2x.png"
     name="The Buf CLI"
-    url="build/usage"
+    url="/build/usage"
     description="Browse through the Buf CLI manuals and lean how to use simplify your protobuf workflow"
   />
   <Card
@@ -127,7 +144,7 @@ brings dependency management to your Protobuf APIs.
 
 See the [installation](installation.mdx) page to install the `buf` CLI.
 
-Next, we recommend completing the [tour](tour/introduction.md). The tour
+Next, we recommend completing the [tour](/tutorials/getting-started-with-buf-cli). The tour
 provides an overview of most of the existing functionality of Buf and takes
 approximately 20 minutes to complete.
 

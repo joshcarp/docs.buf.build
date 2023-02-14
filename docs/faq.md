@@ -33,8 +33,7 @@ If you've pinned your `googleapis/googleapis` dependency, you'll need to remove
 the pin prior to `buf mod update`.
 
 Additionally, if you have dependencies that themselves depend on googleapis,
-you'll need to update those as well, starting with your upstream modules. See
-[Tour - Push workspace modules](tour/push-workspace-modules) for more details.
+you'll need to update those as well, starting with your upstream modules. 
 
 For context, we recently made a change to our managed
 [buf.build/googleapis/googleapis][googleapis] repository.

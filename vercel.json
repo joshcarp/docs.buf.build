@@ -220,6 +220,74 @@
     {
       "source": "/bsr/managed-packages/concepts",
       "destination": "/bsr/managed-packages/overview#concepts"
+    },
+    {
+      "source": "/tour/introduction",
+      "destination": "/tutorials/getting-started-with-buf-cli"
+    },
+    {
+      "source": "/tour/configure-and-build",
+      "destination": "/tutorials/getting-started-with-buf-cli"
+    },
+    {
+      "source": "/tour/list-all-protobuf-files",
+      "destination": "/tutorials/getting-started-with-buf-cli"
+    },
+    {
+      "source": "/tour/lint-your-api",
+      "destination": "/tutorials/getting-started-with-buf-cli"
+    },
+    {
+      "source": "/tour/detect-breaking-changes",
+      "destination": "/tutorials/getting-started-with-buf-cli"
+    },
+    {
+      "source": "/tour/generate-code",
+      "destination": "/tutorials/getting-started-with-buf-cli"
+    },
+    {
+      "source": "/tour/log-into-the-bsr",
+      "destination": "/tutorials/getting-started-with-bsr"
+    },
+    {
+      "source": "/tour/push-a-module",
+      "destination": "/tutorials/getting-started-with-bsr"
+    },
+    {
+      "source": "/tour/view-generated-documentation",
+      "destination": "/tutorials/getting-started-with-bsr"
+    },
+    {
+      "source": "/tour/add-a-dependency",
+      "destination": "/tutorials/getting-started-with-bsr"
+    },
+    {
+      "source": "/tour/generate-go-code",
+      "destination": "/tutorials/getting-started-with-buf-cli"
+    },
+    {
+      "source": "/tour/implement-grpc-endpoints",
+      "destination": "/tutorials/getting-started-with-buf-cli"
+    },
+    {
+      "source": "/tour/use-a-workspace",
+      "destination": "/reference/workspaces"
+    },
+    {
+      "source": "/tour/use-managed-mode",
+      "destination": "/generate/managed-mode"
+    },
+    {
+      "source": "/tour/push-workspace-modules",
+      "destination": "/reference/workspaces"
+    },
+    {
+      "source": "/tour/use-remote-packages",
+      "destination": "/tutorials/getting-started-with-bsr"
+    },
+    {
+      "source": "/tour/wrapping-up",
+      "destination": "/tutorials/getting-started-with-buf-cli"
     }
   ]
 }

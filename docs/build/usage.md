@@ -3,7 +3,8 @@ id: usage
 title: Usage
 ---
 
-> We highly recommend completing [the tour](../tour/configure-and-build.md) to get an overview of `buf build`.
+> We highly recommend completing [the tour](../tutorials/getting-started-with-buf-cli.md#configure-buf) to get an
+> overview of `buf build`.
 
 All `buf` operations rely on building, or compiling, Protobuf files. The [linter](../lint/overview.md),
 [breaking change detector](../breaking/overview.md), [generator](../generate/usage.mdx),
@@ -67,7 +68,8 @@ lint:
 For those of you that have used `protoc`, the placement of the `buf.yaml` is analogous to a `protoc`
 include (`-I`) path. **With `buf`, there is no `-I` flag** - each `protoc` `-I` path maps to a directory
 that contains a `buf.yaml` (called a module in Buf parlance), and multiple modules are stitched
-together with a [`buf.work.yaml`](../configuration/v1/buf-work-yaml.md), which defines a [workspace](../reference/workspaces.mdx).
+together with a [`buf.work.yaml`](../configuration/v1/buf-work-yaml.md), which defines
+a [workspace](../reference/workspaces.mdx).
 
 To illustrate how all these pieces fit together here's a quick example using `protoc` and its equivalent
 in `buf`:
@@ -107,8 +109,9 @@ directories:
 ```
 
 Like the `-I` flag for `protoc`, workspaces make it possible to import definitions across modules, such as introducing
-a new `message` in one module, and importing it from another. Similarly, any command that is run on an input that contains
-a `buf.work.yaml` acts upon *all* of the modules defined in the `buf.work.yaml`.
+a new `message` in one module, and importing it from another. Similarly, any command that is run on an input that
+contains
+a `buf.work.yaml` acts upon *all* the modules defined in the `buf.work.yaml`.
 
 ## Workspace requirements
 
@@ -116,7 +119,8 @@ There are two additional requirements that `buf` imposes on your `.proto` file s
 for compilation to succeed that are not enforced by `protoc`, both of which are essential to
 successful modern Protobuf development across a number of languages.
 
-**1. Workspace modules must not overlap, that is one workspace module can not be a sub-directory of another workspace module.**
+**1. Workspace modules must not overlap, that is one workspace module can not be a subdirectory of another workspace
+module.**
 
 This, for example, is not a valid configuration:
 
@@ -146,8 +150,8 @@ directories:
 
 *Given the above configuration, it's invalid to have these two files:*
 
-  - `foo/baz/baz.proto`
-  - `bar/baz/baz.proto`
+- `foo/baz/baz.proto`
+- `bar/baz/baz.proto`
 
 This results in two files having the path `baz/baz.proto`. Imagine that a third file is thrown into
 the mix:
@@ -168,8 +172,10 @@ pre-compilation, which `buf` does) the order of the imports given to the
 remember if it's the first `-I` or second `-I` that wins - we have outlawed this in our own builds for a long time.
 
 While the above example is relatively contrived, the common error that comes up is when you
-have vendored `.proto` files. For example, [grpc-gateway](https://github.com/grpc-ecosystem/grpc-gateway/tree/cc01a282127b54a81f92d6b8e8fb8971dab8be9b/third_party/googleapis)
-has its own copy of the [google.api](https://github.com/googleapis/googleapis/tree/master/google/api) definitions it needs.
+have vendored `.proto` files. For
+example, [grpc-gateway](https://github.com/grpc-ecosystem/grpc-gateway/tree/cc01a282127b54a81f92d6b8e8fb8971dab8be9b/third_party/googleapis)
+has its own copy of the [google.api](https://github.com/googleapis/googleapis/tree/master/google/api) definitions it
+needs.
 While these are usually in sync, the `google.api` schema can change. Imagine that we allowed this:
 
 ```yaml
@@ -194,10 +200,10 @@ $ buf build
 
 The `buf build` command:
 
-  - Discovers all Protobuf files per your `buf.yaml` configuration.
-  - Copies the Protobuf files into memory.
-  - Compiles all Protobuf files.
-  - Outputs the compiled result to a configurable location (defaults to `/dev/null`)
+- Discovers all Protobuf files per your `buf.yaml` configuration.
+- Copies the Protobuf files into memory.
+- Compiles all Protobuf files.
+- Outputs the compiled result to a configurable location (defaults to `/dev/null`)
 
 If there are errors, they are printed out in a `file:line:column:message` format by default.
 For example:
@@ -221,11 +227,15 @@ $ buf build --error-format=json
 By default, `buf build` outputs its result to `/dev/null`. In this case, it's common to use
 `buf build` as a validation step, analogous to checking if the input compiles.
 
-`buf build` also supports outputting [`FileDescriptorSet`](https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto)s
-and [Images](../reference/images.md), which is Buf's custom extension of the `FileDescriptorSet`. Better yet, these outputs
+`buf build` also supports
+outputting [`FileDescriptorSet`](https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto)
+s
+and [Images](../reference/images.md), which is Buf's custom extension of the `FileDescriptorSet`. Better yet, these
+outputs
 can be formatted in a variety of ways.
 
-`buf build` can deduce the output format by the file extension, see the documentation on [automatically derived formats](../reference/inputs.md#automatically-derived-formats). For example,
+`buf build` can deduce the output format by the file extension, see the documentation
+on [automatically derived formats](../reference/inputs.md#automatically-derived-formats). For example,
 
 ```terminal
 $ buf build -o image.bin
@@ -267,7 +277,8 @@ this field set, and thus to mimic `protoc` entirely, you can use the `--as-file-
 $ buf build -o image.bin --as-file-descriptor-set
 ```
 
-The `ImageExtension` field doesn't affect Protobuf plugins or any other operations, as they merely see this as an unknown
+The `ImageExtension` field doesn't affect Protobuf plugins or any other operations, as they merely see this as an
+unknown
 field. But we provide the option in case you want it.
 
 ## Limit to specific files
@@ -305,17 +316,17 @@ The `--type` flag accepts fully qualified names for [messages], [enums], and [se
 dependent descriptors are included in the build:
 
 - [Messages]
-  - Messages and enums referenced in message fields
-  - Any [proto2] extension declarations for message fields
-  - The parent message if this message is a nested definition
-  - Any custom options for the message, its fields, and the file in which the message is defined
+    - Messages and enums referenced in message fields
+    - Any [proto2] extension declarations for message fields
+    - The parent message if this message is a nested definition
+    - Any custom options for the message, its fields, and the file in which the message is defined
 - [Enums]
-  - The enum value descriptors for this enum
-  - The parent message is this enum is a nested definition
-  - Any custom options for the enum, enum values, and the file in which the enum is defined
+    - The enum value descriptors for this enum
+    - The parent message is this enum is a nested definition
+    - Any custom options for the enum, enum values, and the file in which the enum is defined
 - [Services]
-  - Request and response types referenced in service methods
-  - Any custom options for the services, its methods, and the file in which the service is defined
+    - Request and response types referenced in service methods
+    - Any custom options for the services, its methods, and the file in which the service is defined
 
 :::success Supplying multiple types
 
@@ -342,7 +353,7 @@ message Foo {
   optional Bar bar = 1;
   extensions 2 to 3;
 }
-message Bar { ... }
+message Bar {...}
 message Baz {
   other.Qux qux = 1 [(other.my_option).field = "buf"];
 }
@@ -353,8 +364,8 @@ package other;
 extend Foo {
   optional Qux baz = 2;
 }
-message Qux{ ... }
-message Quux{ ... }
+message Qux{...}
+message Quux{...}
 extend google.protobuf.FieldOptions {
   optional Quux my_option = 51234;
 }
@@ -363,11 +374,11 @@ extend google.protobuf.FieldOptions {
 This table shows which files, messages, and extensions would be included for various types from
 `foo.proto` and `bar.proto` if specified as the argument to `--type`:
 
-Type | Files | Messages | Extensions
-:----|:------|:---------|:----------
-`buf build --type pkg.Foo` | `foo.proto`, `bar.proto` | `pkg.Foo`, `pkg.Bar`, `other.Qux` | `other.baz`
-`buf build --type pkg.Bar` | `foo.proto` | `pkg.Bar` | |
-`buf build --type pkg.Baz` | `foo.proto`, `bar.proto` | `pkg.Baz`, `other.Quux`, `other.Qux` | `other.my_option`
+ Type                       | Files                    | Messages                             | Extensions        
+:---------------------------|:-------------------------|:-------------------------------------|:------------------
+ `buf build --type pkg.Foo` | `foo.proto`, `bar.proto` | `pkg.Foo`, `pkg.Bar`, `other.Qux`    | `other.baz`       
+ `buf build --type pkg.Bar` | `foo.proto`              | `pkg.Bar`                            |                   |
+ `buf build --type pkg.Baz` | `foo.proto`, `bar.proto` | `pkg.Baz`, `other.Quux`, `other.Qux` | `other.my_option` 
 
 ## Docker
 
@@ -382,9 +393,15 @@ $ docker run \
 ```
 
 [enums]: https://developers.google.com/protocol-buffers/docs/proto3#enum
+
 [filedescriptorset]: https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto
+
 [image]: ../reference/images.md
+
 [messages]: https://developers.google.com/protocol-buffers/docs/proto3#simple
+
 [module]: ../bsr/overview.mdx#modules
+
 [proto2]: https://developers.google.com/protocol-buffers/docs/proto
+
 [services]: https://developers.google.com/protocol-buffers/docs/proto3#services
